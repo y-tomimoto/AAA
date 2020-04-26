@@ -13,7 +13,7 @@ class MainActivity : AppCompatActivity() { // 基本的に1つのアクティビ
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main) // ここでレイアウトを紐付ける（ビューやビューグループも設定できる）
 
-        val button = findViewById<Button>(R.id.calculate) // これはwidget別に管理されていて、別のアクティビティからも、caluculateにはアクセスできそう
+        val button = findViewById<Button>(R.id.calculate) // Rにlayoutが保存されていてそこからcaluculateを引いている
 
         // 下記はoncreate内で実行しないと、Expecting member declaration エラーが出る
         button.setOnClickListener {
@@ -45,10 +45,10 @@ class MainActivity : AppCompatActivity() { // 基本的に1つのアクティビ
                 val discount = discountText.toInt()
 
                 // ここで画面遷移を行う
-            val intent = Intent(this, ResultActivity::class.java)
-            intent.putExtra("price", prßice)
-            intent.putExtra("discount", discount)
-            startActivity(intent)
+                val intent = Intent(this, ResultActivity::class.java)
+                intent.putExtra("price", price)
+                intent.putExtra("discount", discount)
+                startActivity(intent)
             }
         }
     }
