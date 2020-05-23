@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.content.Intent
+import android.view.Menu
 
 
 class MainActivity : AppCompatActivity() { // 基本的に1つのアクティビティが１つの画面を表示している。これはAppCompatActivityからextendされている
@@ -51,5 +52,10 @@ class MainActivity : AppCompatActivity() { // 基本的に1つのアクティビ
                 startActivity(intent)
             }
         }
+    }
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.options_menu, menu)
+
+        return true
     }
 }
