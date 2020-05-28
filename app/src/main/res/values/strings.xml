@@ -8,4 +8,5 @@
     <string name="expression">%1$,3d円の%2$d%%引きは</string>
     <string name="result">%1$,3d円です</string>
     <string name="search_title">test</string>
+    <string name="search_hint">予約する店舗名を選択</string>
 </resources>
