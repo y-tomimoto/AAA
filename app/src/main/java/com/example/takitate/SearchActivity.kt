@@ -18,8 +18,9 @@ class SearchActivity : AppCompatActivity() {
         val searchBtn = findViewById<Button>(R.id.startSearch)
         val searchText = findViewById<EditText>(R.id.searchText)
 
+        // Reffer to http://olee46.hatenablog.com/entry/2017/05/31/191657
         searchBtn.setOnClickListener {
-            // テキストを初期化している
+            // テキストを初期化しているß
             disp.text = "SEARCH RESULTS:\n";
             val str = searchText.text.toString()
             val database = SampleDBOpenHelper(this).readableDatabase
