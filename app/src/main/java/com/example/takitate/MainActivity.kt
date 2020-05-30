@@ -33,7 +33,13 @@ class MainActivity : AppCompatActivity() { // 基本的に1つのアクティビ
         show()
 
 
+        val searchButton = findViewById<Button>(R.id.button3)
 
+        searchButton.setOnClickListener {
+            // ここで画面遷移を行う
+            val intent = Intent(this, SearchActivity::class.java)
+            startActivity(intent)
+            }
 
         val button = findViewById<Button>(R.id.calculate) // Rにlayoutが保存されていてそこからcaluculateを引いている
 
