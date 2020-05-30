@@ -4,18 +4,36 @@ import android.app.SearchManager
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
 import android.content.Intent
 import android.view.Menu
-import android.widget.SearchView
+import android.widget.*
 
 
 class MainActivity : AppCompatActivity() { // 基本的に1つのアクティビティが１つの画面を表示している。これはAppCompatActivityからextendされている
 
+
+    private fun show() {
+        // データベースに登録されている文字列の一覧を得る
+        val texts = queryTexts(this)
+        val listView = findViewById<ListView>(R.id.listVIew)
+
+        listView.adapter = ArrayAdapter<String>(this, R.layout.list_text_row, R.id.textView3, texts)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) { // アクティビティが生成されたときに実行される
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main) // ここでレイアウトを紐付ける（ビューやビューグループも設定できる）
+
+        val button1 = findViewById<Button>(R.id.button)
+        button1.setOnClickListener {
+            val editText = findViewById<EditText>(R.id.editText)
+            insertText(this, editText.text.toString())
+            show()
+        }
+        show()
+
+
+
 
         val button = findViewById<Button>(R.id.calculate) // Rにlayoutが保存されていてそこからcaluculateを引いている
 
@@ -55,6 +73,7 @@ class MainActivity : AppCompatActivity() { // 基本的に1つのアクティビ
                 startActivity(intent)
             }
         }
+
     }
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.options_menu, menu)
