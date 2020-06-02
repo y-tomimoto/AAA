@@ -39,7 +39,15 @@ class MainActivity : AppCompatActivity() { // 基本的に1つのアクティビ
             // ここで画面遷移を行う
             val intent = Intent(this, SearchActivity::class.java)
             startActivity(intent)
-            }
+        }
+
+        val adminButton = findViewById<Button>(R.id.admin)
+
+        adminButton.setOnClickListener {
+            // ここで画面遷移を行う
+            val intent = Intent(this, AdminActivity::class.java)
+            startActivity(intent)
+        }
 
 
 
