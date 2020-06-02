@@ -41,6 +41,8 @@ class MainActivity : AppCompatActivity() { // 基本的に1つのアクティビ
             startActivity(intent)
             }
 
+
+
         val button = findViewById<Button>(R.id.calculate) // Rにlayoutが保存されていてそこからcaluculateを引いている
 
         // 下記はoncreate内で実行しないと、Expecting member declaration エラーが出る
