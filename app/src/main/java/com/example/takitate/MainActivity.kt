@@ -1,5 +1,6 @@
 package com.example.takitate
 
+import android.app.Application
 import android.app.SearchManager
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
@@ -7,7 +8,14 @@ import android.os.Bundle
 import android.content.Intent
 import android.view.Menu
 import android.widget.*
+import com.jakewharton.threetenabp.AndroidThreeTen
 
+class SampleApp : Application() {
+    override fun onCreate() {
+        super.onCreate()
+        AndroidThreeTen.init(this)
+    }
+}
 
 class MainActivity : AppCompatActivity() { // 基本的に1つのアクティビティが１つの画面を表示している。これはAppCompatActivityからextendされている
 
