@@ -1,6 +1,5 @@
 package com.example.takitate
 
-import android.app.Application
 import android.app.SearchManager
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
@@ -10,15 +9,7 @@ import android.view.Menu
 import android.widget.*
 import com.jakewharton.threetenabp.AndroidThreeTen
 
-class SampleApp : Application() {
-    override fun onCreate() {
-        super.onCreate()
-        AndroidThreeTen.init(this)
-    }
-}
-
 class MainActivity : AppCompatActivity() { // 基本的に1つのアクティビティが１つの画面を表示している。これはAppCompatActivityからextendされている
-
 
     private fun show() {
         // データベースに登録されている文字列の一覧を得る
@@ -30,6 +21,7 @@ class MainActivity : AppCompatActivity() { // 基本的に1つのアクティビ
 
     override fun onCreate(savedInstanceState: Bundle?) { // アクティビティが生成されたときに実行される
         super.onCreate(savedInstanceState)
+        AndroidThreeTen.init(this)
         setContentView(R.layout.activity_main) // ここでレイアウトを紐付ける（ビューやビューグループも設定できる）
 
         val button1 = findViewById<Button>(R.id.button)
