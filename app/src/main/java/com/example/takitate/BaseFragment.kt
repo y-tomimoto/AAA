@@ -6,6 +6,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 // extensionを用いて、viewへの参照を簡素化
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.home_activity.*
 
 interface HasToolbar {
     val toolbar: Toolbar? // Return null to hide the toolbar
