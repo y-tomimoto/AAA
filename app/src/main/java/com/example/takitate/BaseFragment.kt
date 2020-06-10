@@ -17,8 +17,9 @@ abstract class BaseFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         if (this is HasToolbar) { // このクラスがinstance化されるとき、interfaceの有無で条件分岐
-            requireActivity().homeToolbar.makeGone()
-            (requireActivity() as AppCompatActivity).setSupportActionBar(toolbar)
+            requireActivity().homeToolbar.makeGone() // makeGoneを通じて状態をvisibleにしたviewを取得する
+            // requireActivity() は、値を返さない場合例外を吐く。getActivityのnull対応が楽になる
+            (requireActivity() as AppCompatActivity).setSupportActionBar(toolbar) //
         }
 
 
