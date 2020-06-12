@@ -5,8 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 // extensionを用いて、viewへの参照を簡素化
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.home_activity.*
+import kotlinx.android.synthetic.main.activity_main.*
+
 
 interface HasToolbar {
     val toolbar: Toolbar? // Return null to hide the toolbar
@@ -18,11 +19,11 @@ abstract class BaseFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         if (this is HasToolbar) { // このクラスがinstance化されるとき、interfaceの有無で条件分岐
+            requireActivity().textView.text = "test"
             requireActivity().homeToolbar.makeGone() // makeGoneを通じて状態をvisibleにしたviewを取得する
             // requireActivity() は、値を返さない場合例外を吐く。getActivityのnull対応が楽になる
             (requireActivity() as AppCompatActivity).setSupportActionBar(toolbar) //
         }
-
 
         if (this is HasBackButton) {
             val actionBar = (requireActivity() as AppCompatActivity).supportActionBar
