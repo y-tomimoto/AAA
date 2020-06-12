@@ -7,7 +7,10 @@ import android.os.Bundle
 import android.content.Intent
 import android.view.Menu
 import android.widget.*
+import androidx.annotation.StringRes
 import com.jakewharton.threetenabp.AndroidThreeTen
+
+data class ExampleItem(@StringRes val titleRes: Int, @StringRes val subtitleRes: Int, val createView: () -> BaseFragment)
 
 class MainActivity : AppCompatActivity() { // 基本的に1つのアクティビティが１つの画面を表示している。これはAppCompatActivityからextendされている
 
@@ -26,11 +29,34 @@ class MainActivity : AppCompatActivity() { // 基本的に1つのアクティビ
 
         val button1 = findViewById<Button>(R.id.button)
         button1.setOnClickListener {
-            val editText = findViewById<EditText>(R.id.editText)
-            insertText(this, editText.text.toString())
-            show()
+            //ここが引数になっている。
+            val fragment = Ex.createView() // ここにはdata内に宣言されているものが入る。
+            // ここで、戻り値をエル。
+            supportFragmentManager.beginTransaction() // ここでfragmentを実行している //  あー、これは返し方を定義しているのね、、、
+                .run {
+                    return@run setCustomAnimations(
+                        R.anim.slide_in_right,
+                        R.anim.slide_out_left,
+                        R.anim.slide_in_left,
+                        R.anim.slide_out_right
+                    )
+                }
+                .add(R.id.homeContainer, fragment, fragment.javaClass.simpleName) // ここにrepもあるのね。そしてここにはtagが入る
+                // 3つ目の引数はなんだ？
+                .addToBackStack(fragment.javaClass.simpleName) // これで戻るボタンを押すとfragmentに戻れる。一回これなしでやってみる。今のアクティビテぃの後続としてfragmentを採用するかたちか。
+                .commit() // これが設定の反映ね。
+            // ここまでがtapしたときの動き。これがhome画面からtapしたときの遷移になる。
         }
         show()
+
+
+        val fragmentButton = findViewById<Button>(R.id.fragmentButton)
+
+        button1.setOnClickListener {
+
+
+        }
+
 
 
         val searchButton = findViewById<Button>(R.id.button3)
