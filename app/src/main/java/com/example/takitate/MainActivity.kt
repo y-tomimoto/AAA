@@ -30,7 +30,8 @@ class MainActivity : AppCompatActivity() { // 基本的に1つのアクティビ
         val button1 = findViewById<Button>(R.id.button)
         button1.setOnClickListener {
             //ここが引数になっている。
-            val fragment = Ex.createView() // ここにはdata内に宣言されているものが入る。
+            val test = ExampleItem(R.string.example_3_title, R.string.example_3_subtitle) { Example3Fragment() }
+            val fragment = test.createView() // ここにはdata内に宣言されているものが入る。
             // ここで、戻り値をエル。
             supportFragmentManager.beginTransaction() // ここでfragmentを実行している //  あー、これは返し方を定義しているのね、、、
                 .run {

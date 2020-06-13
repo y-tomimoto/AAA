@@ -10,6 +10,7 @@ import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.view.inputmethod.InputMethodManager
 import android.widget.FrameLayout
+import android.widget.ListView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -20,6 +21,7 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.gms.vision.text.Text
 import com.kizitonwose.calendarview.model.CalendarDay
 import com.kizitonwose.calendarview.model.CalendarMonth
 import com.kizitonwose.calendarview.model.DayOwner
@@ -58,8 +60,9 @@ class Example3EventsAdapter(val onClick: (Event) -> Unit) : // Unit はvoidの�
     RecyclerView.Adapter<Example3EventsAdapter.Example3EventsViewHolder>() {
 
         val events = mutableListOf<Event>() // eventを格納するList。ここにイベントを打ち込む
+        // val itemEventText = View.findViewById<Text>(R.id.itemEventText)
 
-        // このViewGroupが、1つのレコードみたいなもんで、これを構成するパーツが、いくつかあって、それぞれにtypeがつく　
+    // このViewGroupが、1つのレコードみたいなもんで、これを構成するパーツが、いくつかあって、それぞれにtypeがつく　
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Example3EventsViewHolder {
             return Example3EventsViewHolder(parent.inflate(R.layout.example_3_event_item_view))
         }
@@ -89,7 +92,7 @@ class Example3EventsAdapter(val onClick: (Event) -> Unit) : // Unit はvoidの�
 
              // これはイベントをわたして、テキストを取得するやつ
             fun bind(event: Event) {
-                itemEventText.text = event.text
+                 itemEventText.text = event.text // このXMLが、viewにもactivityにもなさそう
             }
         }
 
