@@ -1,4 +1,4 @@
-package com.example.takitate
+package com.example.reservation
 
 import org.junit.Test
 

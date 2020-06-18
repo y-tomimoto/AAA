@@ -1,4 +1,4 @@
-package com.example.takitate
+package com.example.reservation
 
 
 import android.content.Context
@@ -10,7 +10,6 @@ import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.view.inputmethod.InputMethodManager
 import android.widget.FrameLayout
-import android.widget.ListView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -21,7 +20,6 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.gms.vision.text.Text
 import com.kizitonwose.calendarview.model.CalendarDay
 import com.kizitonwose.calendarview.model.CalendarMonth
 import com.kizitonwose.calendarview.model.DayOwner
@@ -38,6 +36,7 @@ import org.threeten.bp.LocalDate
 import org.threeten.bp.YearMonth
 import org.threeten.bp.format.DateTimeFormatter
 import java.util.*
+
 
 private val Context.inputMethodManager // ソフトキーボードからアプリケーションに情報を受け渡すためのAPI
     // このget()は謎。多分systemServie
@@ -57,12 +56,11 @@ class Example3EventsAdapter(val onClick: (Event) -> Unit) : // Unit はvoidの�
     // ここで引数に渡しているViewHolderとはなんだ？
     // あくまでこれは型引数であって、純粋な引数でないのか。
     // Adapterは型引数に、ViewHolderを extendsしたクラスを要求している
-    RecyclerView.Adapter<Example3EventsAdapter.Example3EventsViewHolder>() {
+    RecyclerView.Adapter<Example3EventsAdapter.Example3EventsViewHolder>() { //
 
         val events = mutableListOf<Event>() // eventを格納するList。ここにイベントを打ち込む
-        // val itemEventText = View.findViewById<Text>(R.id.itemEventText)
 
-    // このViewGroupが、1つのレコードみたいなもんで、これを構成するパーツが、いくつかあって、それぞれにtypeがつく　
+        // このViewGroupが、1つのレコードみたいなもんで、これを構成するパーツが、いくつかあって、それぞれにtypeがつく　
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Example3EventsViewHolder {
             return Example3EventsViewHolder(parent.inflate(R.layout.example_3_event_item_view))
         }
@@ -76,7 +74,8 @@ class Example3EventsAdapter(val onClick: (Event) -> Unit) : // Unit はvoidの�
 
          // これもクラス。constructorとしてViewを受け取っていて、
          // ここでViewへの参照を持っておく。これにより毎回Viewを参照する必要がなくなる
-        inner class Example3EventsViewHolder(override val containerView: View) :
+        inner class Example3EventsViewHolder(override val containerView: View) : //
+
             // このViewHolderを継承しているとおもったら、2つ継承している？？
             // このカンマはなんだ？？1つはcontainerView（引数）をコンストラクタとしているのがわかる。しかしもうひとつは？？コンストラクタがなにので、
             RecyclerView.ViewHolder(containerView), LayoutContainer { // このLayoutXContainerでは、Viewのアクセスをキャッシュしてくれるinterface
@@ -89,10 +88,14 @@ class Example3EventsAdapter(val onClick: (Event) -> Unit) : // Unit はvoidの�
                     // adapterPosition これはなんだ。多分アクションがあったときの位置
                 }
             }
+             
 
+
+             val itemEventText = containerView.findViewById<TextView>(R.id.itemEventText)
              // これはイベントをわたして、テキストを取得するやつ
             fun bind(event: Event) {
-                 itemEventText.text = event.text // このXMLが、viewにもactivityにもなさそう
+                 itemEventText.text = event.text
+
             }
         }
 

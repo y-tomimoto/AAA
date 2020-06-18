@@ -1,23 +1,19 @@
 <resources>
-    <string name="app_name">TAKITATE</string>
-    <string name="price_label">定価</string>
-    <string name="discount_label">割引率</string>
-    <string name="calculate_button">計算する</string>
-    <string name="price_error">定価を入力してください</string>
-    <string name="discount_error">割引率を入力してください</string>
-    <string name="expression">%1$,3d円の%2$d%%引きは</string>
-    <string name="result">%1$,3d円です</string>
-    <string name="search_title">test</string>
-    <string name="search_hint">予約する店舗名を選択</string>
-    <string name="add">追加</string>
-    <string name="name">Name</string>
-    <string name="textview">TextView</string>
-    <string name="button">Button</string>
-    <string name="button1">Button</string>
-    <string name="admin">Admin</string>
-    <string name="fragment">Fragment</string>
+    <string name="app_name">CalendarView Sample</string>
+    <string name="example_1_title">Example 1</string>
+    <string name="example_1_subtitle">Multiple selection, horizontal scrolling, shows usage of \"maxRowCount\" property to switch between week and month modes. Also shows usage of OutDateStyle \"endOfRow\".</string>
+    <string name="example_2_title">Example 2</string>
+    <string name="example_2_subtitle">Month header view, single selection, vertical scrolling, hides in and out dates.</string>
     <string name="example_3_title">Example 3</string>
     <string name="example_3_subtitle">Event style implementation, day labels as header view, single selection, month scroll listener. Similar to what is in the Google Calendar app.</string>
+    <string name="example_4_title">Example 4</string>
+    <string name="example_4_subtitle">Continuous selection within one month and across multiple months, dates older than the current day are disabled. Similar to what is in the Airbnb app.</string>
+    <string name="example_5_title">Example 5</string>
+    <string name="example_5_subtitle">Single selection, programmatic calendar scrolling, generates six rows for all months showing \"endOfGrid\" implementation of \"outDateStyle\" option. A flight schedule calender.</string>
+    <string name="example_6_title">Example 6</string>
+    <string name="example_6_subtitle">Custom date width and height, custom month view, item decoration on the CalendarView, continuous horizontal scrolling style.</string>
+    <string name="example_7_title">Example 7</string>
+    <string name="example_7_subtitle">Week mode calendar with single selection. Shows usage of \"hasBoundaries\" and  \"maxRowCount\" properties.</string>
     <string name="save">Save</string>
     <string name="close">Close</string>
     <string name="example_3_input_dialog_title">Enter event title</string>
@@ -28,4 +24,5 @@
     <string name="end_date">End date</string>
     <string name="clear">Clear</string>
     <string name="week_mode">Week mode</string>
+
 </resources>
