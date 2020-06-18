@@ -26,6 +26,8 @@ import org.threeten.bp.DayOfWeek
 import org.threeten.bp.temporal.WeekFields
 import java.util.*
 import androidx.recyclerview.widget.RecyclerView
+import com.facebook.FacebookSdk
+import com.facebook.appevents.AppEventsLogger
 import com.jakewharton.threetenabp.AndroidThreeTen
 
 

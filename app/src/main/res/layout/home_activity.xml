@@ -20,6 +20,7 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
+
     <FrameLayout
         android:id="@+id/homeContainer"
         android:layout_width="match_parent"
@@ -30,6 +31,8 @@
             android:id="@+id/examplesRv"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
+
     </FrameLayout>
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
