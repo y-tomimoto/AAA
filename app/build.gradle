@@ -7,7 +7,7 @@ android {
     buildToolsVersion "29.0.3"
 
     defaultConfig {
-        applicationId "com.example.io.github.y_tomimoto"
+        applicationId "io.github.reservation"
         minSdkVersion 24
         targetSdkVersion 29
         versionCode 1

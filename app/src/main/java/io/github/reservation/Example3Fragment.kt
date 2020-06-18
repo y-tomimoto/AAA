@@ -1,4 +1,4 @@
-package com.example.y_tomimoto
+package io.github.reservation
 
 
 import android.content.Context
@@ -20,6 +20,7 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import io.github.reservation.R
 import com.kizitonwose.calendarview.model.CalendarDay
 import com.kizitonwose.calendarview.model.CalendarMonth
 import com.kizitonwose.calendarview.model.DayOwner
@@ -104,7 +105,8 @@ class Example3EventsAdapter(val onClick: (Event) -> Unit) : // Unit はvoidの�
 // このクラスが呼ばれて、最終的にFragmentを返しているみたい。
 // これ。BaseFragmentを継承している。そしてinterfaceも。
 
-class Example3Fragment : BaseFragment(), HasBackButton { // ここでFlagmentクラスと、HasBackButton　interfaceを継承している
+class Example3Fragment : BaseFragment(),
+    HasBackButton { // ここでFlagmentクラスと、HasBackButton　interfaceを継承している
 
     private val eventsAdapter = Example3EventsAdapter {
         // これがイベント。タップされたらdeleteボタンをメッセージと表示する
@@ -152,7 +154,8 @@ class Example3Fragment : BaseFragment(), HasBackButton { // ここでFlagmentク
             }
     }
 
-    override val titleRes: Int = R.string.example_3_title // これは入り口に表示するやつか。
+    override val titleRes: Int =
+        R.string.example_3_title // これは入り口に表示するやつか。
 
     private var selectedDate: LocalDate? = null// これはなにかは知らん
     private val today = LocalDate.now() //これは本日の参考にするはず。
@@ -184,7 +187,8 @@ class Example3Fragment : BaseFragment(), HasBackButton { // ここでFlagmentク
         exThreeRv.addItemDecoration(DividerItemDecoration(requireContext(), RecyclerView.VERTICAL)) // これで罫線を通過しているのね。
 
         // 上半分
-        val daysOfWeek = daysOfWeekFromLocale() // これは月から日までの日付を入れるところ
+        val daysOfWeek =
+            daysOfWeekFromLocale() // これは月から日までの日付を入れるところ
         val currentMonth = YearMonth.now() // いま何月か
         // ここがCalendar部分のレイアウトか。
         // 前後10ヶ月を作成している
@@ -312,10 +316,15 @@ class Example3Fragment : BaseFragment(), HasBackButton { // ここでFlagmentク
 
     private fun saveEvent(text: String) {
         if (text.isBlank()) {
-            Toast.makeText(requireContext(), R.string.example_3_empty_input_text, Toast.LENGTH_LONG).show()
+            Toast.makeText(requireContext(),
+                R.string.example_3_empty_input_text, Toast.LENGTH_LONG).show()
         } else {
             selectedDate?.let {
-                events[it] = events[it].orEmpty().plus(Event(UUID.randomUUID().toString(), text, it))
+                events[it] = events[it].orEmpty().plus(
+                    Event(
+                        UUID.randomUUID().toString(), text, it
+                    )
+                )
                 updateAdapterForDate(it)
             }
         }
@@ -336,13 +345,17 @@ class Example3Fragment : BaseFragment(), HasBackButton { // ここでFlagmentク
 
     override fun onStart() {
         super.onStart()
-        (activity as AppCompatActivity).homeToolbar.setBackgroundColor(requireContext().getColorCompat(R.color.example_3_toolbar_color))
+        (activity as AppCompatActivity).homeToolbar.setBackgroundColor(requireContext().getColorCompat(
+            R.color.example_3_toolbar_color
+        ))
         requireActivity().window.statusBarColor = requireContext().getColorCompat(R.color.example_3_statusbar_color)
     }
 
     override fun onStop() {
         super.onStop()
-        (activity as AppCompatActivity).homeToolbar.setBackgroundColor(requireContext().getColorCompat(R.color.colorPrimary))
+        (activity as AppCompatActivity).homeToolbar.setBackgroundColor(requireContext().getColorCompat(
+            R.color.colorPrimary
+        ))
         requireActivity().window.statusBarColor = requireContext().getColorCompat(R.color.colorPrimaryDark)
     }
 }

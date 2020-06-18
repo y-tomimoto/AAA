@@ -1,4 +1,4 @@
-package com.example.y_tomimoto
+package io.github.reservation
 
 import android.content.Context
 import android.graphics.drawable.GradientDrawable
@@ -26,6 +26,7 @@ import org.threeten.bp.DayOfWeek
 import org.threeten.bp.temporal.WeekFields
 import java.util.*
 import androidx.recyclerview.widget.RecyclerView
+import io.github.reservation.R
 import com.jakewharton.threetenabp.AndroidThreeTen
 
 
@@ -140,7 +141,10 @@ class HomeOptionsAdapter(val onClick: (ExampleItem) -> Unit) :
 
     // これはlist
     val examples = listOf(
-            ExampleItem(R.string.example_3_title, R.string.example_3_subtitle) { Example3Fragment() }
+        ExampleItem(
+            R.string.example_3_title,
+            R.string.example_3_subtitle
+        ) { Example3Fragment() }
     )
 
 
@@ -186,7 +190,7 @@ class HomeOptionsAdapter(val onClick: (ExampleItem) -> Unit) :
 class MainActivity : AppCompatActivity() {
     // ここでインスタンスを作成している。
     // これが、1つのViewに割り当てられる
-    private val examplesAdapter =  HomeOptionsAdapter {
+    private val examplesAdapter = HomeOptionsAdapter {
         //ここが引数になっている。
         val fragment = it.createView() // ここにはdata内に宣言されているものが入る。
         // ここで、戻り値をエル。
@@ -199,7 +203,11 @@ class MainActivity : AppCompatActivity() {
                     R.anim.slide_out_right
                 )
             }
-            .add(R.id.homeContainer, fragment, fragment.javaClass.simpleName) // ここにrepもあるのね。そしてここにはtagが入る
+            .add(
+                R.id.homeContainer,
+                fragment,
+                fragment.javaClass.simpleName
+            ) // ここにrepもあるのね。そしてここにはtagが入る
 
             // 3つ目の引数はなんだ？
             .addToBackStack(fragment.javaClass.simpleName) // これで戻るボタンを押すとfragmentに戻れる。一回これなしでやってみる。今のアクティビテぃの後続としてfragmentを採用するかたちか。

@@ -1,4 +1,4 @@
-package com.example.y_tomimoto
+package io.github.reservation
 
 import org.junit.Test
 

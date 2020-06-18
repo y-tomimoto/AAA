@@ -1,4 +1,4 @@
-package com.example.y_tomimoto
+package io.github.reservation
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -19,6 +19,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.example.io.github.y_tomimoto", appContext.packageName)
+        assertEquals("com.example.io.github.io.github.y_tomimoto", appContext.packageName)
     }
 }
