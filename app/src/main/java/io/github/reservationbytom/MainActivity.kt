@@ -1,4 +1,4 @@
-package io.github.reservation
+package io.github.reservationbytom
 
 import android.content.Context
 import android.graphics.drawable.GradientDrawable
@@ -26,7 +26,6 @@ import org.threeten.bp.DayOfWeek
 import org.threeten.bp.temporal.WeekFields
 import java.util.*
 import androidx.recyclerview.widget.RecyclerView
-import io.github.reservation.R
 import com.jakewharton.threetenabp.AndroidThreeTen
 
 

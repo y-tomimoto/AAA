@@ -1,4 +1,4 @@
-package io.github.reservation
+package io.github.reservationbytom
 
 import org.junit.Test
 
