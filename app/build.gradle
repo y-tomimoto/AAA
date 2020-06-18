@@ -7,7 +7,7 @@ android {
     buildToolsVersion "29.0.3"
 
     defaultConfig {
-        applicationId "com.example.reservation"
+        applicationId "com.example.io.github.y_tomimoto"
         minSdkVersion 24
         targetSdkVersion 29
         versionCode 1
@@ -30,6 +30,7 @@ android {
 }
 
 dependencies {
+    implementation 'com.facebook.android:facebook-android-sdk:[4,5)'
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.github.kizitonwose:CalendarView:0.3.5'

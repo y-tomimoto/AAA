@@ -1,4 +1,4 @@
-package com.example.reservation
+package com.example.y_tomimoto
 
 
 import android.content.Context
@@ -29,7 +29,6 @@ import com.kizitonwose.calendarview.ui.ViewContainer
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.calendar_day_legend.view.*
 import kotlinx.android.synthetic.main.example_3_calendar_day.view.*
-import kotlinx.android.synthetic.main.example_3_event_item_view.*
 import kotlinx.android.synthetic.main.example_3_fragment.*
 import kotlinx.android.synthetic.main.home_activity.*
 import org.threeten.bp.LocalDate

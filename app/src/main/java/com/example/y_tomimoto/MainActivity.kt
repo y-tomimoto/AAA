@@ -1,4 +1,4 @@
-package com.example.reservation
+package com.example.y_tomimoto
 
 import android.content.Context
 import android.graphics.drawable.GradientDrawable
