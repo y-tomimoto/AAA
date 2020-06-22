@@ -25,5 +25,6 @@
     <string name="clear">Clear</string>
     <string name="week_mode">Week mode</string>
     <string name="facebook_app_id">640113296580578</string> <string name="fb_login_protocol_scheme">fb640113296580578</string>
+    <string name="button">Button</string>
 
 </resources>
