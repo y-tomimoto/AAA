@@ -225,8 +225,8 @@ class MainActivity : AppCompatActivity() {
             override fun onSuccess(result: LoginResult?) {
 //                val intent = Intent(applicationContext,HomeActivity::class.java).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
 //                startActivity(intent)
-                val intent = Intent(applicationContext,Home::class.java).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                startActivity(intent)
+//                val intent = Intent(applicationContext,Home::class.java).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+//                startActivity(intent)
                 Log.d("tag","da")
             }
 
@@ -249,55 +249,55 @@ class MainActivity : AppCompatActivity() {
     }
 }
 
-class HomeActivity : AppCompatActivity() {
-        private val examplesAdapter = HomeOptionsAdapter {
-        //ここが引数になっている。
-        val fragment = it.createView() // ここにはdata内に宣言されているものが入る。
-        // ここで、戻り値をエル。
-        supportFragmentManager.beginTransaction() // ここでfragmentを実行している //  あー、これは返し方を定義しているのね、、、
-            .run {
-                return@run setCustomAnimations(
-                    R.anim.slide_in_right,
-                    R.anim.slide_out_left,
-                    R.anim.slide_in_left,
-                    R.anim.slide_out_right
-                )
-            }
-            .add(
-                R.id.homeContainer,
-                fragment,
-                fragment.javaClass.simpleName
-            ) // ここにrepもあるのね。そしてここにはtagが入る
-
-            // 3つ目の引数はなんだ？
-            .addToBackStack(fragment.javaClass.simpleName) // これで戻るボタンを押すとfragmentに戻れる。一回これなしでやってみる。今のアクティビテぃの後続としてfragmentを採用するかたちか。
-            .commit() // これが設定の反映ね。
-        // ここまでがtapしたときの動き。これがhome画面からtapしたときの遷移になる。
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.home_activity) // この画面ではなく、別の画面を起動する。
-        setSupportActionBar(homeToolbar)
-        AndroidThreeTen.init(this);
-        val examplesRv = findViewById<RecyclerView>(R.id.examplesRv)
-        // このexam- はレイアウトになる。どこでinitしているのかは謎。importか？
-        // ここで、RecyclerViewに各要素を割り当て
-        examplesRv.layoutManager =
-            LinearLayoutManager(this, RecyclerView.VERTICAL, false)// これはどう並べるか
-        examplesRv.adapter =
-            examplesAdapter // ここでadaptorを採用 このときはそのままぶち込み案件 // これは、1つの viewにどのデータを割り当てるか
-        examplesRv.addItemDecoration(
-            DividerItemDecoration(
-                this,
-                RecyclerView.VERTICAL
-            )
-        ) //  ここで枠線を採用
-    }
-        override fun onOptionsItemSelected(item: MenuItem): Boolean { // いまどのフラグメントにいるのかを保持している
-        return when (item.itemId) {
-            android.R.id.home -> onBackPressed().let { true }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
-}
+//class HomeActivity : AppCompatActivity() {
+//        private val examplesAdapter = HomeOptionsAdapter {
+//        //ここが引数になっている。
+//        val fragment = it.createView() // ここにはdata内に宣言されているものが入る。
+//        // ここで、戻り値をエル。
+//        supportFragmentManager.beginTransaction() // ここでfragmentを実行している //  あー、これは返し方を定義しているのね、、、
+//            .run {
+//                return@run setCustomAnimations(
+//                    R.anim.slide_in_right,
+//                    R.anim.slide_out_left,
+//                    R.anim.slide_in_left,
+//                    R.anim.slide_out_right
+//                )
+//            }
+//            .add(
+//                R.id.homeContainer,
+//                fragment,
+//                fragment.javaClass.simpleName
+//            ) // ここにrepもあるのね。そしてここにはtagが入る
+//
+//            // 3つ目の引数はなんだ？
+//            .addToBackStack(fragment.javaClass.simpleName) // これで戻るボタンを押すとfragmentに戻れる。一回これなしでやってみる。今のアクティビテぃの後続としてfragmentを採用するかたちか。
+//            .commit() // これが設定の反映ね。
+//        // ここまでがtapしたときの動き。これがhome画面からtapしたときの遷移になる。
+//    }
+//
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//        super.onCreate(savedInstanceState)
+//        setContentView(R.layout.home_activity) // この画面ではなく、別の画面を起動する。
+//        setSupportActionBar(homeToolbar)
+//        AndroidThreeTen.init(this);
+//        val examplesRv = findViewById<RecyclerView>(R.id.examplesRv)
+//        // このexam- はレイアウトになる。どこでinitしているのかは謎。importか？
+//        // ここで、RecyclerViewに各要素を割り当て
+//        examplesRv.layoutManager =
+//            LinearLayoutManager(this, RecyclerView.VERTICAL, false)// これはどう並べるか
+//        examplesRv.adapter =
+//            examplesAdapter // ここでadaptorを採用 このときはそのままぶち込み案件 // これは、1つの viewにどのデータを割り当てるか
+//        examplesRv.addItemDecoration(
+//            DividerItemDecoration(
+//                this,
+//                RecyclerView.VERTICAL
+//            )
+//        ) //  ここで枠線を採用
+//    }
+//        override fun onOptionsItemSelected(item: MenuItem): Boolean { // いまどのフラグメントにいるのかを保持している
+//        return when (item.itemId) {
+//            android.R.id.home -> onBackPressed().let { true }
+//            else -> super.onOptionsItemSelected(item)
+//        }
+//    }
+//}
