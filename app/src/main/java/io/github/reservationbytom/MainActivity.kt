@@ -157,7 +157,6 @@ class HomeOptionsAdapter(val onClick: (ExampleItem) -> Unit) :
         ) { Example3Fragment() }
     )
 
-
     // ここで、それぞれの値が割り振られるViewをholderとして生成している
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeOptionsViewHolder { // 戻り値の型がHomeOptionsViewHolderということ、継承しているのは下記
         return HomeOptionsViewHolder( //　ここでviewを渡してinstance化している
@@ -206,20 +205,27 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.login)
+        AndroidThreeTen.init(this);
 
         val loginButton = findViewById<LoginButton>(R.id.login_button);
         val testButton = findViewById<Button>(R.id.testButton);
 
         testButton.setOnClickListener  {
-            val intent = Intent(applicationContext,HomeActivity::class.java)
+
+            // もしかすると、Activityに遷移したあと、そこで新たに生成する必要がありそう。
+            // ここでは、該当の Activityを呼ぶか。
+            val intent = Intent(applicationContext,Home::class.java).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
             startActivity(intent)
+
         }
         Log.d("tag","dadadada")
         loginButton.setReadPermissions("email");
         loginButton.registerCallback(callbackManager, object: FacebookCallback<LoginResult> {
 
             override fun onSuccess(result: LoginResult?) {
-                val intent = Intent(applicationContext,HomeActivity::class.java).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+//                val intent = Intent(applicationContext,HomeActivity::class.java).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+//                startActivity(intent)
+                val intent = Intent(applicationContext,Home::class.java).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
                 startActivity(intent)
                 Log.d("tag","da")
             }
