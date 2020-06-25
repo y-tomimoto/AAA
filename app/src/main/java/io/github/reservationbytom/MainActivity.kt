@@ -25,7 +25,6 @@ class MainActivity: AppCompatActivity() {
                 fragment,
                 fragment.javaClass.simpleName
             ) // ここにrepもあるのね。そしてここにはtagが入る
-
             // 3つ目の引数はなんだ？
             // .addToBackStack(fragment.javaClass.simpleName) // これで戻るボタンを押すとfragmentに戻れる。一回これなしでやってみる。今のアクティビテぃの後続としてfragmentを採用するかたちか。
             .commit()

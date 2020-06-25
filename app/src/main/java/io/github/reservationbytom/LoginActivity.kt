@@ -218,8 +218,8 @@ class LoginActivity : AppCompatActivity() {
         loginButton.registerCallback(callbackManager, object: FacebookCallback<LoginResult> {
 
             override fun onSuccess(result: LoginResult?) {
-//                val intent = Intent(applicationContext,HomeActivity::class.java).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-//                startActivity(intent)
+                val intent = Intent(applicationContext,MainActivity::class.java).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                startActivity(intent)
 //                val intent = Intent(applicationContext,Home::class.java).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
 //                startActivity(intent)
                 Log.d("tag","da")

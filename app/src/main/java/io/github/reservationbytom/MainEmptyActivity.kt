@@ -10,7 +10,7 @@ class MainEmptyActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         // go straight to main if a token is stored
-        val activityIntent: Intent = if (true) {
+        val activityIntent: Intent = if (true) { // TODO 条件式にFacebook Tokenを追加
             Intent(this, MainActivity::class.java)
         } else {
             Intent(this, LoginActivity::class.java)
