@@ -214,7 +214,7 @@ class MainActivity : AppCompatActivity() {
 
             // もしかすると、Activityに遷移したあと、そこで新たに生成する必要がありそう。
             // ここでは、該当の Activityを呼ぶか。
-            val intent = Intent(applicationContext,Home::class.java).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            val intent = Intent(applicationContext,HomeActivity::class.java).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
             startActivity(intent)
 
         }

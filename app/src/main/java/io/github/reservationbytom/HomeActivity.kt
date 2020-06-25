@@ -2,11 +2,13 @@ package io.github.reservationbytom
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.jakewharton.threetenabp.AndroidThreeTen
 
-class Home : AppCompatActivity() {
+class HomeActivity: AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        AndroidThreeTen.init(this);
         setContentView(R.layout.home_activity)
         val fragment = Example3Fragment()
         supportFragmentManager.beginTransaction() // ここでfragmentを実行している //  あー、これは返し方を定義しているのね、、、
@@ -25,7 +27,7 @@ class Home : AppCompatActivity() {
             ) // ここにrepもあるのね。そしてここにはtagが入る
 
             // 3つ目の引数はなんだ？
-            .addToBackStack(fragment.javaClass.simpleName) // これで戻るボタンを押すとfragmentに戻れる。一回これなしでやってみる。今のアクティビテぃの後続としてfragmentを採用するかたちか。
+            // .addToBackStack(fragment.javaClass.simpleName) // これで戻るボタンを押すとfragmentに戻れる。一回これなしでやってみる。今のアクティビテぃの後続としてfragmentを採用するかたちか。
             .commit()
     }
 }
