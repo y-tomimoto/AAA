@@ -261,11 +261,11 @@ class Example3Fragment : BaseFragment(),
         // これは無名関数
         // スクロールした際に実行されるやつ
         exThreeCalendar.monthScrollListener = {
-            requireActivity().homeToolbar.title = if (it.year == today.year) {
-                titleSameYearFormatter.format(it.yearMonth)
-            } else {
-                titleFormatter.format(it.yearMonth)
-            }
+//            requireActivity().homeToolbar.title = if (it.year == today.year) {
+//                titleSameYearFormatter.format(it.yearMonth)
+//            } else {
+//                titleFormatter.format(it.yearMonth)
+//            }
 
             // Select the first day of the month when
             // we scroll to a new month.
@@ -344,17 +344,17 @@ class Example3Fragment : BaseFragment(),
 
     override fun onStart() {
         super.onStart()
-        (activity as AppCompatActivity).homeToolbar.setBackgroundColor(requireContext().getColorCompat(
-            R.color.example_3_toolbar_color
-        ))
+//        (activity as AppCompatActivity).homeToolbar.setBackgroundColor(requireContext().getColorCompat(
+//            R.color.example_3_toolbar_color
+//        ))
         requireActivity().window.statusBarColor = requireContext().getColorCompat(R.color.example_3_statusbar_color)
     }
 
     override fun onStop() {
         super.onStop()
-        (activity as AppCompatActivity).homeToolbar.setBackgroundColor(requireContext().getColorCompat(
-            R.color.colorPrimary
-        ))
+//        (activity as AppCompatActivity).homeToolbar.setBackgroundColor(requireContext().getColorCompat(
+//            R.color.colorPrimary
+//        ))
         requireActivity().window.statusBarColor = requireContext().getColorCompat(R.color.colorPrimaryDark)
     }
 }
