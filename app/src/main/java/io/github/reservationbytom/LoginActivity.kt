@@ -104,10 +104,6 @@ abstract class BaseFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        if (this is HasToolbar) {
-            requireActivity().homeToolbar.makeGone()
-            (requireActivity() as AppCompatActivity).setSupportActionBar(toolbar)
-        }
 
         if (this is HasBackButton) {
             val actionBar = (requireActivity() as AppCompatActivity).supportActionBar
@@ -118,10 +114,6 @@ abstract class BaseFragment : Fragment() {
 
     override fun onStop() {
         super.onStop()
-        if (this is HasToolbar) {
-            requireActivity().homeToolbar.makeVisible()
-            (requireActivity() as AppCompatActivity).setSupportActionBar(requireActivity().homeToolbar)
-        }
 
         if (this is HasBackButton) {
             val actionBar = (requireActivity() as AppCompatActivity).supportActionBar

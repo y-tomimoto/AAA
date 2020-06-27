@@ -178,7 +178,6 @@ class Example3Fragment : BaseFragment(),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState) //これはお決まりみたいなもんだろう。
 
-
         // 下半分
         // 作成したlayout内のxmlには動的にアクセスできるとかなんだろうな。
         exThreeRv.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false) // これが横スワイプとか縦スワイプを管理するやつ。
