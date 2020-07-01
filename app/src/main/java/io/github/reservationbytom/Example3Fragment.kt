@@ -1,6 +1,7 @@
 package io.github.reservationbytom
 
 
+import android.bluetooth.BluetoothProfile
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -43,6 +44,57 @@ private val Context.inputMethodManager // ソフトキーボードからアプ�
 
 // これはdata class。データを保持するためだけのもの。
 data class Event(val id: String, val text: String, val date: LocalDate)
+
+data class Course(
+    val id:String,
+    val name: String,
+    val time :Int,
+    val series:Int,
+    val seriesPrice:Int,
+    val price:Int,
+    val essentialItem:Array<String>,
+    val meetingPoint:String, // zoomのときはここにurlを追加したい
+    val capacity : Int,
+    val imagePath : String
+)
+
+data class CourseProgress(
+    val course:Course,
+    val courseDone:Int
+)
+
+data class Progress(
+    val courseProgress :  Array<CourseProgress>
+)
+
+data class Status(
+    val anyStatus : String
+)
+
+
+data class User(
+    val id:String,
+    val name: String,
+    val birthday :LocalDate,
+    val sex:String,
+    val progress:Progress,
+    val status : Status,
+    val visit : Int,
+    val profileStringPicturePath:String
+)
+
+
+data class Reservation(
+    val id: String,
+    val appointmentTime: LocalDate,
+    val course: Course,
+    val user :User,
+    val message : String
+)
+
+
+
+
 
 // このクラス自体が、RecyclerView.Adapterを継承していて、その引数が、Example3EventsViewHolder なのか。
 class Example3EventsAdapter(val onClick: (Event) -> Unit) : // Unit はvoidの意味。ここで渡したOnclickは、戻り値を必要としない。このOnclickはデータを受け取る
