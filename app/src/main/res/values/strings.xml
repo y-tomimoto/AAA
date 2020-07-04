@@ -29,8 +29,14 @@
     <string name="button">Button</string>
     <string name="course">Course</string>
     <string name="header">HEADER</string>
-    <string name="header">HEADER</string>
-    <string name="main">MAIN</string>
     <string name="footer">FOOTER</string>
+    <string name="main">MAIN</string>
+    <string name="item1">item1</string>
+    <string name="item2">item2</string>
+    <string name="item3">item3</string>
+    <string name="title_activity_bottom__navigation">Bottom_Navigation</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
 
 </resources>

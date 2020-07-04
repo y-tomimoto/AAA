@@ -22,5 +22,4 @@
         app:layout_anchor="@+id/homeContainer"
         app:layout_anchorGravity="center" />
 
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -35,6 +35,7 @@ import kotlinx.android.synthetic.main.home_activity.*
 import org.threeten.bp.LocalDate
 import org.threeten.bp.YearMonth
 import org.threeten.bp.format.DateTimeFormatter
+import java.io.StringBufferInputStream
 import java.util.*
 
 
@@ -80,7 +81,8 @@ data class User(
     val progress:Progress,
     val status : Status,
     val visit : Int,
-    val profileStringPicturePath:String
+    val profilePicturePath:String,
+    val lectureMemo : String
 )
 
 

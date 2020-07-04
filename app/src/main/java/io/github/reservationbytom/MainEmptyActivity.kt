@@ -16,7 +16,8 @@ class MainEmptyActivity : AppCompatActivity() {
         val activityIntent: Intent = if (AccessToken.getCurrentAccessToken() == null) {
             Intent(this, LoginActivity::class.java)
         } else {
-            Intent(this, MainActivity::class.java)
+            // Intent(this, MainActivity::class.java)
+            Intent(this, Test::class.java)
         }
         startActivity(activityIntent)
         finish()
