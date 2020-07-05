@@ -12,10 +12,10 @@ class SampleDBOpenHelper(context:Context):
         SQLiteOpenHelper(context, DB_NAME, null, DB_VERSION,null){
     override fun onCreate(db: SQLiteDatabase?) {
         // ここでtableを作成する
-        db?.execSQL("CREATE TABLE texts ( " +
+        db?.execSQL("CREATE TABLE test_table ( " +
                 " _id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                " text TEXT NOT NULL," +
-                " created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)")
+                " _text TEXT NOT NULL," +
+                " _created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)")
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
@@ -29,13 +29,13 @@ fun queryTexts(context:Context):List<String>{
 
     // データベースを検索
     val cursor = database.query(
-        "texts",null,null,null,null,null,"created_at DESC"
+        "test_table",null,null,null,null,null,"created_at DESC"
     )
     val texts = mutableListOf<String>()
     cursor.use {
         // カーソルで処理
         while(cursor.moveToNext()){
-            val text = cursor.getString(cursor.getColumnIndex("text"))
+            val text = cursor.getString(cursor.getColumnIndex("_text"))
             texts.add(text)
         }
     }
@@ -49,6 +49,6 @@ fun insertText(context:Context,text:String){
         val record = ContentValues().apply {
             put("texts",text)
         }
-        db.insert("texts",null,record)
+        db.insert("test_table",null,record)
     }
 }
