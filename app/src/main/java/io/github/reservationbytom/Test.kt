@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.jakewharton.threetenabp.AndroidThreeTen
 import kotlinx.android.synthetic.main.activity_test.*
 
 class Test : AppCompatActivity() {
@@ -48,12 +49,13 @@ class Test : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_test)
         bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+        AndroidThreeTen.init(this);
         setupViewPager()
     }
 
     private fun setupViewPager(){
         // 実際にはここから呼び出している
-        val fragment =  mutableListOf( Example3Fragment(), Example3Fragment(),  Example3Fragment())
+        val fragment =  mutableListOf( Example3Fragment(), BlankFragment1(),  BlankFragment1())
         val adapter = ViewPagerAdapter(fragment,supportFragmentManager)
         viewPager.adapter = adapter
         viewPager.offscreenPageLimit = 2 // データの保持に関して
