@@ -23,7 +23,6 @@ class Test : AppCompatActivity() {
 
     private var currentItem: MenuItem? = null
 
-
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.navigation_home -> {
@@ -58,17 +57,22 @@ class Test : AppCompatActivity() {
         val adapter = ViewPagerAdapter(fragment,supportFragmentManager)
         viewPager.adapter = adapter
         viewPager.offscreenPageLimit = 2 // データの保持に関して
-        viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+        viewPager.addOnPageChangeListener(
+            object : ViewPager.OnPageChangeListener {
+
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
+
             override fun onPageScrollStateChanged(state: Int) {}
+
             override fun onPageSelected(position: Int) {
+                // ここでいうcurrentItemは...
                 if (currentItem != null) {
-                    (currentItem as MenuItem).isChecked = false
+                    (currentItem as MenuItem).isChecked = false // ここでMenuItemが何をしているのかを確認したいところ
                 } else {
-                    navigation.menu.getItem(0).isChecked = false
+                    bottomNavigationView.menu.getItem(0).isChecked = false //
                 }
-                navigation.menu.getItem(position).isChecked = true
-                currentItem = navigation.menu.getItem(position)
+                bottomNavigationView.menu.getItem(position).isChecked = true
+                currentItem = bottomNavigationView.menu.getItem(position) // ここでcurrentItemをput
             }
         })
     }
