@@ -4,8 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
+import android.widget.*
 import androidx.fragment.app.Fragment
 import com.facebook.FacebookSdk.getApplicationContext
 
@@ -31,7 +30,6 @@ class BlankFragment1 : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
-        val db = SampleDBOpenHelper(getApplicationContext())
     }
 
     override fun onCreateView(
@@ -44,8 +42,24 @@ class BlankFragment1 : Fragment() {
             container,
             false
         )
+        val db = SampleDBOpenHelper(getApplicationContext())
         val insertButton: Button = view.findViewById(R.id.insert)
+        val insertText: EditText = view.findViewById(R.id.insertText)
+        insertButton.setOnClickListener {
+            val text : String = insertText.text.toString()
+            insertText(getApplicationContext(),text)
+        }
+        val search: Button = view.findViewById(R.id.search)
+        val showText: ListView = view.findViewById(R.id.showText)
+        search.setOnClickListener {
+            // ここに取得したやつをすべて表示したい
+            val adapter = ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, selectData(getApplicationContext()))
+            showText.adapter = adapter
 
+        }
+
+
+        return view
     }
 
     companion object {

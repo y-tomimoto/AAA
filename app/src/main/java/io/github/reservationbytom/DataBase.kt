@@ -4,6 +4,10 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.os.Build
+import androidx.annotation.RequiresApi
+import java.time.LocalDate
+import java.time.LocalDateTime
 
 private const val DB_NAME = "test"
 private const val DB_VERSION = 1
@@ -14,8 +18,7 @@ class SampleDBOpenHelper(context:Context):
         // ここでtableを作成する
         db?.execSQL("CREATE TABLE test_table ( " +
                 " _id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                " _text TEXT NOT NULL," +
-                " _created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)")
+                " _text TEXT NOT NULL)")
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
@@ -43,12 +46,30 @@ fun queryTexts(context:Context):List<String>{
     return texts
 }
 
-fun insertText(context:Context,text:String){
+
+fun insertText(context:Context, text:String){
     val database = SampleDBOpenHelper(context).writableDatabase
     database.use{ db->
         val record = ContentValues().apply {
-            put("texts",text)
+            put("_text",text)
         }
         db.insert("test_table",null,record)
     }
+}
+
+fun selectData(context:Context): MutableList<String> {
+    val database = SampleDBOpenHelper(context).readableDatabase
+    val sql = "SELECT * FROM test_table;"
+    val cursor = database.rawQuery(sql, null)
+
+    val texts = mutableListOf<String>()
+    cursor.use {
+        // カーソルで処理
+        while(cursor.moveToNext()){
+            val text = cursor.getString(cursor.getColumnIndex("_text"))
+            texts.add(text)
+        }
+    }
+    database.close()
+    return texts
 }
