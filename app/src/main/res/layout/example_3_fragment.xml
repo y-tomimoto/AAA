@@ -18,32 +18,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="14dp">
-
-                <TextView
-                    android:id="@+id/test1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="#D9000000"
-                    android:textSize="24sp"
-                    tools:text="2019" />
-
-                <TextView
-                    android:id="@+id/test2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-light"
-                    android:textColor="#D9000000"
-                    android:textSize="38sp"
-                    tools:text="April" />
-
-            </LinearLayout>
-
             <com.kizitonwose.calendarview.CalendarView
                 android:id="@+id/exThreeCalendar"
                 android:layout_width="match_parent"

@@ -55,10 +55,7 @@ class BlankFragment1 : Fragment() {
             // ここに取得したやつをすべて表示したい
             val adapter = ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, selectData(getApplicationContext()))
             showText.adapter = adapter
-
         }
-
-
         return view
     }
 

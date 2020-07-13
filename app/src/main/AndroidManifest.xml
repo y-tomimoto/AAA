@@ -11,10 +11,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".Test"></activity>
+        <activity android:name=".Reservation"></activity>
+        <activity android:name=".Test" />
         <activity
             android:name=".Bottom_Navigation"
-            android:label="@string/title_activity_bottom__navigation"></activity>
+            android:label="@string/title_activity_bottom__navigation" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
@@ -45,8 +46,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"></activity>
-        <activity android:name=".LoginActivity"></activity>
+        <activity android:name=".MainActivity" />
+        <activity android:name=".LoginActivity" />
     </application>
 
 </manifest>

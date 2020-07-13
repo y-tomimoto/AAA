@@ -319,7 +319,6 @@ class Example3Fragment : BaseFragment(),
 //            } else {
 //                titleFormatter.format(it.yearMonth)
 //            }
-
             // Select the first day of the month when
             // we scroll to a new month.
             selectDate(it.yearMonth.atDay(1)) // 最初を1に設定している
@@ -344,7 +343,7 @@ class Example3Fragment : BaseFragment(),
         }
 
         exThreeAddButton.setOnClickListener {
-            inputDialog.show()
+            inputDialog.show() // おそらくこのときに実体化される
         }
     }
 
