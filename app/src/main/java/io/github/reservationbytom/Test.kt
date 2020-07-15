@@ -55,7 +55,7 @@ class Test : AppCompatActivity() {
 
     private fun setupViewPager(){
         // 実際にはここから呼び出している
-        val fragment =  mutableListOf( Example3Fragment(), BlankFragment1(),  BlankFragment1())
+        val fragment =  mutableListOf( Example3Fragment(), BlankFragment1(),  ReservationMain())
         val adapter = ViewPagerAdapter(fragment,supportFragmentManager)
         viewPager.adapter = adapter
         viewPager.offscreenPageLimit = 2 // データの保持に関して
