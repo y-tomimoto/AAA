@@ -1,12 +1,17 @@
 package io.github.reservationbytom
 
+import android.app.DatePickerDialog
+import android.icu.util.Calendar
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Button
 import android.widget.Spinner
 import androidx.fragment.app.Fragment
+import com.google.android.material.datepicker.MaterialDatePicker
+import javax.xml.datatype.DatatypeConstants.MONTHS
 
 
 class ReservationMain : Fragment() {
@@ -30,6 +35,21 @@ class ReservationMain : Fragment() {
         val items = arrayOf("1", "2", "three")
         val adapter = ctx?.let { ArrayAdapter(it,android.R.layout.simple_spinner_dropdown_item,items) }
         dropdown.adapter = adapter
+
+        val dp_fragmet = MaterialDatePicker.Builder.datePicker().build().apply {
+            addOnPositiveButtonClickListener { time: Long ->
+
+            }
+        }
+        // ここでpickerフラ面とを生成して、
+        val showdp = view.findViewById<Button>(R.id.showdp)
+        showdp.setOnClickListener {
+            dp_fragmet.show(getChildFragmentManager(), "Tag")
+        }
+
+
+
+
         return view
     }
 }
