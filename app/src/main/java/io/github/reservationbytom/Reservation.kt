@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.EditText
 import android.widget.Spinner
 import androidx.fragment.app.Fragment
 import com.google.android.material.datepicker.MaterialDatePicker
@@ -42,13 +43,11 @@ class ReservationMain : Fragment() {
             }
         }
         // ここでpickerフラ面とを生成して、
-        val showdp = view.findViewById<Button>(R.id.showdp)
-        showdp.setOnClickListener {
-            dp_fragmet.show(getChildFragmentManager(), "Tag")
-        }
-
-
-
+        val showdp = view.findViewById<EditText>(R.id.showdp)
+        showdp.setFocusable(false) // これでtapしても、反応しないように設定している。この値は、Calendarwidgetからのみ変更できるようにする、
+//        showdp.setOnClickListener {
+//            dp_fragmet.show(childFragmentManager, "Tag")
+//        }
 
         return view
     }
