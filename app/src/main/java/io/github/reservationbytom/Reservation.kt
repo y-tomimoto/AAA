@@ -6,10 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Spinner
+import android.widget.*
 import androidx.fragment.app.Fragment
 import com.google.android.material.datepicker.MaterialDatePicker
 import javax.xml.datatype.DatatypeConstants.MONTHS
@@ -43,11 +40,22 @@ class ReservationMain : Fragment() {
             }
         }
         // ここでpickerフラ面とを生成して、
-        val showdp = view.findViewById<EditText>(R.id.showdp)
-        showdp.setFocusable(false) // これでtapしても、反応しないように設定している。この値は、Calendarwidgetからのみ変更できるようにする、
+        val showdp = view.findViewById<TextView>(R.id.showdp)
+        // showdp.setFocusable(false) // これでtapしても、反応しないように設定している。この値は、Calendarwidgetからのみ変更できるようにする、
 //        showdp.setOnClickListener {
-//            dp_fragmet.show(childFragmentManager, "Tag")
-//        }
+////            dp_fragmet.show(childFragmentManager, "Tag")
+////        }
+        showdp.setOnFocusChangeListener { v, hasFocus ->
+                if (hasFocus) {
+                    dp_fragmet.show(childFragmentManager, "Tag")
+                }
+            }
+        showdp.setOnClickListener {
+            dp_fragmet.show(childFragmentManager, "Tag")
+        }
+
+
+        //  dp_fragmet.show(childFragmentManager, "Tag")
 
         return view
     }
