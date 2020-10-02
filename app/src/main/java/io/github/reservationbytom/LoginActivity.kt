@@ -3,7 +3,6 @@ package io.github.reservationbytom
 import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.GradientDrawable
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.util.TypedValue
@@ -16,22 +15,21 @@ import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.home_activity.*
-import org.threeten.bp.DayOfWeek
-import org.threeten.bp.temporal.WeekFields
-import java.util.*
 import androidx.recyclerview.widget.RecyclerView
-import com.facebook.CallbackManager
-import com.facebook.FacebookCallback
-import com.facebook.FacebookException
+import com.facebook.*
 import com.facebook.login.LoginResult
 import com.facebook.login.widget.LoginButton
 import com.jakewharton.threetenabp.AndroidThreeTen
+import kotlinx.android.extensions.LayoutContainer
+import org.json.JSONObject
+import org.threeten.bp.DayOfWeek
+import org.threeten.bp.temporal.WeekFields
+import java.util.*
 
 
 // 通常で実行されて、Viewクラスを拡張しているとか？？
@@ -208,8 +206,34 @@ class LoginActivity : AppCompatActivity() {
         Log.d("tag","dadadada")
         loginButton.setReadPermissions("email");
         loginButton.registerCallback(callbackManager, object: FacebookCallback<LoginResult> {
+            val callback = object :  GraphRequest.GraphJSONObjectCallback{
+                override fun onCompleted(`object`: JSONObject?, response: GraphResponse?) {
+                    println("==============")
+                    if (`object` != null) {
+                        println("==============")
+                        print(`object`)
+                        print(`object`.getString("email"))
+                        println("==============")
+                    }
+                    println("==============")
+                }
 
+            }
             override fun onSuccess(result: LoginResult?) {
+                val accessToken = result?.accessToken
+                val request = GraphRequest.newMeRequest(accessToken, callback)
+                val parameters = Bundle()
+                // ここでrequestに付与したparameterがレスポンスとして帰ってくる。
+                parameters.putString("fields", "id, name, email, gender")
+                request.parameters = parameters
+                request.executeAsync()
+                // ここでlogin処理を噛ましているみたい。
+                // おそらく、このresult内にlogin情報が入っていそう。
+                println("==============")
+                println("==============")
+                println(result)
+                println("==============")
+                println("==============")
                 val intent = Intent(applicationContext,MainActivity::class.java).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
                 startActivity(intent)
 //                val intent = Intent(applicationContext,Home::class.java).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
