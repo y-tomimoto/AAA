@@ -1,9 +1,12 @@
 package io.github.reservationbytom
 
+import android.Manifest
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
+import android.os.Looper
 import android.util.Log
 import android.util.TypedValue
 import android.view.LayoutInflater
@@ -17,6 +20,7 @@ import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -24,6 +28,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.facebook.*
 import com.facebook.login.LoginResult
 import com.facebook.login.widget.LoginButton
+import com.google.android.gms.location.*
 import com.jakewharton.threetenabp.AndroidThreeTen
 import kotlinx.android.extensions.LayoutContainer
 import org.json.JSONObject
@@ -185,12 +190,70 @@ class LoginActivity : AppCompatActivity() {
     // ここでインスタンスを作成している。
     // これが、1つのViewに割り当てられる
 
+    // 位置情報を取得できるクラス
+    private lateinit var fusedLocationClient : FusedLocationProviderClient
+
+    private val REQUEST_CODE = 1000
+
     private val callbackManager: CallbackManager = CallbackManager.Factory.create();
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.login)
         AndroidThreeTen.init(this);
+
+        // 位置情報を更新
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            val permissions = arrayOf(
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_BACKGROUND_LOCATION
+            )
+            ActivityCompat.requestPermissions(this, permissions, REQUEST_CODE);
+            return
+        }
+
+        fusedLocationClient = FusedLocationProviderClient(this)
+
+        // どのような取得方法を要求
+        val locationRequest = LocationRequest().apply {
+            // 精度重視(電力大)と省電力重視(精度低)を両立するため2種類の更新間隔を指定
+            // 今回は公式のサンプル通りにする。
+            interval = 10000                                   // 最遅の更新間隔(但し正確ではない。)
+            fastestInterval = 5000                             // 最短の更新間隔
+            priority = LocationRequest.PRIORITY_HIGH_ACCURACY  // 精度重視
+        }
+
+        // コールバック
+        val locationCallback = object : LocationCallback() {
+            override fun onLocationResult(locationResult: LocationResult?) {
+                // 更新直後の位置が格納されているはず
+                val location = locationResult?.lastLocation ?: return
+                println("========called=======")
+                println(location)
+                println(location.latitude)
+                println(location.longitude)
+            }
+        }
+
+        println("========start=======")
+        fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper())
+        println("========end=======")
+
 
         val loginButton = findViewById<LoginButton>(R.id.login_button);
         val testButton = findViewById<Button>(R.id.testButton);
@@ -258,6 +321,7 @@ class LoginActivity : AppCompatActivity() {
         callbackManager.onActivityResult(requestCode,
             resultCode, data)
     }
+
 }
 
 //class HomeActivity : AppCompatActivity() {
