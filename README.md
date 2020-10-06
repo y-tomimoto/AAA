@@ -1,3 +1,3 @@
-# TAKITATE
+# :construction: TAKITATE
 炊きたてのご飯にたどり着きやすくするためだけのアプリ
 yet under construction ...
