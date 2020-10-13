@@ -207,7 +207,7 @@ class LoginActivity : AppCompatActivity() {
     private val callbackManager: CallbackManager = CallbackManager.Factory.create();
 
     interface IGetRestaurants{
-        @GET("maps/api/place/findplacefromtext/json?input=Museum%20of%20Contemporary%20Art%20Australia&inputtype=textquery&fields=photos,formatted_address,name,rating,opening_hours,geometry&key=XXXX")
+        @GET("maps/api/place/findplacefromtext/json?input=Museum%20of%20Contemporary%20Art%20Australia&inputtype=textquery&fields=photos,formatted_address,name,rating,opening_hours,geometry&key=${BuildConfig.GOOGLE_MAP_API_KEY}")
         fun getRestaurants(): Call<ResponseBody>
     }
 
