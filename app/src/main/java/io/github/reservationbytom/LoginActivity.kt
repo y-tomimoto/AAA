@@ -29,11 +29,20 @@ import com.facebook.*
 import com.facebook.login.LoginResult
 import com.facebook.login.widget.LoginButton
 import com.google.android.gms.location.*
+import com.google.gson.GsonBuilder
 import com.jakewharton.threetenabp.AndroidThreeTen
 import kotlinx.android.extensions.LayoutContainer
+import okhttp3.ResponseBody
 import org.json.JSONObject
 import org.threeten.bp.DayOfWeek
 import org.threeten.bp.temporal.WeekFields
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.GET
+import java.io.IOException
 import java.util.*
 
 
@@ -197,10 +206,43 @@ class LoginActivity : AppCompatActivity() {
 
     private val callbackManager: CallbackManager = CallbackManager.Factory.create();
 
+    interface IGetRestaurants{
+        @GET("maps/api/place/findplacefromtext/json?input=Museum%20of%20Contemporary%20Art%20Australia&inputtype=textquery&fields=photos,formatted_address,name,rating,opening_hours,geometry&key=AIzaSyCZBwJSll7JDlToNYO5uDuL3AREesXuxQo")
+        fun getRestaurants(): Call<ResponseBody>
+    }
+
+    private val retrofit: Retrofit = Retrofit.Builder()
+        .addConverterFactory(GsonConverterFactory.create(GsonBuilder().serializeNulls().create()))
+        .baseUrl("https://maps.googleapis.com/")
+        .build()
+
+    private val service: IGetRestaurants = retrofit.create(IGetRestaurants::class.java)
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.login)
         AndroidThreeTen.init(this);
+
+        val call = service.getRestaurants()
+
+        call.enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>?, response: Response<ResponseBody>?) {
+                try {
+                    if (response != null) {
+                        println(response.code())
+                    }
+                    if (response != null) {
+                        println(response.body()?.string())
+                    }
+                } catch (e: IOException) {
+                    Log.d("onResponse", "IOException")
+                }
+            }
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+        })
 
         // 位置情報を更新
         if (ActivityCompat.checkSelfPermission(
@@ -247,6 +289,7 @@ class LoginActivity : AppCompatActivity() {
                 println(location)
                 println(location.latitude)
                 println(location.longitude)
+
             }
         }
 
@@ -323,6 +366,11 @@ class LoginActivity : AppCompatActivity() {
     }
 
 }
+
+data class TestObject (
+    val Item:String,
+    val title: String
+)
 
 //class HomeActivity : AppCompatActivity() {
 //        private val examplesAdapter = HomeOptionsAdapter {
