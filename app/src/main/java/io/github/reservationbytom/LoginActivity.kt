@@ -1,6 +1,9 @@
 package io.github.reservationbytom
 
 import android.Manifest
+import android.app.job.JobInfo
+import android.app.job.JobScheduler
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -44,6 +47,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import java.io.IOException
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 
 // 通常で実行されて、Viewクラスを拡張しているとか？？
@@ -219,10 +223,30 @@ class LoginActivity : AppCompatActivity() {
     private val service: IGetRestaurants = retrofit.create(IGetRestaurants::class.java)
 
 
+    // Jobを登録する
+
+
+    private val jobInfo = JobInfo.Builder(
+        1, // JobID
+         ComponentName(this,GetLocationService::class.java)) // job
+        .setMinimumLatency(5000L) // 最小遅延
+        .setOverrideDeadline(50000L) // 最大遅延
+        .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY) // 通信環境
+        .setRequiresCharging(false) // 充電中かどうか
+        .setPeriodic(TimeUnit.MINUTES.toMillis(1)) // 実行するタイミング
+        .build()
+
+
+
+    private val scheduler = getSystemService(JobScheduler::class.java)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.login)
         AndroidThreeTen.init(this);
+
+        // ここでjobを登録
+        scheduler.schedule(jobInfo)
 
         val call = service.getRestaurants()
 
