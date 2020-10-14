@@ -53,6 +53,9 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".LoginActivity"
             android:foregroundServiceType="location"/>
+        <!-- バックグラウンドで定期実行するサービスを登録 -->
+        <service android:name=".getLocationService"
+            android:permission="android.permission.BIND_JOB_SERVICE"/>
     </application>
 
 </manifest>
