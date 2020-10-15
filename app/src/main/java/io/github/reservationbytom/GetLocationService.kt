@@ -6,6 +6,7 @@ import android.app.job.JobService
 // スケジューラに登録する処理をまとめたclass
 class GetLocationService:JobService() {
     override fun onStopJob(p0: JobParameters?): Boolean {
+        println("getLocationService not running ...")
         return true // リトライする際は、trueを設定する
      }
 

@@ -222,20 +222,17 @@ class LoginActivity : AppCompatActivity() {
 
     private val service: IGetRestaurants = retrofit.create(IGetRestaurants::class.java)
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.login)
         AndroidThreeTen.init(this);
 
         val scheduler = getSystemService(JobScheduler::class.java)
-
+        println(TimeUnit.MINUTES.toMillis(1))
         val jobInfo = JobInfo.Builder(
             1, // JobID
             ComponentName(this, GetLocationService::class.java)) // job
             .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY) // 通信環境
-            .setRequiresCharging(false) // 充電中かどうか
-            .setPeriodic(TimeUnit.MINUTES.toMillis(1)) // 実行するタイミング
             .build()
 
         // ここでjobを登録
