@@ -47,6 +47,18 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    // Unit Test で Android メソッドを無視する ex) Log.dとか
+    testOptions{
+        unitTests.returnDefaultValues = true
+        unitTests.all {
+            // All the usual Gradle options.
+            testLogging {
+                events "passed", "skipped", "failed", "standardOut", "standardError"
+                outputs.upToDateWhen {false}
+                showStandardStreams = true
+            }
+        }
+    }
 }
 
 dependencies {

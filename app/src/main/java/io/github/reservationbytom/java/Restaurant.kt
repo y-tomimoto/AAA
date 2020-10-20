@@ -1,4 +1,4 @@
-package io.github.reservationbytom.data
+package io.github.reservationbytom.java
 
 import com.google.gson.annotations.SerializedName
 
@@ -39,7 +39,7 @@ data class Code(
     val areacode: String,
     val areaname: String,
     val prefcode: String,
-    val prefname: String
+    val prefname: String,
     val areacode_s: String,
     val areaname_s: String,
     val category_code_l: ArrayList<String>,
@@ -57,7 +57,7 @@ data class Flag(
 data class GnaviRestaurant(
     val id: Int,
     val update_date: String,
-    val name: String
+    val name: String,
     val name_kana: String,
     val latitude: Int,
     val longitude: Int,
@@ -66,13 +66,13 @@ data class GnaviRestaurant(
     val url_mobile: String,
     val coupon_url: CouponUrl,
     val image_url: ImageUrl,
-    val address: String
+    val address: String,
     val tel: String,
     val tel_sub: String,
     val fax: String,
     val opentime: String,
     val holiday: String,
-    val access: Access
+    val access: Access,
     val line: String,
     val station: String,
     val station_exit: String,
