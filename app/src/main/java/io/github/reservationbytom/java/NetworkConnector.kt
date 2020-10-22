@@ -2,8 +2,12 @@ package io.github.reservationbytom.java
 
 import android.util.Log
 import com.google.gson.GsonBuilder
+import com.google.gson.annotations.SerializedName
 import io.github.reservationbytom.BuildConfig
 import io.github.reservationbytom.LoginActivity
+import io.github.reservationbytom.model.Attributes
+import io.github.reservationbytom.model.GNaviResponse
+import io.github.reservationbytom.model.Rest
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -14,19 +18,6 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 import java.io.IOException
 
-
-object Model {
-    data class Result(val rest: Rest)
-    data class Rest(val restaurants: ArrayList<GnaviRestaurant>)
-    data class GnaviRestaurant(
-        val latitude: Int,
-        val longitude: Int,
-        val id: Int,
-        val update_date: String
-    )
-}
-
-
 interface GnaviAPIService {
     @GET("RestSearchAPI/v3/")
     fun getRestaurants(
@@ -34,12 +25,11 @@ interface GnaviAPIService {
         @Query("range") range: Int,
         @Query("longitude") longitude: Double,
         @Query("latitude") latitude: Double
-    // ): Call<Model.GnaviRestaurant>
-    ): Call<ResponseBody>
+    ): Call<GNaviResponse>
+    // ): Call<Model.GnaviRes>
 }
 
 class NetworkConnector {
-
 
     fun create(): GnaviAPIService {
 
@@ -62,7 +52,7 @@ class NetworkConnector {
 
         val bbb: GnaviAPIService = create()
         val ddd = bbb.getRestaurants(
-            "XXXX",
+            BuildConfig.GNAVI_API_KEY,
             1,
             139.6353565,
             35.6994197
