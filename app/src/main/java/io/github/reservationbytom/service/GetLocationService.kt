@@ -1,4 +1,4 @@
-package io.github.reservationbytom
+package io.github.reservationbytom.service
 
 import android.app.job.JobParameters
 import android.app.job.JobService

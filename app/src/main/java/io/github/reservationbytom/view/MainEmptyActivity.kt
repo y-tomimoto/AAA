@@ -1,4 +1,4 @@
-package io.github.reservationbytom
+package io.github.reservationbytom.view
 
 import android.content.Intent
 import android.os.Bundle

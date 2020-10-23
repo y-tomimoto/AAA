@@ -38,22 +38,22 @@
         </activity>
         <!-- Activity for Splash -->
         <activity
-            android:name=".MainEmptyActivity"
+            android:name=".view.MainEmptyActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
+        <activity android:name=".view.MainActivity" />
         <activity android:name=".Test" />
         <!-- Activity for Login -->
         <activity
-            android:name=".LoginActivity"
+            android:name=".view.LoginActivity"
             android:foregroundServiceType="location" />
         <!-- バックグラウンドで定期実行するサービスを登録 -->
         <service
-            android:name=".GetLocationService"
+            android:name=".service.GetLocationService"
             android:permission="android.permission.BIND_JOB_SERVICE" />
     </application>
 
