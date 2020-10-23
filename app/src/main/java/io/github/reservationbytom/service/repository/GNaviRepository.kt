@@ -3,6 +3,7 @@ package io.github.reservationbytom.service.repository
 import com.google.gson.GsonBuilder
 import io.github.reservationbytom.service.model.GNaviResponse
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -25,6 +26,13 @@ class GNaviRepository {
         range: Int, // Range: 1,
         longitude: Double, // 緯度: 139.6353565,
         latitude: Double // 軽度: 35.6994197
-    ): Call<GNaviResponse> = gNaviService.getRestaurants(keyid, range, longitude, latitude)
+    ): Response<GNaviResponse> = gNaviService.getRestaurants(keyid, range, longitude, latitude)
+
+    companion object Factory { // TODO: 明示的にFactoryを呼び出すことがなさそうでされば、`companion object` とする
+        val instance: GNaviRepository
+            @Synchronized get() { // @Synchronized を用いてスレッドセーフにインスタンスを作成する。singleton インスタンスを生成するときのtips
+                return GNaviRepository()
+            }
+    }
 
 }
