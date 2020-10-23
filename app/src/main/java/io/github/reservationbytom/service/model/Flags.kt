@@ -1,4 +1,4 @@
-package io.github.reservationbytom.model
+package io.github.reservationbytom.service.model
 
 data class Flags(
     val mobile_coupon: Int,

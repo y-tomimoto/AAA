@@ -1,7 +1,5 @@
 package io.github.reservationbytom
 
-import android.util.Log
-import io.github.reservationbytom.java.NetworkConnector
 import org.junit.Test
 
 import org.junit.Assert.*

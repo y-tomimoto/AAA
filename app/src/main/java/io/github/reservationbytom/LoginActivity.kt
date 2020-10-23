@@ -141,64 +141,6 @@ abstract class BaseFragment : Fragment() {
     abstract val titleRes: Int?
 }
 
-
-// @StringRes : https://maku77.github.io/android/fw/res-annotation.html
-data class ExampleItem(@StringRes val titleRes: Int, @StringRes val subtitleRes: Int, val createView: () -> BaseFragment)
-
-// これがインスタンス。これを渡す。
-class HomeOptionsAdapter(val onClick: (ExampleItem) -> Unit) :
-        RecyclerView.Adapter<HomeOptionsAdapter.HomeOptionsViewHolder>() { // これはクラス内のクラスを継承している。そして、ここでは、ジェネリクスとして、viewHolderを渡している。
-
-    // これはadapterを継承している。そして、HomeOptionsViewHolderは、実際に割り当てるviewをもっている
-    // これはただのデータクラス。コンストラクタに関数を引き渡している。これはBaaeFragmentをreturnする関数がすべて
-
-    // これはlist
-    val examples = listOf(
-        ExampleItem(
-            R.string.example_3_title,
-            R.string.example_3_subtitle
-        ) { Example3Fragment() }
-    )
-
-    // ここで、それぞれの値が割り振られるViewをholderとして生成している
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeOptionsViewHolder { // 戻り値の型がHomeOptionsViewHolderということ、継承しているのは下記
-        return HomeOptionsViewHolder( //　ここでviewを渡してinstance化している
-                LayoutInflater.from(parent.context).inflate(R.layout.home_options_item_view, parent, false)
-        )
-    }
-
-    override fun onBindViewHolder(viewHolder: HomeOptionsViewHolder, position: Int) {
-        viewHolder.bind(examples[position])
-    }
-
-    override fun getItemCount(): Int = examples.size
-
-    // ここでクラスを生成している。これは、実際にviewが割り振られる列のこと
-    inner class HomeOptionsViewHolder(override val containerView: View) :
-            RecyclerView.ViewHolder(containerView), LayoutContainer { // 継承する際は、Viewholderとしている。
-        // 実態化したら、データから、配列番目のアクションを起動している
-        init {
-            itemView.setOnClickListener {
-                onClick(examples[adapterPosition])// ここにクリックされた時に挙動を書いてある。クリックしたらこの関数を実行するみたいだな、
-            }
-        }
-        // ここで、実際のviewに対して、受け取った値、いわゆるデータをbindする
-        fun bind(item: ExampleItem) { // つまり今回、ViewHolderを生成するクラスで、view自体を外部からもらってViewに割り当てるクラスで、エラーがおきている、
-            val context = itemView.context
-            val itemOptionTitle = containerView.findViewById<TextView>(R.id.itemOptionTitle)
-            val itemOptionSubtitle = containerView.findViewById<TextView>(R.id.itemOptionSubtitle)
-
-            //  このitemは、ExampleItemのことを表している
-            itemOptionTitle.text = if (item.titleRes != 0) context.getString(item.titleRes) else null
-            itemOptionTitle.isVisible = itemOptionTitle.text.isNotBlank()
-
-            itemOptionSubtitle.text = if (item.subtitleRes != 0) context.getString(item.subtitleRes) else null
-            itemOptionSubtitle.isVisible = itemOptionSubtitle.text.isNotBlank()
-        }
-    }
-
-}
-
 class LoginActivity : AppCompatActivity() {
     // ここでインスタンスを作成している。
     // これが、1つのViewに割り当てられる
