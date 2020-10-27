@@ -15,7 +15,7 @@ class RestViewModel(
 ) : AndroidViewModel(myApplication) {
     private val repository = GNaviRepository.instance
     private val restLiveData: MutableLiveData<Rest> = MutableLiveData()
-    private var rest = ObservableField<Rest>() // 監視対象に指定
+    private var rest = ObservableField<Rest>() // LiveDataとは異なり、更新時に値が異なっている場合にも監視関数が発火する : https://blog.amay0777.net/blog/2017/12/05/58e589780ccea6fd5470/
 
     init {
         loadRest()
@@ -46,7 +46,7 @@ class RestViewModel(
     class Factory(
         private val application: Application, private val restID: Int
     ) : ViewModelProvider.NewInstanceFactory() {
-        @Suppress("UNCHECKED_CAST")
+        @Suppress("UNCHECKED_CAST") // 使用しないParameterでwarnを出さないように指定: https://rmakiyama.hatenablog.com/entry/2018/01/26/140944
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             return RestViewModel(application, restID) as T
         }

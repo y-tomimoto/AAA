@@ -12,9 +12,9 @@ import kotlinx.coroutines.launch
 import retrofit2.Response
 
 class RestListViewModel(application: Application) : AndroidViewModel(application) {
-    private val repository = GNaviRepository.instance
+    private val repository = GNaviRepository.instance // TODO: Factoryの省略ルールについて
 
-    // LiveDataについて: https://qiita.com/amay077/items/6e1c94305420a41ff7ed
+    // LiveDataについて: https://qiita.com/takahirom/items/3f012d46e15a1666fa33
     // TODO: ObservableField と比較検討
     private var restListLiveData: MutableLiveData<GNaviResponse> = MutableLiveData()
 
@@ -33,7 +33,7 @@ class RestListViewModel(application: Application) : AndroidViewModel(application
                     33.3 // TODO: 外部から取得
                 )
                 if (response.isSuccessful) {
-                    restListLiveData.postValue(response.body()) // Observerが変更を検知する
+                    restListLiveData.postValue(response.body()) // TODO:setValueとの比較
                     Log.d("LIVE_DATA", "Updated.")
                 }
             } catch (e: Exception) {
