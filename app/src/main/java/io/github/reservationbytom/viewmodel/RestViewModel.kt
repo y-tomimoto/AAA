@@ -10,8 +10,8 @@ import io.github.reservationbytom.service.repository.GNaviRepository
 import kotlinx.coroutines.launch
 
 class RestViewModel(
-    private val myApplication: Application
-    // private val restID: String // コンストラクタとしてIDを受け取るかどうか検討
+    private val myApplication: Application,
+    private val restID: Int
 ) : AndroidViewModel(myApplication) {
     private val repository = GNaviRepository.instance
     private val restLiveData: MutableLiveData<Rest> = MutableLiveData()
@@ -25,30 +25,30 @@ class RestViewModel(
         //viewModelScope->ViewModel.onCleared() のタイミングでキャンセルされる CoroutineScope
         viewModelScope.launch {
             try {
-                val restaurants = repository.getRestaurants(
+                val rest = repository.getRest(
                     BuildConfig.GNAVI_API_KEY,
-                    1,
-                    33.3, // TODO: 外部から取得
-                    33.3 // TODO: 外部から取得
+                    restID
                 )
-                if (restaurants.isSuccessful) {
-                    restLiveData.postValue(restaurants.body()?.rest) // Observerが動作する
+                if (rest.isSuccessful) {
+                    restLiveData.postValue(rest.body()) // Observerが動作する
                 }
             } catch (e: Exception) {
-                Log.e("loadProject:Failed", e.stackTrace.toString())
+                Log.e("loadRest:Failed", e.stackTrace.toString())
             }
         }
     }
 
-    fun setRest(restaurants: List<Rest>) {
-        this.rest.set(restaurants)
+    fun setRest(rest: Rest) {
+        this.rest.set(rest)
     }
 
     //IDの(DI)依存性注入ファクトリ
-    class Factory(private val application: Application) : ViewModelProvider.NewInstanceFactory() {
+    class Factory(
+        private val application: Application, private val restID: Int
+    ) : ViewModelProvider.NewInstanceFactory() {
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return RestViewModel(application) as T
+            return RestViewModel(application, restID) as T
         }
     }
 

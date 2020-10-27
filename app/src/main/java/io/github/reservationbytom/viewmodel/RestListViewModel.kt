@@ -26,7 +26,7 @@ class RestListViewModel(application: Application) : AndroidViewModel(application
         // Coroutine that will be canceled when the ViewModel is cleared.
         viewModelScope.launch {
             try {
-                val response: Response<GNaviResponse> = repository.getRestaurants(
+                val response: Response<GNaviResponse> = repository.getRests(
                     BuildConfig.GNAVI_API_KEY,
                     1,
                     33.3, // TODO: 外部から取得
