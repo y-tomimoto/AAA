@@ -1,4 +1,4 @@
-package io.github.reservationbytom.view
+package io.github.reservationbytom.view.ui
 
 import android.Manifest
 import android.app.job.JobInfo

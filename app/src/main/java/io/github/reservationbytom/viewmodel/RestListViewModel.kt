@@ -11,17 +11,18 @@ import io.github.reservationbytom.service.repository.GNaviRepository
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
-class RestaurantsViewModel(application: Application) : AndroidViewModel(application) {
+class RestListViewModel(application: Application) : AndroidViewModel(application) {
     private val repository = GNaviRepository.instance
 
-    // postValue で LiveData を受け取る
-    private var projectListLiveData: MutableLiveData<GNaviResponse> = MutableLiveData()
+    // LiveDataについて: https://qiita.com/amay077/items/6e1c94305420a41ff7ed
+    // TODO: ObservableField と比較検討
+    private var restListLiveData: MutableLiveData<GNaviResponse> = MutableLiveData()
 
     init {
-        loadRestaurants()
+        loadRests()
     }
 
-    private fun loadRestaurants() {
+    private fun loadRests() {
         // Coroutine that will be canceled when the ViewModel is cleared.
         viewModelScope.launch {
             try {
@@ -32,7 +33,7 @@ class RestaurantsViewModel(application: Application) : AndroidViewModel(applicat
                     33.3 // TODO: 外部から取得
                 )
                 if (response.isSuccessful) {
-                    projectListLiveData.postValue(response.body())
+                    restListLiveData.postValue(response.body()) // Observerが変更を検知する
                     Log.d("LIVE_DATA", "Updated.")
                 }
             } catch (e: Exception) {

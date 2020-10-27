@@ -1,4 +1,4 @@
-package io.github.reservationbytom.view
+package io.github.reservationbytom.view.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,6 +10,9 @@ import android.view.View
 import android.view.ViewGroup
 import io.github.reservationbytom.R
 import io.github.reservationbytom.view.dummy.DummyContent
+
+
+const val TAG_OF_REST_LIST_FRAGMENT = "RestListFragment"
 
 /**
  * A fragment representing a list of Items.
@@ -39,7 +42,10 @@ class RestListFragment : Fragment() {
                     columnCount <= 1 -> LinearLayoutManager(context)
                     else -> GridLayoutManager(context, columnCount)
                 }
-                adapter = MyRestListRecyclerViewAdapter(DummyContent.ITEMS)
+                adapter =
+                    MyRestListRecyclerViewAdapter(
+                        DummyContent.ITEMS
+                    )
             }
         }
         return view

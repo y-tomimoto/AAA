@@ -9,12 +9,13 @@ import io.github.reservationbytom.service.model.Rest
 import io.github.reservationbytom.service.repository.GNaviRepository
 import kotlinx.coroutines.launch
 
-class RestaurantViewModel(
+class RestViewModel(
     private val myApplication: Application
+    // private val restID: String // コンストラクタとしてIDを受け取るかどうか検討
 ) : AndroidViewModel(myApplication) {
     private val repository = GNaviRepository.instance
-    val restaurantLiveData: MutableLiveData<List<Rest>> = MutableLiveData()
-    var restaurants = ObservableField<List<Rest>>() // 監視対象に指定
+    private val restLiveData: MutableLiveData<Rest> = MutableLiveData()
+    private var rest = ObservableField<Rest>() // 監視対象に指定
 
     init {
         loadRest()
@@ -31,7 +32,7 @@ class RestaurantViewModel(
                     33.3 // TODO: 外部から取得
                 )
                 if (restaurants.isSuccessful) {
-                    restaurantLiveData.postValue(restaurants.body()?.rest)
+                    restLiveData.postValue(restaurants.body()?.rest) // Observerが動作する
                 }
             } catch (e: Exception) {
                 Log.e("loadProject:Failed", e.stackTrace.toString())
@@ -40,14 +41,14 @@ class RestaurantViewModel(
     }
 
     fun setRest(restaurants: List<Rest>) {
-        this.restaurants.set(restaurants)
+        this.rest.set(restaurants)
     }
 
     //IDの(DI)依存性注入ファクトリ
     class Factory(private val application: Application) : ViewModelProvider.NewInstanceFactory() {
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return RestaurantViewModel(application) as T
+            return RestViewModel(application) as T
         }
     }
 

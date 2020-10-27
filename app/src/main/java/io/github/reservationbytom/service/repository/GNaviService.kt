@@ -14,4 +14,12 @@ interface GNaviService {
         @Query("longitude") longitude: Double,
         @Query("latitude") latitude: Double
     ): Response<GNaviResponse> // Call<GNaviResponse> ?
+
+    @GET("RestSearchAPI/v3/")
+    suspend fun getRestaurant(
+        @Query("keyid") keyid: String,
+        @Query("range") range: Int,
+        @Query("longitude") longitude: Double,
+        @Query("latitude") latitude: Double
+    ): Response<GNaviResponse> // Call<GNaviResponse> ?
 }

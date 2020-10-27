@@ -28,6 +28,7 @@ class GNaviRepository {
         latitude: Double // 軽度: 35.6994197
     ): Response<GNaviResponse> = gNaviService.getRestaurants(keyid, range, longitude, latitude)
 
+    // 他の設計も見てみる
     companion object Factory { // TODO: 明示的にFactoryを呼び出すことがなさそうでされば、`companion object` とする
         val instance: GNaviRepository
             @Synchronized get() { // @Synchronized を用いてスレッドセーフにインスタンスを作成する。singleton インスタンスを生成するときのtips

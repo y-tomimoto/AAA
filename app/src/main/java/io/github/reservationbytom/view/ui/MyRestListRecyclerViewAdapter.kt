@@ -1,4 +1,4 @@
-package io.github.reservationbytom.view
+package io.github.reservationbytom.view.ui
 
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
