@@ -5,8 +5,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import io.github.reservationbytom.BuildConfig
 import io.github.reservationbytom.R
-import io.github.reservationbytom.databinding.FragmentRestaurantDetailsBinding
+import io.github.reservationbytom.databinding.FragmentRestDetailsBinding
+import io.github.reservationbytom.viewmodel.RestViewModel
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -20,53 +25,59 @@ private const val ARG_PARAM2 = "param2"
  */
 class RestFragment : Fragment() {
 
-
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var binding: FragmentRestDetailsBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-        lateinit var binding: FragmentRestaurantDetailsBinding
-
-
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_restaurant, container, false)
+        // TODO: DataBinding-ktx と比較検討
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_rest_details, container, false)
+        return binding.root // Binding先のroot viewを返す。getRoot()でも可
     }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        val restID = arguments?.getInt(KEY_REST_ID)
+
+        val factory = RestViewModel.Factory(
+            requireActivity().application, restID ?: 0
+        )
+
+        val viewModel = ViewModelProvider(this, factory).get(RestViewModel::class.java)
+
+        // apply: https://qiita.com/wakwak/items/7f576b4dbada0995f069
+        // applyの採用はアンチパターン。letを採用する: https://www.slideshare.net/RecruitLifestyle/kotlin-87339759
+        binding.apply {
+            restViewModel = viewModel
+            isLoading = true
+        }
+        observeViewModel(viewModel)
+    }
+
+    private fun observeViewModel(viewModel: RestViewModel) {
+        viewModel.restLiveData.observe(viewLifecycleOwner, Observer { rest -> // restLiveData.postValue(rest) で発火する
+
+            // ここにliveData更新時の処理を記載
+            if (rest != null) {
+                binding.isLoading = false
+                viewModel.setRest(rest)
+            }
+        })
+    }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment RestaurantFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            RestFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+        private const val KEY_REST_ID = "rest_id"
 
-        fun forRest(name: String): Any {
-            return this
+        fun forRest(restID: String): RestFragment {
+            val fragment = RestFragment()
+            val args = Bundle()
+
+            args.putString(KEY_REST_ID, restID)
+            fragment.arguments = args
+
+            return fragment
         }
     }
 }

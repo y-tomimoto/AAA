@@ -1,4 +1,4 @@
-package io.github.reservationbytom.view.ui
+package io.github.reservationbytom.view.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -14,7 +14,7 @@ class RestAdapter (private val projectClickCallback: RestClickCallback?) :
 
     private var restList: List<Rest>? = null
 
-    fun setrestList(restList: List<Rest>) {
+    fun setRestList(restList: List<Rest>) {
 
         if (this.restList == null) {
             this.restList = restList
@@ -59,7 +59,9 @@ class RestAdapter (private val projectClickCallback: RestClickCallback?) :
 
         binding.callback = projectClickCallback
 
-        return RestViewHolder(binding)
+        return RestViewHolder(
+            binding
+        )
     }
 
     override fun onBindViewHolder(holder: RestViewHolder, position: Int) {

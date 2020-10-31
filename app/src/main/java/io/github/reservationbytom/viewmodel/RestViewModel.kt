@@ -14,7 +14,7 @@ class RestViewModel(
     private val restID: Int
 ) : AndroidViewModel(myApplication) {
     private val repository = GNaviRepository.instance
-    private val restLiveData: MutableLiveData<Rest> = MutableLiveData()
+    val restLiveData: MutableLiveData<Rest> = MutableLiveData()
     private var rest = ObservableField<Rest>() // LiveDataとは異なり、更新時に値が異なっている場合にも監視関数が発火する : https://blog.amay0777.net/blog/2017/12/05/58e589780ccea6fd5470/
 
     init {

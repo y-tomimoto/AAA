@@ -1,4 +1,4 @@
-package io.github.reservationbytom.view.ui
+package io.github.reservationbytom.view.adapter
 
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
@@ -6,15 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import io.github.reservationbytom.R
+import io.github.reservationbytom.service.model.Rest
 
-import io.github.reservationbytom.view.dummy.DummyContent.DummyItem
 
-/**
- * [RecyclerView.Adapter] that can display a [DummyItem].
- * TODO: Replace the implementation with code for your data type.
- */
 class MyRestListRecyclerViewAdapter(
-    private val values: List<DummyItem>
+    private val values: List<Rest>
 ) : RecyclerView.Adapter<MyRestListRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -26,7 +22,7 @@ class MyRestListRecyclerViewAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = values[position]
         holder.idView.text = item.id
-        holder.contentView.text = item.content
+        holder.contentView.text = item.name
     }
 
     override fun getItemCount(): Int = values.size
