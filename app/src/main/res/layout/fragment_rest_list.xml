@@ -10,42 +10,52 @@
       type="boolean" />
   </data>
 
+
   <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:ignore="PrivateResource">
+    android:orientation="vertical">
 
     <TextView
-      android:id="@+id/loading_projects"
+      android:id="@+id/titleView"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="8dp"
+      android:layout_marginTop="112dp"
+      android:layout_marginEnd="8dp"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+      android:id="@+id/dateView"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="8dp"
+      android:layout_marginTop="56dp"
+      android:layout_marginEnd="8dp"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/titleView" />
+
+    <Button
+      android:id="@+id/button"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="8dp"
+      android:layout_marginEnd="8dp"
+      android:layout_marginBottom="136dp"
+      android:text="Button"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.482"
+      app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/rest_list"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:gravity="center_vertical|center_horizontal"
-      android:text="@string/loading_projects"
-      android:textAlignment="center" />
+      app:layoutManager="LinearLayoutManager" />
 
-    <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:orientation="vertical">
-
-      <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
-        android:gravity="center_horizontal"
-        android:text="@string/github_projects"
-        android:textAlignment="center"
-        android:textSize="@dimen/project_header1"
-        android:textStyle="bold" />
-
-      <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rest_list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:contentDescription="@string/project_list"
-        app:layoutManager="LinearLayoutManager" />
-    </LinearLayout>
   </LinearLayout>
 </layout>

@@ -81,9 +81,11 @@ class RestAdapter(private val restClickCallback: RestClickCallback?) :
     binding.callback = restClickCallback // callbackはlayout内の値にattach。constructorから受け取る。
 
     // Binding View を持つ ViewHolder を返している
+    println("return ViewHolder!!")
     return RestViewHolder(
       binding
     )
+
   }
 
   // Modelに値をset。
@@ -92,6 +94,8 @@ class RestAdapter(private val restClickCallback: RestClickCallback?) :
     holder.binding.rest = restList?.get(position)
     // バインドを即時反映するためのexecutePendingBindings: https://techbooster.org/android/application/17971/
     holder.binding.executePendingBindings()
+    println("Binding data to ViewHolder ...!!")
+
   }
 
   // RecyclerView.Adapterに自作のAdapterがattachされたとき、まずはここがcallsされる

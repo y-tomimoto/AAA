@@ -12,6 +12,7 @@
     <variable
       name="restViewModel"
       type="io.github.reservationbytom.viewmodel.RestViewModel" />
+
   </data>
 
   <LinearLayout
