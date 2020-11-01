@@ -17,14 +17,14 @@ const val HTTPS_API_GNAVI_URL = "https://api.gnavi.co.jp/"
 
 class GNaviRepository {
   private val retrofit: Retrofit = Retrofit.Builder()
-    // .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+    .baseUrl(HTTPS_API_GNAVI_URL)
     .addConverterFactory(
       // TODO: kotlinx.serialization を採用する
       GsonConverterFactory.create(
         GsonBuilder().serializeNulls().create()
       )
     )
-    .baseUrl(HTTPS_API_GNAVI_URL)
+    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
     .build()
 
   private val gNaviService = retrofit.create(GNaviService::class.java) // Declaration by var ?
@@ -47,11 +47,23 @@ class GNaviRepository {
     range: Int, // Range: 1,
     longitude: Double, // 緯度: 139.6353565,
     latitude: Double // 軽度: 35.6994197
-  ): Response<GNaviResponse> {
+  ) {
     println("Lets connecting ...")
     val call = gNaviService.getTest(keyid, range, longitude, latitude)
-    val responce: Response<GNaviResponse> = call.execute()
-    return responce
+    val responce = call.enqueue(object : Callback<GNaviResponse> {
+      override fun onResponse(call: Call<GNaviResponse>, response: Response<GNaviResponse>) {
+        response?.let {
+          if (response.isSuccessful) {
+            response.body()?.let {
+              println("dada")
+            }
+          }
+        }
+      }
+      override fun onFailure(call: Call<GNaviResponse>, t: Throwable) {
+        print("dadada")
+      }
+    })
   }
 
   suspend fun getRest(
