@@ -45,7 +45,12 @@
     <!--      <category android:name="android.intent.category.LAUNCHER" />-->
     <!--    </intent-filter>-->
     <!--  </activity>-->
-    <activity android:name=".view.ui.MainActivity" />
+    <activity android:name=".view.ui.MainActivity">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+        <category android:name="android.intent.category.LAUNCHER" />
+      </intent-filter>
+    </activity>
     <!-- Activity for Login -->
     <!-- <activity-->
     <!-- android:name=".view.ui.LoginActivity"-->
