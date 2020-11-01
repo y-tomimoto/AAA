@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+  <data>
+
+    <variable
+      name="rest"
+      type="io.github.reservationbytom.service.model.Rest" />
+
+
+    <variable
+      name="isLoading"
+      type="boolean" />
+
+    <variable
+      name="callback"
+      type="io.github.reservationbytom.view.callback.RestClickCallback" />
+
+
+    <variable
+      name="restViewModel"
+      type="io.github.reservationbytom.viewmodel.RestViewModel" />
+  </data>
+
+  <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

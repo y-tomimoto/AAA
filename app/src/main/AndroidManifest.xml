@@ -1,60 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="io.github.reservationbytom">
+  package="io.github.reservationbytom">
 
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+  <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+  <uses-permission android:name="android.permission.INTERNET" />
+  <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+  <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
 
 
-    <application
-        android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
-        android:theme="@style/AppTheme.NoActionBar">
-        <meta-data
-            android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id" />
-        <!-- Activity for Facebook Login -->
-        <activity
-            android:name="com.facebook.FacebookActivity"
-            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-            android:label="@string/app_name" />
-        <!-- Activity for Facebook Login -->
-        <activity
-            android:name="com.facebook.CustomTabActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
+  <application
+    android:allowBackup="true"
+    android:icon="@mipmap/ic_launcher"
+    android:label="@string/app_name"
+    android:roundIcon="@mipmap/ic_launcher_round"
+    android:supportsRtl="true"
+    android:theme="@style/AppTheme.NoActionBar">
+    <meta-data
+      android:name="com.facebook.sdk.ApplicationId"
+      android:value="@string/facebook_app_id" />
+    <!-- Activity for Facebook Login -->
+    <activity
+      android:name="com.facebook.FacebookActivity"
+      android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+      android:label="@string/app_name" />
+    <!-- Activity for Facebook Login -->
+    <activity
+      android:name="com.facebook.CustomTabActivity"
+      android:exported="true">
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW" />
 
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="@string/fb_login_protocol_scheme" />
-            </intent-filter>
-        </activity>
-        <!-- Activity for Splash -->
-        <activity
-            android:name=".view.ui.MainEmptyActivity"
-            android:theme="@style/SplashTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".view.ui.MainActivity" />
-        <activity android:name=".Test" />
-        <!-- Activity for Login -->
-        <activity
-            android:name=".view.ui.LoginActivity"
-            android:foregroundServiceType="location" />
-        <!-- バックグラウンドで定期実行するサービスを登録 -->
-        <service
-            android:name=".service.GetLocationService"
-            android:permission="android.permission.BIND_JOB_SERVICE" />
-    </application>
+        <data android:scheme="@string/fb_login_protocol_scheme" />
+      </intent-filter>
+    </activity>
+    <!-- Activity for Splash -->
+    <!--  <activity-->
+    <!--  android:name=".view.ui.MainEmptyActivity"-->
+    <!--  android:theme="@style/SplashTheme">-->
+    <!--  <intent-filter>-->
+    <!--      <action android:name="android.intent.action.MAIN" />-->
+    <!--      <category android:name="android.intent.category.LAUNCHER" />-->
+    <!--    </intent-filter>-->
+    <!--  </activity>-->
+    <activity android:name=".view.ui.MainActivity" />
+    <!-- Activity for Login -->
+    <!-- <activity-->
+    <!-- android:name=".view.ui.LoginActivity"-->
+    <!-- android:foregroundServiceType="location" />-->
+    <!-- バックグラウンドで定期実行するサービスを登録 -->
+    <service
+      android:name=".service.GetLocationService"
+      android:permission="android.permission.BIND_JOB_SERVICE" />
+  </application>
 
 </manifest>

@@ -42,5 +42,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="textview">TextView</string>
+    <string name="loading_projects">loading_projects</string>
+  <string name="github_projects">github_projects</string>
+  <string name="project_list">project_list</string>
 
 </resources>

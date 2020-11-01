@@ -16,7 +16,7 @@ class RestListViewModel(application: Application) : AndroidViewModel(application
 
     // LiveDataについて: https://qiita.com/takahirom/items/3f012d46e15a1666fa33
     // TODO: ObservableField と比較検討
-    private var restListLiveData: MutableLiveData<GNaviResponse> = MutableLiveData()
+    var restListLiveData: MutableLiveData<GNaviResponse> = MutableLiveData()
 
     init {
         loadRests()
