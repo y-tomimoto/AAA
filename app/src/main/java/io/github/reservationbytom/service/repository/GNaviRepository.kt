@@ -16,6 +16,19 @@ import java.util.concurrent.TimeUnit
 const val HTTPS_API_GNAVI_URL = "https://api.gnavi.co.jp/"
 
 class GNaviRepository {
+
+  // log用
+  val okHttpClient = OkHttpClient.Builder()
+    .connectTimeout(20, TimeUnit.SECONDS)
+    .writeTimeout(30, TimeUnit.SECONDS)
+    .readTimeout(30, TimeUnit.SECONDS)
+    // ログを出力させる設定
+    .addInterceptor(HttpLoggingInterceptor().apply {
+      level = HttpLoggingInterceptor.Level.BODY
+    })
+    .build()
+
+
   private val retrofit: Retrofit = Retrofit.Builder()
     .baseUrl(HTTPS_API_GNAVI_URL)
     .addConverterFactory(
@@ -25,6 +38,7 @@ class GNaviRepository {
       )
     )
     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+    .client(okHttpClient)
     .build()
 
   private val gNaviService = retrofit.create(GNaviService::class.java) // Declaration by var ?
