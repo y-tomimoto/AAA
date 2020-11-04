@@ -15,7 +15,7 @@ interface GNaviService {
     @Query("range") range: Int,
     @Query("longitude") longitude: Double,
     @Query("latitude") latitude: Double
-  ): Call<GNaviResponse> // Call<GNaviResponse> ?
+  ): GNaviResponse // Call<GNaviResponse> ?
 
   @GET("RestSearchAPI/v3/")
   suspend fun getTest(

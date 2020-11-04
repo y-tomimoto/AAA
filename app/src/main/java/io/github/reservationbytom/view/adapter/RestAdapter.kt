@@ -17,15 +17,17 @@ class RestAdapter(private val restClickCallback: RestClickCallback?) :
 
   fun setRestList(restList: List<Rest>) {
 
+    println("rub")
     if (this.restList == null) {
       this.restList = restList // 引数で受け取ったrestList
+      println("null")
 
       // RecyclerViewの組み込み。
       // positionStartの位置からitemCountの範囲において、データの変更があったことを登録されているすべてのobserverに通知する。
       notifyItemRangeInserted(0, restList.size)
 
     } else {
-
+      println("dada")
       // 既に this.restList が値を持っていた場合
       val result = DiffUtil.calculateDiff(object : DiffUtil.Callback() {
 

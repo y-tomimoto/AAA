@@ -75,14 +75,12 @@ class RestListFragment : Fragment() {
         CoroutineScope(Dispatchers.IO).launch {
           // runBlocking {
           println("dada")
-          val result = repository.getTest(
+          repository.getTest(
             BuildConfig.GNAVI_API_KEY,
             1,
-            33.3, // TODO: 外部から取得
-            33.3 // TODO: 外部から取得
+            139.6353565, // TODO: 外部から取得
+            35.6994197 // TODO: 外部から取得
           )
-          print(result)
-
         }
       })
       println("Attached adapter!! ")
@@ -99,7 +97,6 @@ class RestListFragment : Fragment() {
     println("onActivityCreated!! trying observe ...  ")
 
     viewModel.restListLiveData.observe(viewLifecycleOwner, Observer { rest ->
-      println("No Mod LiveData!!")
       if (rest != null) {
         binding.isLoading = false
         restAdapter.setRestList(rest.rest)
