@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import io.github.reservationbytom.R
 import io.github.reservationbytom.R.id
+import io.github.reservationbytom.service.GetLocationService
 import io.github.reservationbytom.service.model.Rest
 
 class MainActivity: AppCompatActivity() {
@@ -11,7 +12,7 @@ class MainActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        GetLocationService().getLocation(this)
         // savedInstanceState == null について : https://qiita.com/Nkzn/items/c09629d91d5cf42ff05d
         if (savedInstanceState == null) {
 

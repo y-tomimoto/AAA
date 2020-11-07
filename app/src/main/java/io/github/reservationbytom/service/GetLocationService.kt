@@ -1,11 +1,14 @@
 package io.github.reservationbytom.service
 
 import android.Manifest
+import android.app.Activity
 import android.app.job.JobInfo
 import android.app.job.JobScheduler
 import android.content.ComponentName
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.location.Location
 import android.os.Build
 import android.os.Bundle
 import android.os.Looper
@@ -33,26 +36,25 @@ import retrofit2.http.GET
 import java.io.IOException
 import java.util.concurrent.TimeUnit
 
-class GetLocationService : AppCompatActivity() { // TODO: AppCompatActivityを継承せずPermissionを確認
+class GetLocationService{ // TODO: AppCompatActivityを継承せずPermissionを確認
 
   // 位置情報を取得できるクラス
   private lateinit var fusedLocationClient: FusedLocationProviderClient
   private val REQUEST_CODE = 1000
 
-  override fun onCreate(savedInstanceState: Bundle?) { // 関数っぽく位置情報を取得したい
-    super.onCreate(savedInstanceState)
+  fun getLocation(context: Context) { // 関数っぽく位置情報を取得したい
 
     // 1. Permissionの許諾を取る: https://developer.android.com/training/location/retrieve-current#permissions
     if (Build.VERSION.SDK_INT >= 23) { // 23以降厳格なPermission許諾が求められる
       println("permissions checking ...")
       if (ActivityCompat.checkSelfPermission(
-          this,
+          context,
           Manifest.permission.ACCESS_FINE_LOCATION
         ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-          this,
+          context,
           Manifest.permission.ACCESS_COARSE_LOCATION
         ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-          this,
+          context,
           Manifest.permission.ACCESS_BACKGROUND_LOCATION
         ) != PackageManager.PERMISSION_GRANTED
       ) {
@@ -63,17 +65,29 @@ class GetLocationService : AppCompatActivity() { // TODO: AppCompatActivityを�
         )
         // permissions が指定されていない場合、permissionsをrequestする
         println("request permissions ...")
-        ActivityCompat.requestPermissions(this, permissions, REQUEST_CODE);
+        ActivityCompat.requestPermissions(context as Activity, permissions, REQUEST_CODE);
       }
     }
 
     // 2. 位置情報サービス クライアントを作成する: https://developer.android.com/training/location/retrieve-current#play-services
-    fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+    fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
 
-    // 3. 接続方法を指定
+    // 3. 位置情報を取得する: https://developer.android.com/training/location/retrieve-current#last-known
+//    fusedLocationClient.lastLocation
+//      .addOnSuccessListener { location : Location? ->
+//        println(location)
+//        if (location != null) {
+//          println(location.latitude)
+//        }
+//        if (location != null) {
+//          println(location.longitude)
+//        }
+//      }
+
+
+    // 3. 接続方法を指定: https://developer.android.com/training/location/change-location-settings#location-request
     val locationRequest = LocationRequest().apply {
       // 精度重視(電力大)と省電力重視(精度低)を両立するため2種類の更新間隔を指定
-      // 今回は公式のサンプル通りにする。
       interval = 10000                                   // 最遅の更新間隔(但し正確ではない。)
       fastestInterval = 5000                             // 最短の更新間隔
       priority = LocationRequest.PRIORITY_HIGH_ACCURACY  // 精度重視
@@ -83,6 +97,7 @@ class GetLocationService : AppCompatActivity() { // TODO: AppCompatActivityを�
     val locationCallback = object : LocationCallback() {
       override fun onLocationResult(locationResult: LocationResult?) {
         // 更新直後の位置が格納されているはず
+        println("run location callback ...")
         val location = locationResult?.lastLocation ?: return
         println(location)
         println(location.latitude)
@@ -91,7 +106,9 @@ class GetLocationService : AppCompatActivity() { // TODO: AppCompatActivityを�
     }
 
     // 5. 位置情報を取得
+    println("get location ...")
     fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper())
+    println("finish get location.")
   }
 }
 
