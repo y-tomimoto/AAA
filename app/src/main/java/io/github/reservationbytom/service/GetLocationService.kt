@@ -73,42 +73,42 @@ class GetLocationService{ // TODO: AppCompatActivityを継承せずPermissionを
     fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
 
     // 3. 位置情報を取得する: https://developer.android.com/training/location/retrieve-current#last-known
-//    fusedLocationClient.lastLocation
-//      .addOnSuccessListener { location : Location? ->
-//        println(location)
-//        if (location != null) {
-//          println(location.latitude)
-//        }
-//        if (location != null) {
-//          println(location.longitude)
-//        }
-//      }
-
-
-    // 3. 接続方法を指定: https://developer.android.com/training/location/change-location-settings#location-request
-    val locationRequest = LocationRequest().apply {
-      // 精度重視(電力大)と省電力重視(精度低)を両立するため2種類の更新間隔を指定
-      interval = 10000                                   // 最遅の更新間隔(但し正確ではない。)
-      fastestInterval = 5000                             // 最短の更新間隔
-      priority = LocationRequest.PRIORITY_HIGH_ACCURACY  // 精度重視
-    }
-
-    // 4. 実行時の挙動を指定
-    val locationCallback = object : LocationCallback() {
-      override fun onLocationResult(locationResult: LocationResult?) {
-        // 更新直後の位置が格納されているはず
-        println("run location callback ...")
-        val location = locationResult?.lastLocation ?: return
+    fusedLocationClient.lastLocation
+      .addOnSuccessListener { location : Location? ->
         println(location)
-        println(location.latitude)
-        println(location.longitude)
+        if (location != null) {
+          println(location.latitude)
+        }
+        if (location != null) {
+          println(location.longitude)
+        }
       }
-    }
 
-    // 5. 位置情報を取得
-    println("get location ...")
-    fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper())
-    println("finish get location.")
+
+//    // 3. 接続方法を指定: https://developer.android.com/training/location/change-location-settings#location-request
+//    val locationRequest = LocationRequest().apply {
+//      // 精度重視(電力大)と省電力重視(精度低)を両立するため2種類の更新間隔を指定
+//      interval = 10000                                   // 最遅の更新間隔(但し正確ではない。)
+//      fastestInterval = 5000                             // 最短の更新間隔
+//      priority = LocationRequest.PRIORITY_HIGH_ACCURACY  // 精度重視
+//    }
+//
+//    // 4. 実行時の挙動を指定
+//    val locationCallback = object : LocationCallback() {
+//      override fun onLocationResult(locationResult: LocationResult?) {
+//        // 更新直後の位置が格納されているはず
+//        println("run location callback ...")
+//        val location = locationResult?.lastLocation ?: return
+//        println(location)
+//        println(location.latitude)
+//        println(location.longitude)
+//      }
+//    }
+//
+//    // 5. 位置情報を取得
+//    println("get location ...")
+//    fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper())
+//    println("finish get location.")
   }
 }
 
