@@ -2,11 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
   package="io.github.reservationbytom">
 
+  <!-- Backgroundで位置情報を取得するためのPermission -->
   <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
   <uses-permission android:name="android.permission.INTERNET" />
   <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+  <!-- Required only when requesting background location access on
+     Android 10 (API level 29) and higher. -->
   <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
-
+  <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
   <application
     android:allowBackup="true"
@@ -56,8 +59,10 @@
     <!-- android:name=".view.ui.LoginActivity"-->
     <!-- android:foregroundServiceType="location" />-->
     <!-- バックグラウンドで定期実行するサービスを登録 -->
+
+    <!-- Backgroundで位置情報を取得するserviceを利用するために、permissionを記載: https://qiita.com/naoi/items/f1d00a79196d3d2d3a81 -->
     <service
-      android:name=".service.GetLocationService"
+      android:name=".service.GetLocationJob"
       android:permission="android.permission.BIND_JOB_SERVICE" />
   </application>
 

@@ -57,6 +57,7 @@ class RestListFragment : Fragment() {
     inflater: LayoutInflater, container: ViewGroup?,
     savedInstanceState: Bundle?
   ): View? {
+
     // Databinding対象viewとして、listViewを指定している。
     binding = DataBindingUtil.inflate(
       inflater,
@@ -65,37 +66,32 @@ class RestListFragment : Fragment() {
       false
     )
 
-
     binding.apply {
       // RecyclerViewにadapterをattachしている
+      println("attach")
       restList.adapter = restAdapter // bindingのid 『restList』 のViewの型がRecyclerView
       isLoading = true // layout自体にattachしている
-      button.setOnClickListener(View.OnClickListener() {
-        val repository = GNaviRepository.instance
-        CoroutineScope(Dispatchers.IO).launch {
-          // runBlocking {
-          println("dada")
-          repository.getTest(
-            BuildConfig.GNAVI_API_KEY,
-            1,
-            139.6353565, // TODO: 外部から取得
-            35.6994197 // TODO: 外部から取得
-          )
-        }
-      })
+//      button.setOnClickListener(View.OnClickListener() {
+//        val repository = GNaviRepository.instance
+//        CoroutineScope(Dispatchers.IO).launch {
+//          // runBlocking {
+//          println("dada")
+//          repository.getTest(
+//            BuildConfig.GNAVI_API_KEY,
+//            1,
+//            139.6353565, // TODO: 外部から取得
+//            35.6994197 // TODO: 外部から取得
+//          )
+//        }
+//      })
       println("Attached adapter!! ")
     }
-
-
-
-
     return binding.root // rootタグである <layout> をresしている。
   }
 
   override fun onActivityCreated(savedInstanceState: Bundle?) {
     super.onActivityCreated(savedInstanceState)
     println("onActivityCreated!! trying observe ...  ")
-
     viewModel.restListLiveData.observe(viewLifecycleOwner, Observer { rest ->
       if (rest != null) {
         binding.isLoading = false

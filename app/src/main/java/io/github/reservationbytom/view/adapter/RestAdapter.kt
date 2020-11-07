@@ -87,7 +87,6 @@ class RestAdapter(private val restClickCallback: RestClickCallback?) :
     return RestViewHolder(
       binding
     )
-
   }
 
   // Modelに値をset。
@@ -97,11 +96,11 @@ class RestAdapter(private val restClickCallback: RestClickCallback?) :
     // バインドを即時反映するためのexecutePendingBindings: https://techbooster.org/android/application/17971/
     holder.binding.executePendingBindings()
     println("Binding data to ViewHolder ...!!")
-
   }
 
   // RecyclerView.Adapterに自作のAdapterがattachされたとき、まずはここがcallsされる
   override fun getItemCount(): Int {
+    println("count: ${restList?.size}")
     return restList?.size ?: 0
   }
 
