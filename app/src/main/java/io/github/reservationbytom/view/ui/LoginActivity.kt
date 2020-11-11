@@ -33,7 +33,6 @@ import com.google.gson.GsonBuilder
 import com.jakewharton.threetenabp.AndroidThreeTen
 import io.github.reservationbytom.BuildConfig
 import io.github.reservationbytom.R
-import io.github.reservationbytom.service.GetLocationJob
 import okhttp3.ResponseBody
 import org.json.JSONObject
 import org.threeten.bp.DayOfWeek
@@ -169,16 +168,16 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.login)
         AndroidThreeTen.init(this);
 
-        val scheduler = getSystemService(JobScheduler::class.java)
-        println(TimeUnit.MINUTES.toMillis(1))
-        val jobInfo = JobInfo.Builder(
-            1, // JobID
-            ComponentName(this, GetLocationJob::class.java)) // job
-            .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY) // 通信環境
-            .build()
-
-        // ここでjobを登録
-        scheduler.schedule(jobInfo)
+//        val scheduler = getSystemService(JobScheduler::class.java)
+//        println(TimeUnit.MINUTES.toMillis(1))
+//        val jobInfo = JobInfo.Builder(
+//            1, // JobID
+//            ComponentName(this, GetLocationJob::class.java)) // job
+//            .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY) // 通信環境
+//            .build()
+//
+//        // ここでjobを登録
+//        scheduler.schedule(jobInfo)
 
         val call = service.getRestaurants()
 

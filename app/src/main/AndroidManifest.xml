@@ -62,7 +62,7 @@
 
     <!-- Backgroundで位置情報を取得するserviceを利用するために、permissionを記載: https://qiita.com/naoi/items/f1d00a79196d3d2d3a81 -->
     <service
-      android:name=".service.GetLocationJob"
+      android:name=".service.GetLocationJobService"
       android:permission="android.permission.BIND_JOB_SERVICE" />
   </application>
 

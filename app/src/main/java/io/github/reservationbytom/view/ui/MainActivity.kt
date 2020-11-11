@@ -1,27 +1,36 @@
 package io.github.reservationbytom.view.ui
 
+import android.Manifest
 import android.app.job.JobInfo
+import android.app.job.JobParameters
 import android.app.job.JobScheduler
+import android.app.job.JobService
 import android.content.ComponentName
 import android.content.Context
+import android.content.pm.PackageManager
+import android.location.Location
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.core.app.ActivityCompat
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import io.github.reservationbytom.R
 import io.github.reservationbytom.R.id
-import io.github.reservationbytom.service.GetLocationJob
-import io.github.reservationbytom.service.GetLocationService
+import io.github.reservationbytom.service.GetLocationJobService
 import io.github.reservationbytom.service.model.Rest
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
   val MY_BACKGROUND_JOB = 0
+  private val REQUEST_CODE = 1000
 
   // Jobをset : https://developer.android.com/topic/performance/background-optimization?hl=ja
   fun scheduleJob(context: Context) {
     val jobScheduler = context.getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
     val job = JobInfo.Builder(
       MY_BACKGROUND_JOB,
-      ComponentName(context, GetLocationJob::class.java)
+      ComponentName(context, GetLocationJobService::class.java)
     )
       .setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED)
       .setRequiresCharging(true)
@@ -33,6 +42,33 @@ class MainActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_main)
+
+    // 関数っぽく位置情報を取得したい
+    // 1. Permissionの許諾を取る: https://developer.android.com/training/location/retrieve-current#permissions
+    if (Build.VERSION.SDK_INT >= 23) { // 23以降厳格なPermission許諾が求められる
+      println("permissions checking ...")
+      if (ActivityCompat.checkSelfPermission(
+          this,
+          Manifest.permission.ACCESS_FINE_LOCATION
+        ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+          this,
+          Manifest.permission.ACCESS_COARSE_LOCATION
+        ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+          this,
+          Manifest.permission.ACCESS_BACKGROUND_LOCATION
+        ) != PackageManager.PERMISSION_GRANTED
+      ) {
+        val permissions = arrayOf(
+          Manifest.permission.ACCESS_COARSE_LOCATION,
+          Manifest.permission.ACCESS_FINE_LOCATION,
+          Manifest.permission.ACCESS_BACKGROUND_LOCATION
+        )
+        // permissions が指定されていない場合、permissionsをrequestする
+        println("request permissions ...")
+        ActivityCompat.requestPermissions(this, permissions, REQUEST_CODE);
+      }
+    }
+
     scheduleJob(this)
 
     // savedInstanceState == null について : https://qiita.com/Nkzn/items/c09629d91d5cf42ff05d
