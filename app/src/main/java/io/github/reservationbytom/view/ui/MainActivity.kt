@@ -25,8 +25,9 @@ class MainActivity : AppCompatActivity() {
   val MY_BACKGROUND_JOB = 0
   private val REQUEST_CODE = 1000
 
-  // Jobをset : https://developer.android.com/topic/performance/background-optimization?hl=ja
+  // Jobをsetする関数 : https://developer.android.com/topic/performance/background-optimization?hl=ja
   fun scheduleJob(context: Context) {
+    // Backgroundでjobを実行する
     val jobScheduler = context.getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
     val job = JobInfo.Builder(
       MY_BACKGROUND_JOB,
@@ -43,10 +44,8 @@ class MainActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_main)
 
-    // 関数っぽく位置情報を取得したい
-    // 1. Permissionの許諾を取る: https://developer.android.com/training/location/retrieve-current#permissions
+    // Permissionの許諾を取る: https://developer.android.com/training/location/retrieve-current#permissions
     if (Build.VERSION.SDK_INT >= 23) { // 23以降厳格なPermission許諾が求められる
-      println("permissions checking ...")
       if (ActivityCompat.checkSelfPermission(
           this,
           Manifest.permission.ACCESS_FINE_LOCATION
@@ -64,7 +63,6 @@ class MainActivity : AppCompatActivity() {
           Manifest.permission.ACCESS_BACKGROUND_LOCATION
         )
         // permissions が指定されていない場合、permissionsをrequestする
-        println("request permissions ...")
         ActivityCompat.requestPermissions(this, permissions, REQUEST_CODE);
       }
     }
@@ -73,9 +71,7 @@ class MainActivity : AppCompatActivity() {
 
     // savedInstanceState == null について : https://qiita.com/Nkzn/items/c09629d91d5cf42ff05d
     if (savedInstanceState == null) {
-
       val fragment = RestListFragment()
-
       supportFragmentManager
         .beginTransaction()
         .add(
@@ -89,7 +85,6 @@ class MainActivity : AppCompatActivity() {
   //詳細画面への遷移
   fun show(rest: Rest) {
     val restFragment = RestFragment.forRest(rest.name)
-
     supportFragmentManager
       .beginTransaction()
       .addToBackStack("rest")

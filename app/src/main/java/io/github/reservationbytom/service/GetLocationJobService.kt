@@ -6,8 +6,7 @@ import android.app.job.JobService
 import android.content.pm.PackageManager
 import android.location.Location
 import androidx.core.app.ActivityCompat
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.*
 
 class GetLocationJobService : JobService() {
 
@@ -34,7 +33,6 @@ class GetLocationJobService : JobService() {
     // 2. 位置情報サービス クライアントを作成する: https://developer.android.com/training/location/retrieve-current#play-services
     fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
-    // 3. 位置情報を取得する: https://developer.android.com/training/location/retrieve-current#last-known
     if (ActivityCompat.checkSelfPermission(
         this,
         Manifest.permission.ACCESS_FINE_LOCATION
@@ -52,15 +50,37 @@ class GetLocationJobService : JobService() {
       // for ActivityCompat#requestPermissions for more details.
       return false
     }
+
+    // 3. 位置情報を取得する: https://developer.android.com/training/location/retrieve-current#last-known
     fusedLocationClient.lastLocation
       .addOnSuccessListener { location: Location? ->
-        println(location)
         if (location != null) {
           println(location.latitude)
-        }
-        if (location != null) {
           println(location.longitude)
+        } else {
+          // https://qiita.com/outerlet/items/78941b0b352c7003c01f
+          val request = LocationRequest.create()
+            .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+            .setInterval(500)
+            .setFastestInterval(300)
+
+          fusedLocationClient
+            .requestLocationUpdates(
+              request,
+              object : LocationCallback() {
+                override fun onLocationResult(result: LocationResult) {
+                  println(result)
+                  // (b)LocationUpdates で得た時の処理
+                  // 現在地だけ欲しいので、1回取得したらすぐに外す
+                  fusedLocationClient.removeLocationUpdates(this)
+                }
+              },
+              null
+            )
         }
+      }
+      .addOnFailureListener {
+        println("location error")
       }
 
 
