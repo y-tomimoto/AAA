@@ -6,12 +6,19 @@ import android.app.job.JobService
 import android.content.pm.PackageManager
 import android.location.Location
 import androidx.core.app.ActivityCompat
+import androidx.room.Room
 import com.google.android.gms.location.*
+import io.github.reservationbytom.service.persistence.db.entity.AppDatabase
 
 class GetLocationJobService : JobService() {
 
   // 位置情報を取得できるクラス
   private lateinit var fusedLocationClient: FusedLocationProviderClient
+
+  private var db = Room.databaseBuilder(
+    applicationContext,
+    AppDatabase::class.java, "database-name"
+  ).build()
 
   override fun onStopJob(params: JobParameters?): Boolean {
     println("Job stopping ...")
@@ -57,6 +64,7 @@ class GetLocationJobService : JobService() {
         if (location != null) {
           println(location.latitude)
           println(location.longitude)
+          db.locationDao().insertAll(io.github.reservationbytom.service.persistence.db.entity.Location(latitude = location.latitude,longitude = location.longitude ))
         } else {
           // https://qiita.com/outerlet/items/78941b0b352c7003c01f
           val request = LocationRequest.create()

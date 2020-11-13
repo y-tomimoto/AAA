@@ -13,12 +13,14 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.core.app.ActivityCompat
+import androidx.room.Room
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import io.github.reservationbytom.R
 import io.github.reservationbytom.R.id
 import io.github.reservationbytom.service.GetLocationJobService
 import io.github.reservationbytom.service.model.Rest
+import io.github.reservationbytom.service.persistence.db.entity.AppDatabase
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
