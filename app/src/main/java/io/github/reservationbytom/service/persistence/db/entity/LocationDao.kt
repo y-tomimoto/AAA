@@ -10,12 +10,8 @@ interface LocationDao {
   @Query("SELECT * FROM location")
   fun getAll(): List<Location>
 
-  @Query("SELECT * FROM location WHERE uid IN (:locationIds)")
+  @Query("SELECT * FROM location WHERE id IN (:locationIds)")
   fun loadAllByIds(locationIds: IntArray): List<Location>
-
-  @Query("SELECT * FROM location WHERE first_name LIKE :first AND " +
-    "last_name LIKE :last LIMIT 1")
-  fun findByName(first: String, last: String): Location
 
   @Insert
   fun insertAll(vararg location: Location)
