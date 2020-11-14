@@ -33,14 +33,17 @@ class MainActivity : AppCompatActivity() {
     val jobScheduler = context.getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
     val job = JobInfo.Builder(
       MY_BACKGROUND_JOB,
-      ComponentName(context, GetLocationJobService::class.java)
+      ComponentName(context, GetLocationJobService::class.java) // メタデータ Class<?> をpassする必要がある
+      // ComponentName(context, GetLocationJobService::class.java) // ここでコンストラクタとしてDBのインスタンスを渡す
     )
       .setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED)
       .setRequiresCharging(true)
       .setPeriodic(Calendar.MINUTE.toLong() * 15) // 15分ごとしか無理: https://medium.com/@yonatanvlevin/the-minimum-interval-for-periodicwork-is-15-minutes-same-as-jobscheduler-periodic-job-eb2d63716d1f
       .build()
     jobScheduler.schedule(job)
+
   }
+
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)

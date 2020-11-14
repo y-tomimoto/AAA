@@ -3,6 +3,7 @@ package io.github.reservationbytom.service
 import android.Manifest
 import android.app.job.JobParameters
 import android.app.job.JobService
+import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
 import androidx.core.app.ActivityCompat
@@ -14,11 +15,17 @@ class GetLocationJobService : JobService() {
 
   // 位置情報を取得できるクラス
   private lateinit var fusedLocationClient: FusedLocationProviderClient
+  private lateinit var context: Context
+  private lateinit var db: AppDatabase
 
-  private var db = Room.databaseBuilder(
-    applicationContext,
-    AppDatabase::class.java, "database-name"
-  ).build()
+  override fun onCreate() {
+    super.onCreate()
+    context = applicationContext // For this Problem: https://stackoverflow.com/questions/21994612/get-application-context-returns-null
+    db = Room.databaseBuilder(
+      context,
+      AppDatabase::class.java, "database-name"
+    ).build()
+  }
 
   override fun onStopJob(params: JobParameters?): Boolean {
     println("Job stopping ...")
@@ -64,7 +71,8 @@ class GetLocationJobService : JobService() {
         if (location != null) {
           println(location.latitude)
           println(location.longitude)
-          db.locationDao().insertAll(io.github.reservationbytom.service.persistence.db.entity.Location(latitude = location.latitude,longitude = location.longitude ))
+          val loca = io.github.reservationbytom.service.persistence.db.entity.Location(1,latitude = location.latitude,longitude = location.longitude )
+          db.locationDao().insertAll(loca)
         } else {
           // https://qiita.com/outerlet/items/78941b0b352c7003c01f
           val request = LocationRequest.create()
