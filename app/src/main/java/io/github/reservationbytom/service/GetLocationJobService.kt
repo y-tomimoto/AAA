@@ -72,7 +72,12 @@ class GetLocationJobService : JobService() {
           println(location.latitude)
           println(location.longitude)
           val loca = io.github.reservationbytom.service.persistence.db.entity.Location(1,latitude = location.latitude,longitude = location.longitude )
-          db.locationDao().insertAll(loca)
+          Thread(
+            Runnable {
+              println("test")
+              db.locationDao().insertAll(loca)
+            }
+          ).start()
         } else {
           // https://qiita.com/outerlet/items/78941b0b352c7003c01f
           val request = LocationRequest.create()
