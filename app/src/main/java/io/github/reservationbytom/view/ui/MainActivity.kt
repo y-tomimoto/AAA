@@ -2,30 +2,27 @@ package io.github.reservationbytom.view.ui
 
 import android.Manifest
 import android.app.job.JobInfo
-import android.app.job.JobParameters
 import android.app.job.JobScheduler
-import android.app.job.JobService
 import android.content.ComponentName
 import android.content.Context
 import android.content.pm.PackageManager
-import android.location.Location
+import android.database.sqlite.SQLiteDatabase
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import androidx.room.Room
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
 import io.github.reservationbytom.R
 import io.github.reservationbytom.R.id
 import io.github.reservationbytom.service.GetLocationJobService
 import io.github.reservationbytom.service.model.Rest
-import io.github.reservationbytom.service.persistence.db.entity.AppDatabase
 import java.util.*
+
 
 class MainActivity : AppCompatActivity() {
   val MY_BACKGROUND_JOB = 0
   private val REQUEST_CODE = 1000
+  private lateinit var db: SQLiteDatabase
+
 
   // Jobをsetする関数 : https://developer.android.com/topic/performance/background-optimization?hl=ja
   fun scheduleJob(context: Context) {
@@ -43,7 +40,6 @@ class MainActivity : AppCompatActivity() {
     jobScheduler.schedule(job)
 
   }
-
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)

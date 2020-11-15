@@ -10,7 +10,7 @@ interface LocationDao {
   @Query("SELECT * FROM location")
   fun getAll(): List<Location>
 
-  @Query("SELECT * FROM location WHERE id IN (:locationIds)")
+  @Query("SELECT * FROM location WHERE uuid IN (:locationIds)")
   fun loadAllByIds(locationIds: IntArray): List<Location>
 
   @Insert
@@ -18,4 +18,5 @@ interface LocationDao {
 
   @Delete
   fun delete(location: Location)
+
 }

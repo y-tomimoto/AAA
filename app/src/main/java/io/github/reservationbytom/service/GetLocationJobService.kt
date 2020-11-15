@@ -10,6 +10,8 @@ import androidx.core.app.ActivityCompat
 import androidx.room.Room
 import com.google.android.gms.location.*
 import io.github.reservationbytom.service.persistence.db.entity.AppDatabase
+import java.text.SimpleDateFormat
+import java.util.*
 
 class GetLocationJobService : JobService() {
 
@@ -23,7 +25,7 @@ class GetLocationJobService : JobService() {
     context = applicationContext // For this Problem: https://stackoverflow.com/questions/21994612/get-application-context-returns-null
     db = Room.databaseBuilder(
       context,
-      AppDatabase::class.java, "database-name"
+      AppDatabase::class.java, "database-name3"
     ).build()
   }
 
@@ -71,13 +73,23 @@ class GetLocationJobService : JobService() {
         if (location != null) {
           println(location.latitude)
           println(location.longitude)
-          val loca = io.github.reservationbytom.service.persistence.db.entity.Location(1,latitude = location.latitude,longitude = location.longitude )
+          val uuid = UUID.randomUUID().toString()
+          val tsLong = System.currentTimeMillis() / 1000
+          val ts = tsLong.toString()
+          val loca = io.github.reservationbytom.service.persistence.db.entity.Location(
+            uuid,
+            latitude = location.latitude,
+            longitude = location.longitude,
+            timestamp = ts
+          )
+
           Thread(
             Runnable {
               println("test")
               db.locationDao().insertAll(loca)
             }
           ).start()
+
         } else {
           // https://qiita.com/outerlet/items/78941b0b352c7003c01f
           val request = LocationRequest.create()
@@ -103,7 +115,6 @@ class GetLocationJobService : JobService() {
       .addOnFailureListener {
         println("location error")
       }
-
 
     jobFinished(params, false)
 
