@@ -22,8 +22,5 @@ data class Location(
   @PrimaryKey val uuid: String,
   @ColumnInfo(name = "longitude") val longitude: Double?,
   @ColumnInfo(name = "latitude") val latitude: Double?,
-  @ColumnInfo(name = "timestamp") val timestamp: String?,
-  // @ColumnInfo(name = "created_at") val created_at: Date?,
-//  @SerializedName(value = "creation_date")
-//  var creationDate: Date = Date(System.currentTimeMillis())
+  @ColumnInfo(name = "timestamp") val timestamp: String?, // TODO: TypeConverterを採用
 )

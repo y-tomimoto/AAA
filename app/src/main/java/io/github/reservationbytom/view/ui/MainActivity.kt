@@ -57,6 +57,7 @@ class MainActivity : AppCompatActivity() {
           this,
           Manifest.permission.ACCESS_BACKGROUND_LOCATION
         ) != PackageManager.PERMISSION_GRANTED
+
       ) {
         val permissions = arrayOf(
           Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -73,13 +74,14 @@ class MainActivity : AppCompatActivity() {
     // savedInstanceState == null について : https://qiita.com/Nkzn/items/c09629d91d5cf42ff05d
     if (savedInstanceState == null) {
       val fragment = RestListFragment()
-      supportFragmentManager
-        .beginTransaction()
-        .add(
-          id.fragment_container, fragment,
-          TAG_OF_REST_LIST_FRAGMENT
-        )
-        .commit()
+      println("no fire fragment")
+//      supportFragmentManager
+//        .beginTransaction()
+//        .add(
+//          id.fragment_container, fragment,
+//          TAG_OF_REST_LIST_FRAGMENT
+//        )
+//        .commit()
     }
   }
 
