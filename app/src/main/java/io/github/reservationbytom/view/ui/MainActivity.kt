@@ -11,6 +11,7 @@ import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.navigation.Navigation
 import io.github.reservationbytom.R
 import io.github.reservationbytom.R.id
 import io.github.reservationbytom.service.GetLocationJobService
@@ -22,7 +23,6 @@ class MainActivity : AppCompatActivity() {
   val MY_BACKGROUND_JOB = 0
   private val REQUEST_CODE = 1000
   private lateinit var db: SQLiteDatabase
-
 
   // Jobをsetする関数 : https://developer.android.com/topic/performance/background-optimization?hl=ja
   fun scheduleJob(context: Context) {
@@ -57,7 +57,6 @@ class MainActivity : AppCompatActivity() {
           this,
           Manifest.permission.ACCESS_BACKGROUND_LOCATION
         ) != PackageManager.PERMISSION_GRANTED
-
       ) {
         val permissions = arrayOf(
           Manifest.permission.ACCESS_COARSE_LOCATION,
