@@ -12,6 +12,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.navigation.Navigation
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import io.github.reservationbytom.R
 import io.github.reservationbytom.R.id
 import io.github.reservationbytom.service.GetLocationJobService
@@ -23,6 +24,29 @@ class MainActivity : AppCompatActivity() {
   val MY_BACKGROUND_JOB = 0
   private val REQUEST_CODE = 1000
   private lateinit var db: SQLiteDatabase
+
+  // https://medium.com/nextbeat-engineering/android%E3%82%A2%E3%83%97%E3%83%AA%E3%81%B8%E3%81%AEbottom-navigation%E3%81%AE%E5%B0%8E%E5%85%A5-872c17b21278
+  private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
+    when (item.itemId) {
+      R.id.navigation_cart -> {
+        println("da")
+        return@OnNavigationItemSelectedListener true
+      }
+      R.id.navigation_my_Page -> {
+        println("dada")
+        return@OnNavigationItemSelectedListener true
+      }
+      R.id.navigation_item_list -> {
+        println("dadada")
+        return@OnNavigationItemSelectedListener true
+      }
+      R.id.navigation_style -> {
+        println("dadadada")
+        return@OnNavigationItemSelectedListener true
+      }
+    }
+    false
+  }
 
   // Jobをsetする関数 : https://developer.android.com/topic/performance/background-optimization?hl=ja
   fun scheduleJob(context: Context) {
@@ -70,9 +94,14 @@ class MainActivity : AppCompatActivity() {
 
     scheduleJob(this)
 
+
+
     // savedInstanceState == null について : https://qiita.com/Nkzn/items/c09629d91d5cf42ff05d
     if (savedInstanceState == null) {
       val fragment = RestListFragment()
+      // https://stackoverflow.com/questions/64529217/unresolved-reference-error-in-kotlin-bottom-navigation-setonnavigationitemselec
+      findViewById<BottomNavigationView>(R.id.navigation)
+        .setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
       println("no fire fragment")
 //      supportFragmentManager
 //        .beginTransaction()
