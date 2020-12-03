@@ -12,6 +12,8 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import io.github.reservationbytom.R
 import io.github.reservationbytom.R.id
@@ -24,29 +26,8 @@ class MainActivity : AppCompatActivity() {
   val MY_BACKGROUND_JOB = 0
   private val REQUEST_CODE = 1000
   private lateinit var db: SQLiteDatabase
+  private lateinit var bottomNavigationView: BottomNavigationView
 
-  // https://medium.com/nextbeat-engineering/android%E3%82%A2%E3%83%97%E3%83%AA%E3%81%B8%E3%81%AEbottom-navigation%E3%81%AE%E5%B0%8E%E5%85%A5-872c17b21278
-  private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
-    when (item.itemId) {
-      R.id.navigation_cart -> {
-        println("da")
-        return@OnNavigationItemSelectedListener true
-      }
-      R.id.navigation_my_Page -> {
-        println("dada")
-        return@OnNavigationItemSelectedListener true
-      }
-      R.id.navigation_item_list -> {
-        println("dadada")
-        return@OnNavigationItemSelectedListener true
-      }
-      R.id.navigation_style -> {
-        println("dadadada")
-        return@OnNavigationItemSelectedListener true
-      }
-    }
-    false
-  }
 
   // Jobをsetする関数 : https://developer.android.com/topic/performance/background-optimization?hl=ja
   fun scheduleJob(context: Context) {
@@ -94,14 +75,23 @@ class MainActivity : AppCompatActivity() {
 
     scheduleJob(this)
 
+    // bottomNavigationView with navigation: https://developer.android.com/guide/navigation/navigation-ui?hl=ja
+    bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_nav)
+    val navHostFragment =
+        supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+    val navController = navHostFragment.navController
 
+    // bottom_nav を選択すると、fragmentを切り替えるよう紐付ける
+    findViewById<BottomNavigationView>(R.id.bottom_nav)
+      .setupWithNavController(navController)
 
     // savedInstanceState == null について : https://qiita.com/Nkzn/items/c09629d91d5cf42ff05d
     if (savedInstanceState == null) {
-      val fragment = RestListFragment()
+      // val fragment = RestListFragment()
       // https://stackoverflow.com/questions/64529217/unresolved-reference-error-in-kotlin-bottom-navigation-setonnavigationitemselec
-      findViewById<BottomNavigationView>(R.id.navigation)
-        .setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+      println("dada")
+       // : https://qiita.com/superman9387/items/d373c8bddfe2243a49a7
+
       println("no fire fragment")
 //      supportFragmentManager
 //        .beginTransaction()

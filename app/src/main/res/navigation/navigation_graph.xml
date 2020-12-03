@@ -6,14 +6,31 @@
   app:startDestination="@id/navigation_style">
 
   <fragment
-    android:id="@+id/firstFragment"
-    android:name="io.github.reservationbytom.view.ui.FirstFragment"
-    android:label="fragment_first"/>
-
-  <fragment
     android:id="@+id/navigation_style"
     android:name="io.github.reservationbytom.view.ui.StyleFragment"
     android:label="fragment_first" />
+
+  <fragment
+    android:id="@+id/test01"
+    android:name="io.github.reservationbytom.view.ui.StyleFragment"
+    android:label="fragment_first" />
+
+  <fragment
+    android:id="@+id/test02"
+    android:name="io.github.reservationbytom.view.ui.StyleFragment"
+    android:label="fragment_first" />
+
+  <fragment
+    android:id="@+id/test03"
+    android:name="io.github.reservationbytom.view.ui.StyleFragment"
+    android:label="fragment_first" />
+
+
+
+  <fragment
+    android:id="@+id/firstFragment"
+    android:name="io.github.reservationbytom.view.ui.FirstFragment"
+    android:label="fragment_first"/>
 
   <fragment
     android:id="@+id/navigation_item_list"
