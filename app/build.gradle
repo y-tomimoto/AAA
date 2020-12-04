@@ -26,7 +26,7 @@ android {
     //  import credentials
     buildConfigField("String", "GOOGLE_MAP_API_KEY", apikeyProperties['GOOGLE_MAP_API_KEY'])
     buildConfigField("String", "GNAVI_API_KEY", apikeyProperties['GNAVI_API_KEY'])
-
+    manifestPlaceholders = [GOOGLE_MAP_API_KEY: apikeyProperties['GOOGLE_MAP_API_KEY']] // https://qiita.com/masaibar/items/38735c99da6f1d439f0a
 
   }
 
