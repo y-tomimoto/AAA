@@ -26,8 +26,15 @@ android {
     //  import credentials
     buildConfigField("String", "GOOGLE_MAP_API_KEY", apikeyProperties['GOOGLE_MAP_API_KEY'])
     buildConfigField("String", "GNAVI_API_KEY", apikeyProperties['GNAVI_API_KEY'])
-    manifestPlaceholders = [GOOGLE_MAP_API_KEY: apikeyProperties['GOOGLE_MAP_API_KEY']] // https://qiita.com/masaibar/items/38735c99da6f1d439f0a
 
+    // https://developers.google.com/maps/documentation/android-sdk/get-api-key
+    // Set the properties within `local.properties` into a `Properties` class so that values
+    // within `local.properties` (e.g. Maps API key) are accessible in this file.
+    Properties properties = new Properties()
+    if (rootProject.file("local.properties").exists()) {
+      properties.load(rootProject.file("local.properties").newDataInputStream())
+    }
+    manifestPlaceholders = [ mapsApiKey : properties.getProperty("MAPS_API_KEY", "") ]
   }
 
   buildTypes {
