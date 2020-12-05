@@ -46,7 +46,7 @@ class StyleFragment : Fragment(), OnMapReadyCallback {
     mapView = view.findViewById<MapView>(R.id.mapview)
     mapView.onCreate(savedInstanceState);
     mapView.getMapAsync(this);
-    return inflater.inflate(R.layout.fragment_style, container, false)
+    return view
   }
 
   companion object {
