@@ -1,10 +1,17 @@
 package io.github.reservationbytom.view.ui
 
+import android.Manifest
+import android.content.Context
+import android.content.pm.PackageManager
+import android.location.Location
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -12,36 +19,26 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import io.github.reservationbytom.R
 
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
 /**
  * A simple [Fragment] subclass.
  * Use the [FirstFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
 class StyleFragment : Fragment(), OnMapReadyCallback {
-  // TODO: Rename and change types of parameters
-  private var param1: String? = null
-  private var param2: String? = null
+
   private lateinit var mMap: GoogleMap
   private lateinit var mapView: MapView
+  // 位置情報を取得できるクラス: https://developer.android.com/training/location/retrieve-current
+  private lateinit var fusedLocationClient: FusedLocationProviderClient
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    arguments?.let {
-      param1 = it.getString(ARG_PARAM1)
-      param2 = it.getString(ARG_PARAM2)
-    }
   }
 
   override fun onCreateView(
     inflater: LayoutInflater, container: ViewGroup?,
     savedInstanceState: Bundle?
   ): View? {
-
     val view = inflater.inflate(R.layout.fragment_style, container, false)
     mapView = view.findViewById<MapView>(R.id.mapview)
     mapView.onCreate(savedInstanceState);
@@ -49,25 +46,6 @@ class StyleFragment : Fragment(), OnMapReadyCallback {
     return view
   }
 
-  companion object {
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment FirstFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    @JvmStatic
-    fun newInstance(param1: String, param2: String) =
-      FirstFragment().apply {
-        arguments = Bundle().apply {
-          putString(ARG_PARAM1, param1)
-          putString(ARG_PARAM2, param2)
-        }
-      }
-  }
   override fun onMapReady(googleMap: GoogleMap?) {
     println("fire!!!!!!!!!!!!!!!!")
     googleMap?.apply {
@@ -78,6 +56,45 @@ class StyleFragment : Fragment(), OnMapReadyCallback {
           .title("Marker in Sydney")
       )
     }
+    val activity_context = requireActivity().applicationContext
+    fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity_context)
+    if (ActivityCompat.checkSelfPermission(
+        activity_context,
+        Manifest.permission.ACCESS_FINE_LOCATION
+      ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+        activity_context,
+        Manifest.permission.ACCESS_COARSE_LOCATION
+      ) != PackageManager.PERMISSION_GRANTED
+    ) {
+      // TODO: Consider calling
+      //    ActivityCompat#requestPermissions
+      // here to request the missing permissions, and then overriding
+      //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+      //                                          int[] grantResults)
+      // to handle the case where the user grants the permission. See the documentation
+      // for ActivityCompat#requestPermissions for more details.
+      return
+    }
+    fusedLocationClient.lastLocation
+      .addOnSuccessListener { location : Location? ->
+        // Got last known location. In some rare situations this can be null.
+        println(location)
+        if (location != null) {
+          val latitude = location.latitude
+          val longitude = location.longitude
+          googleMap?.apply {
+            val test = LatLng(latitude, longitude)
+            addMarker(
+              MarkerOptions()
+                .position(test)
+                .title("Marker in Japan")
+            )
+          }
+        }
+      }
+      .addOnFailureListener {
+        println("failed")
+      }
   }
 
   override fun onResume() {
@@ -114,43 +131,5 @@ class StyleFragment : Fragment(), OnMapReadyCallback {
 //        .title("Marker in Sydney")
 //    )
 //    mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
-//
-//    // Use fields to   define the data types to return.
-//    val placeFields: List<Place.Field> = Arrays.asList(Place.Field.NAME)
-//
-//    // Use the builder to create a FindCurrentPlaceRequest.
-//    val request = FindCurrentPlaceRequest.builder(placeFields).build()
-//
-//    // Call findCurrentPlace and handle the response (first check that the user has granted permission).
-//
-//    // Initialize Places.
-//    Places.initialize(getApplicationContext(), BuildConfig.GOOGLE_MAP_API_KEY)
-//
-//    // Create a new Places client instance.
-//    val placesClient = Places.createClient(getApplicationContext())
-//
-//    if (ContextCompat.checkSelfPermission(
-//        getApplicationContext(),
-//        ACCESS_FINE_LOCATION
-//      ) == PackageManager.PERMISSION_GRANTED
-//    ) {
-//      placesClient.findCurrentPlace(request).addOnSuccessListener { response ->
-//        for (placeLikelihood in response.getPlaceLikelihoods()) {
-//          println(placeLikelihood.place.name)
-//        }
-//      }.addOnFailureListener { exception ->
-//        if (exception is ApiException) {
-//          val apiException = exception as ApiException
-//          println(apiException.statusCode)
-//        }
-//      }
-//    } else {
-//      // A local method to request required permissions;
-//      // See https://developer.android.com/training/permissions/requesting
-//      // getLocationPermission()
-//      println("getLocationPermission")
-//
-//    }
-//
 //  }
 }
