@@ -1,7 +1,6 @@
 package io.github.reservationbytom.view.ui
 
 import android.Manifest
-import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
@@ -12,12 +11,14 @@ import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import io.github.reservationbytom.R
+
 
 /**
  * A simple [Fragment] subclass.
@@ -76,7 +77,7 @@ class StyleFragment : Fragment(), OnMapReadyCallback {
       return
     }
     fusedLocationClient.lastLocation
-      .addOnSuccessListener { location : Location? ->
+      .addOnSuccessListener { location: Location? ->
         // Got last known location. In some rare situations this can be null.
         println(location)
         if (location != null) {
@@ -89,6 +90,12 @@ class StyleFragment : Fragment(), OnMapReadyCallback {
                 .position(test)
                 .title("Marker in Japan")
             )
+          }
+          val cu = CameraUpdateFactory.newLatLngZoom(
+            LatLng(latitude, longitude), 16f
+          )
+          if (googleMap != null) {
+            googleMap.moveCamera(cu)
           }
         }
       }
