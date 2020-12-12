@@ -16,6 +16,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import io.github.reservationbytom.R
 
@@ -25,7 +26,7 @@ import io.github.reservationbytom.R
  * Use the [FirstFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class StyleFragment : Fragment(), OnMapReadyCallback {
+class StyleFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
   private lateinit var mMap: GoogleMap
   private lateinit var mapView: MapView
@@ -96,6 +97,7 @@ class StyleFragment : Fragment(), OnMapReadyCallback {
           )
           if (googleMap != null) {
             googleMap.moveCamera(cu)
+            googleMap.setOnMarkerClickListener(this)
           }
         }
       }
@@ -122,6 +124,11 @@ class StyleFragment : Fragment(), OnMapReadyCallback {
   override fun onLowMemory() {
     super.onLowMemory()
     mapView.onLowMemory()
+  }
+
+  override fun onMarkerClick(p0: Marker?): Boolean {
+    println("dada")
+    return true
   }
 
 //  override fun onMapReady(googleMap: GoogleMap?) {
