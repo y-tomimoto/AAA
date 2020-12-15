@@ -127,6 +127,7 @@ class StyleFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickLis
   }
 
   override fun onMarkerClick(p0: Marker?): Boolean {
+    println(p0?.title)
     println("dada")
     return true
   }
