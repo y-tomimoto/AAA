@@ -11,6 +11,8 @@ import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
@@ -23,6 +25,9 @@ import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
+  val selectedButtonLiveData: LiveData<Boolean> by lazy { selectedButtonMutableLiveData }
+  private val selectedButtonMutableLiveData = MutableLiveData<Boolean>()
+
   val MY_BACKGROUND_JOB = 0
   private val REQUEST_CODE = 1000
   private lateinit var db: SQLiteDatabase
@@ -111,5 +116,10 @@ class MainActivity : AppCompatActivity() {
       .addToBackStack("rest")
       .replace(id.fragment_container, restFragment, null)
       .commit()
+  }
+
+  fun onClickJoinButton() {
+    TODO("Not yet implemented")
+    println("dadda")
   }
 }

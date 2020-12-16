@@ -14,13 +14,14 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import io.github.reservationbytom.R
+import io.github.reservationbytom.databinding.DialogFragmentBottomSheetBinding
 
 /**
  * BottomSheetDialogFragment
  */
 class CustomBottomSheetFragment : BottomSheetDialogFragment() {
 
-  private lateinit var binding: DialogFragmentBottomSheetBinding
+  private lateinit var binding: DialogFragmentBottomSheetBinding // 確かここはlayout fileを指定する必要がありそう
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -54,7 +55,7 @@ class CustomBottomSheetFragment : BottomSheetDialogFragment() {
     setDialogMatchParent()
   }
 
-  override fun getTheme(): Int = R.style.BottomSheetDialogTheme
+//  override fun getTheme(): Int = R.style.BottomSheetDialogTheme
 
   override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
     val bottomSheetDialog =
