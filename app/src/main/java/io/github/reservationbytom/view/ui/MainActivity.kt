@@ -25,6 +25,8 @@ import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
+
+
   val selectedButtonLiveData: LiveData<Boolean> by lazy { selectedButtonMutableLiveData }
   private val selectedButtonMutableLiveData = MutableLiveData<Boolean>()
 
@@ -32,7 +34,6 @@ class MainActivity : AppCompatActivity() {
   private val REQUEST_CODE = 1000
   private lateinit var db: SQLiteDatabase
   private lateinit var bottomNavigationView: BottomNavigationView
-
 
   // Jobをsetする関数 : https://developer.android.com/topic/performance/background-optimization?hl=ja
   fun scheduleJob(context: Context) {
@@ -48,7 +49,6 @@ class MainActivity : AppCompatActivity() {
       .setPeriodic(Calendar.MINUTE.toLong() * 15) // 15分ごとしか無理: https://medium.com/@yonatanvlevin/the-minimum-interval-for-periodicwork-is-15-minutes-same-as-jobscheduler-periodic-job-eb2d63716d1f
       .build()
     jobScheduler.schedule(job)
-
   }
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -94,10 +94,7 @@ class MainActivity : AppCompatActivity() {
     if (savedInstanceState == null) {
       // val fragment = RestListFragment()
       // https://stackoverflow.com/questions/64529217/unresolved-reference-error-in-kotlin-bottom-navigation-setonnavigationitemselec
-      println("dada")
-       // : https://qiita.com/superman9387/items/d373c8bddfe2243a49a7
-
-      println("no fire fragment")
+      // : https://qiita.com/superman9387/items/d373c8bddfe2243a49a7
 //      supportFragmentManager
 //        .beginTransaction()
 //        .add(
@@ -122,4 +119,5 @@ class MainActivity : AppCompatActivity() {
     TODO("Not yet implemented")
     println("dadda")
   }
+
 }

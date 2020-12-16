@@ -84,10 +84,11 @@ class CustomBottomSheetFragment : BottomSheetDialogFragment() {
   fun showDialog(fragmentManager: FragmentManager) {
     if (!isShowingDialog(
         fragmentManager,
-        BottomSheetDialogFragment::class.java.simpleName
+        CustomBottomSheetFragment::class.java.simpleName
       )
     ) {
-      show(fragmentManager, BottomSheetDialogFragment::class.java.simpleName)
+      println("fragmentを展開する")
+      show(fragmentManager, CustomBottomSheetFragment::class.java.simpleName)
     }
   }
 

@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -49,7 +50,6 @@ class StyleFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickLis
   }
 
   override fun onMapReady(googleMap: GoogleMap?) {
-    println("fire!!!!!!!!!!!!!!!!")
     googleMap?.apply {
       val sydney = LatLng(-33.852, 151.211)
       addMarker(
@@ -58,6 +58,7 @@ class StyleFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickLis
           .title("Marker in Sydney")
       )
     }
+
     val activity_context = requireActivity().applicationContext
     fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity_context)
     if (ActivityCompat.checkSelfPermission(
@@ -109,6 +110,10 @@ class StyleFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickLis
   override fun onResume() {
     super.onResume()
     mapView.onResume()
+    // Onresume で call する必要がある: https://qiita.com/nein37/items/32613e9acd9558566c5e
+    // 位置情報の表示が終わったあとで、bottomsheetを展開する
+    CustomBottomSheetFragment().showDialog(fragmentManager = this.childFragmentManager)
+    // CustomBottomSheetFragment().showDialog(fragmentManager = this.parentFragmentManager)
   }
 
   override fun onPause() {
