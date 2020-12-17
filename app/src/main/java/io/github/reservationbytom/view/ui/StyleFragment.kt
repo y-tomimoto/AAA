@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
+import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -19,6 +20,7 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import io.github.reservationbytom.R
 
 
@@ -46,6 +48,15 @@ class StyleFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickLis
     mapView = view.findViewById<MapView>(R.id.mapview)
     mapView.onCreate(savedInstanceState);
     mapView.getMapAsync(this);
+    // bottomSheetを取得する
+    val bottomSheetView = view.findViewById<NestedScrollView>(R.id.bottomSheet)
+    val m = BottomSheetBehavior.from(bottomSheetView)
+    m.state = BottomSheetBehavior.STATE_EXPANDED;
+    println(m.peekHeight)
+    m.peekHeight = 300
+    println(m.peekHeight)
+    println("=====")
+    println(m.state)
     return view
   }
 
@@ -112,7 +123,7 @@ class StyleFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickLis
     mapView.onResume()
     // Onresume で call する必要がある: https://qiita.com/nein37/items/32613e9acd9558566c5e
     // 位置情報の表示が終わったあとで、bottomsheetを展開する
-    CustomBottomSheetFragment().showDialog(fragmentManager = this.childFragmentManager)
+    // CustomBottomSheetFragment().showDialog(fragmentManager = this.childFragmentManager)
     // CustomBottomSheetFragment().showDialog(fragmentManager = this.parentFragmentManager)
   }
 

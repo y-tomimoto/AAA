@@ -19,6 +19,7 @@ import io.github.reservationbytom.databinding.DialogFragmentBottomSheetBinding
 /**
  * BottomSheetDialogFragment
  */
+
 class CustomBottomSheetFragment : BottomSheetDialogFragment() {
 
   private lateinit var binding: DialogFragmentBottomSheetBinding // 確かここはlayout fileを指定する必要がありそう

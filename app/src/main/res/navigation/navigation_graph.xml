@@ -12,7 +12,7 @@
 
   <fragment
     android:id="@+id/test01"
-    android:name="io.github.reservationbytom.view.ui.StyleFragment"
+    android:name="io.github.reservationbytom.view.ui.TestFragment"
     android:label="fragment_first" />
 
   <fragment
