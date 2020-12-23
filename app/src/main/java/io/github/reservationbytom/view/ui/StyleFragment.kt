@@ -22,6 +22,8 @@ import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import io.github.reservationbytom.R
+import io.github.reservationbytom.service.model.Mock
+import io.github.reservationbytom.service.repository.MockRepository
 
 
 /**
@@ -69,7 +71,7 @@ class StyleFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickLis
           .title("Marker in Sydney")
       )
     }
-
+    // 現在地を取得する
     val activity_context = requireActivity().applicationContext
     fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity_context)
     if (ActivityCompat.checkSelfPermission(
@@ -94,6 +96,7 @@ class StyleFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickLis
         // Got last known location. In some rare situations this can be null.
         println(location)
         if (location != null) {
+          // mapViewの初期位置をrenderする
           val latitude = location.latitude
           val longitude = location.longitude
           googleMap?.apply {
@@ -111,11 +114,32 @@ class StyleFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickLis
             googleMap.moveCamera(cu)
             googleMap.setOnMarkerClickListener(this)
           }
+          // 初期位置から周辺のRestaurantの口コミを取得し、それをmapのコメントに反映する
+          val m = MockRepository()
+          val restList = m.getRestaurants(latitude,longitude) // ここはcoroutineで実行したい
+          // restListをmapiconとしてぶっ刺しまくる
+          if (googleMap != null) {
+            addMarkers(googleMap,restList)
+          }
         }
       }
       .addOnFailureListener {
         println("failed")
       }
+  }
+
+  fun addMarkers (gMap: GoogleMap,restList: List<Mock>): Unit {
+    var latlng: LatLng
+    restList.forEach{ rest ->
+      println(rest.id)
+      println(rest.name)
+      latlng = LatLng(rest.latitude, rest.longitude)
+      gMap.addMarker(
+        MarkerOptions()
+          .position(latlng)
+          .title(rest.name)
+      )
+    }
   }
 
   override fun onResume() {
