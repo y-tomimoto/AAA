@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
 import androidx.core.widget.NestedScrollView
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -21,6 +22,7 @@ import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import io.github.reservationbytom.R
+import io.github.reservationbytom.databinding.FragmentStyleBinding
 import io.github.reservationbytom.service.model.Mock
 import io.github.reservationbytom.service.repository.MockRepository
 
@@ -31,7 +33,7 @@ import io.github.reservationbytom.service.repository.MockRepository
  * create an instance of this fragment.
  */
 class StyleFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
-
+  private lateinit var binding:FragmentStyleBinding
   private lateinit var mMap: GoogleMap
   private lateinit var mapView: MapView
   // 位置情報を取得できるクラス: https://developer.android.com/training/location/retrieve-current
@@ -45,6 +47,9 @@ class StyleFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickLis
     inflater: LayoutInflater, container: ViewGroup?,
     savedInstanceState: Bundle?
   ): View? {
+    binding = DataBindingUtil.setContentView(requireActivity(),R.layout.fragment_style)
+    binding.user = "test"
+
     val view = inflater.inflate(R.layout.fragment_style, container, false)
     mapView = view.findViewById<MapView>(R.id.mapview)
     mapView.onCreate(savedInstanceState);

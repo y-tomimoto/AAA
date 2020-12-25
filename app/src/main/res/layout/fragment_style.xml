@@ -1,30 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent">
 
-  <com.google.android.gms.maps.MapView
+<layout>
+  <data>
+    <variable name="user" type="String" />
+  </data>
+  <androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/mapview"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"/>
+    android:layout_height="match_parent">
 
-  <androidx.core.widget.NestedScrollView
-    android:id="@+id/bottomSheet"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:layout_behavior="@string/bottom_sheet_behavior"
-    app:behavior_peekHeight="300dp"
-    android:background="@color/colorPrimary">
+    <com.google.android.gms.maps.MapView
+      xmlns:android="http://schemas.android.com/apk/res/android"
+      android:id="@+id/mapview"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"/>
 
-    <TextView
+    <androidx.core.widget.NestedScrollView
+      android:id="@+id/bottomSheet"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:text="Bottom Sheet Layout Foreground" />
+      app:layout_behavior="@string/bottom_sheet_behavior"
+      app:behavior_peekHeight="300dp"
+      android:background="@color/colorPrimary">
 
-  </androidx.core.widget.NestedScrollView>
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@{user}" />
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </androidx.core.widget.NestedScrollView>
+
+  </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>
