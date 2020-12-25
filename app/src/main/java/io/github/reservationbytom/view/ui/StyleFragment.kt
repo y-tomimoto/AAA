@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -71,6 +70,15 @@ class StyleFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickLis
           .title("Marker in Sydney")
       )
     }
+
+    val marker1 = googleMap?.addMarker(
+      MarkerOptions()
+        .position(LatLng(35.7078999,139.6335999))
+        .title("test")
+    )
+    if (marker1 != null) {
+      marker1.tag = "うぉらーーーーー"
+    }
     // 現在地を取得する
     val activity_context = requireActivity().applicationContext
     fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity_context)
@@ -116,10 +124,10 @@ class StyleFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickLis
           }
           // 初期位置から周辺のRestaurantの口コミを取得し、それをmapのコメントに反映する
           val m = MockRepository()
-          val restList = m.getRestaurants(latitude,longitude) // ここはcoroutineで実行したい
+          val restList = m.getRestaurants(latitude, longitude) // ここはcoroutineで実行したい
           // restListをmapiconとしてぶっ刺しまくる
           if (googleMap != null) {
-            addMarkers(googleMap,restList)
+            addMarkers(googleMap, restList)
           }
         }
       }
@@ -128,7 +136,7 @@ class StyleFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickLis
       }
   }
 
-  fun addMarkers (gMap: GoogleMap,restList: List<Mock>): Unit {
+  fun addMarkers(gMap: GoogleMap, restList: List<Mock>): Unit {
     var latlng: LatLng
     restList.forEach{ rest ->
       println(rest.id)
@@ -168,7 +176,7 @@ class StyleFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickLis
 
   override fun onMarkerClick(p0: Marker?): Boolean {
     println(p0?.title)
-    println("dada")
+    println(p0?.tag)
     return true
   }
 
