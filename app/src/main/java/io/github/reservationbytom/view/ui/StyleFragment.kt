@@ -11,8 +11,10 @@ import androidx.core.app.ActivityCompat
 import androidx.core.widget.NestedScrollView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
@@ -25,6 +27,7 @@ import io.github.reservationbytom.R
 import io.github.reservationbytom.databinding.FragmentStyleBinding
 import io.github.reservationbytom.service.model.Mock
 import io.github.reservationbytom.service.repository.MockRepository
+import io.github.reservationbytom.viewmodel.BottomSheetViewModel
 
 
 /**
@@ -33,6 +36,9 @@ import io.github.reservationbytom.service.repository.MockRepository
  * create an instance of this fragment.
  */
 class StyleFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
+  // GoogleMapと、店のリストを表示するFragmentになる。
+
+  private lateinit var viewModel: BottomSheetViewModel
   private lateinit var binding:FragmentStyleBinding
   private lateinit var mMap: GoogleMap
   private lateinit var mapView: MapView
@@ -47,23 +53,46 @@ class StyleFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickLis
     inflater: LayoutInflater, container: ViewGroup?,
     savedInstanceState: Bundle?
   ): View? {
-    binding = DataBindingUtil.setContentView(requireActivity(),R.layout.fragment_style)
-    binding.user = "test"
 
-    val view = inflater.inflate(R.layout.fragment_style, container, false)
-    mapView = view.findViewById<MapView>(R.id.mapview)
+    // bottomSheetにViewModelを付与
+    viewModel = ViewModelProvider(this).get(BottomSheetViewModel::class.java) // AndroidViewModelを継承した場合、インスタンス化はViewModelProvider経由で行う
+    binding = DataBindingUtil.inflate(inflater,R.layout.fragment_style,container,false) // bindingクラスを生成
+    binding.vm = viewModel // viewModelをsetしている
+    binding.lifecycleOwner = this // LiveDataが値の更新を検知するように設定する
+
+//    viewModel.bottomSheetText.observe(viewLifecycleOwner, Observer {
+//      println("updated")
+//    })
+//    viewModel.updateBottomSheetText("test")
+//    viewModel.updateBottomSheetText("dadadadada")
+//    println(viewModel.bottomSheetText.value)
+
+    // MapView
+    mapView = binding.mapview
     mapView.onCreate(savedInstanceState);
     mapView.getMapAsync(this);
-    // bottomSheetを取得する
-    val bottomSheetView = view.findViewById<NestedScrollView>(R.id.bottomSheet)
+
+    // BottomSheet
+    val bottomSheetView = binding.bottomSheet
     val m = BottomSheetBehavior.from(bottomSheetView)
     m.state = BottomSheetBehavior.STATE_EXPANDED;
-    println(m.peekHeight)
     m.peekHeight = 300
-    println(m.peekHeight)
-    println("=====")
-    println(m.state)
-    return view
+    return binding.root
+
+//    val view = inflater.inflate(R.layout.fragment_style, container, false)
+//    mapView = view.findViewById<MapView>(R.id.mapview)
+//    mapView.onCreate(savedInstanceState);
+//    mapView.getMapAsync(this);
+//    val bottomSheetView = view.findViewById<NestedScrollView>(R.id.bottomSheet)
+//    val m = BottomSheetBehavior.from(bottomSheetView)
+//    m.state = BottomSheetBehavior.STATE_EXPANDED;
+//    println(m.peekHeight)
+//    m.peekHeight = 300
+//    println(m.peekHeight)
+//    println("=====")
+//    println(m.state)
+//    return view
+
   }
 
   override fun onMapReady(googleMap: GoogleMap?) {
@@ -95,6 +124,7 @@ class StyleFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickLis
         Manifest.permission.ACCESS_COARSE_LOCATION
       ) != PackageManager.PERMISSION_GRANTED
     ) {
+      println("権限ないよ")
       // TODO: Consider calling
       //    ActivityCompat#requestPermissions
       // here to request the missing permissions, and then overriding
@@ -107,7 +137,7 @@ class StyleFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickLis
     fusedLocationClient.lastLocation
       .addOnSuccessListener { location: Location? ->
         // Got last known location. In some rare situations this can be null.
-        println(location)
+        println(location) // なぜかここがnullだぜ。
         if (location != null) {
           // mapViewの初期位置をrenderする
           val latitude = location.latitude
@@ -134,6 +164,29 @@ class StyleFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickLis
           if (googleMap != null) {
             addMarkers(googleMap, restList)
           }
+        } else {
+          // 一度電源切れたらこうなるみたい: https://qiita.com/outerlet/items/78941b0b352c7003c01f
+          println("nullだぜ。だから自分で取得してやるぜ。")
+
+          // requestを生成
+          val request = LocationRequest.create()
+            .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+            .setInterval(500)
+            .setFastestInterval(300)
+
+          // 生成したrequestを投げる
+          fusedLocationClient
+            .requestLocationUpdates(
+              request,
+              object : LocationCallback() {
+                override fun onLocationResult(result: LocationResult) {
+                  // (b)LocationUpdates で得た時の処理
+                  // 現在地だけ欲しいので、1回取得したらすぐに外す
+                  fusedLocationClient.removeLocationUpdates(this)
+                }
+              },
+              null
+            )
         }
       }
       .addOnFailureListener {
@@ -180,6 +233,8 @@ class StyleFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickLis
   }
 
   override fun onMarkerClick(p0: Marker?): Boolean {
+    println("fire") // なぜか発火しない。
+    p0?.title?.let { viewModel.updateButton(it) }
     println(p0?.title)
     println(p0?.tag)
     return true

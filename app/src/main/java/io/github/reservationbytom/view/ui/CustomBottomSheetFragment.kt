@@ -15,6 +15,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import io.github.reservationbytom.R
 import io.github.reservationbytom.databinding.DialogFragmentBottomSheetBinding
+import io.github.reservationbytom.databinding.FragmentStyleBinding
+import io.github.reservationbytom.viewmodel.BottomSheetViewModel
 
 /**
  * BottomSheetDialogFragment
@@ -23,6 +25,7 @@ import io.github.reservationbytom.databinding.DialogFragmentBottomSheetBinding
 class CustomBottomSheetFragment : BottomSheetDialogFragment() {
 
   private lateinit var binding: DialogFragmentBottomSheetBinding // 確かここはlayout fileを指定する必要がありそう
+  private lateinit var viewModel: BottomSheetViewModel
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -41,7 +44,6 @@ class CustomBottomSheetFragment : BottomSheetDialogFragment() {
         false
       )
     binding.lifecycleOwner = this
-
     binding.button.setOnClickListener {
       (activity as MainActivity).onClickJoinButton()
       dismiss()

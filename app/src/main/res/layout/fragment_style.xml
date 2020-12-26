@@ -2,7 +2,7 @@
 
 <layout>
   <data>
-    <variable name="user" type="String" />
+    <variable name="vm" type="io.github.reservationbytom.viewmodel.BottomSheetViewModel" />
   </data>
   <androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -28,7 +28,7 @@
       <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@{user}" />
+        android:text="@{vm.buttonText}" />
 
     </androidx.core.widget.NestedScrollView>
 
