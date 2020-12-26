@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: "kotlin-kapt"
+apply plugin: 'com.google.gms.google-services'
 
 // import credentials from properties file
 def apikeyPropertiesFile = rootProject.file("apikey.properties")
@@ -13,9 +14,14 @@ android {
   compileSdkVersion 29
   buildToolsVersion "29.0.3"
 
-  dataBinding {
-    enabled = true
+
+  buildFeatures {
+    dataBinding true
   }
+
+//  dataBinding {
+//    enabled true
+//  }
 
   defaultConfig {
     minSdkVersion 24
@@ -72,7 +78,9 @@ android {
 }
 
 dependencies {
-  // https://developer.android.com/training/data-storage/room?hl=ja
+  implementation 'com.google.firebase:firebase-firestore:22.0.1'
+
+  // Reffer to https://developer.android.com/training/data-storage/room?hl=ja
   def room_version = "2.2.5"
   implementation "androidx.room:room-runtime:$room_version"
   kapt "androidx.room:room-compiler:$room_version"

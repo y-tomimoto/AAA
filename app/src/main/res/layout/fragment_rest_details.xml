@@ -11,7 +11,7 @@
 
     <variable
       name="restViewModel"
-      type="io.github.reservationbytom.viewmodel.RestViewModel" />
+      type="com.company.takitate.viewmodel.RestViewModel" />
 
   </data>
 

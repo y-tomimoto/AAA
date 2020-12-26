@@ -1,9 +1,9 @@
-package io.github.reservationbytom
+package com.company.takitate
 
 import com.google.gson.GsonBuilder
-import io.github.reservationbytom.service.repository.GNaviRepository
-import io.github.reservationbytom.service.repository.GNaviService
-import io.github.reservationbytom.service.repository.HTTPS_API_GNAVI_URL
+import com.company.takitate.service.repository.GNaviRepository
+import com.company.takitate.service.repository.GNaviService
+import com.company.takitate.service.repository.HTTPS_API_GNAVI_URL
 import kotlinx.coroutines.runBlocking
 import org.junit.Test
 
