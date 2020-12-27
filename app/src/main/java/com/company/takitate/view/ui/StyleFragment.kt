@@ -59,7 +59,7 @@ class StyleFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickLis
     println(inflater)
     println(R.layout.fragment_style)
     println(container)
-    binding = DataBindingUtil.inflate(inflater,R.layout.fragment_style,container,false) // bindingクラスを生成
+    binding = DataBindingUtil.inflate(inflater,R.layout.fragment_style, container,false) // bindingクラスを生成
     binding.vm = viewModel // viewModelをsetしている
     binding.lifecycleOwner = this // LiveDataが値の更新を検知するように設定する
 
