@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/navigation_graph"
+  app:startDestination="@id/navigation_style">
+
+  <fragment
+    android:id="@+id/navigation_style"
+    android:name="com.company.takitate.ui.map.MapFragment"
+    android:label="map" />
+
+  <fragment
+    android:id="@+id/test01"
+    android:name="com.company.takitate.ui.test.TestFragment"
+    android:label="test" />
+
+
+  <fragment
+    android:id="@+id/test02"
+    android:name="com.company.takitate.ui.test.TestFragment"
+    android:label="test" />
+
+  <fragment
+    android:id="@+id/test03"
+    android:name="com.company.takitate.ui.test.TestFragment"
+    android:label="test" />
+
+</navigation>
