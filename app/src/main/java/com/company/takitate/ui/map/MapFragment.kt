@@ -60,7 +60,10 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
         )
       }
 
-      googleMap?.moveCamera(cu)
+      if (googleMap != null) {
+        googleMap.moveCamera(cu)
+        googleMap.setOnMarkerClickListener(this)
+      }
     }
 
     val lm = MyLocationManager(context = activity.applicationContext, activity = activity)
@@ -69,7 +72,8 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
   }
 
   override fun onMarkerClick(p0: Marker?): Boolean {
-    TODO("Not yet implemented")
+    println(p0)
+    return true
   }
 
   override fun onResume() {

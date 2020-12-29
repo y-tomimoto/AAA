@@ -12,7 +12,7 @@
 
   <fragment
     android:id="@+id/test01"
-    android:name="com.company.takitate.ui.test.TestFragment"
+    android:name="com.company.takitate.ui.map.MapBottomSheetFragment"
     android:label="test" />
 
 
