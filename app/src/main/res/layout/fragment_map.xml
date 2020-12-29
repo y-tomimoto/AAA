@@ -12,4 +12,20 @@
       android:layout_width="match_parent"
       android:layout_height="match_parent" />
 
+    <androidx.core.widget.NestedScrollView
+      android:id="@+id/bottomSheet"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      app:layout_behavior="@string/bottom_sheet_behavior"
+      app:behavior_peekHeight="0dp"
+      android:background="@color/black">
+
+      <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragment2"
+        android:name="com.company.takitate.ui.map.MapBottomSheetFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    </androidx.core.widget.NestedScrollView>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

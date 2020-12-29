@@ -1,24 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  tools:context=".ui.map.MapBottomSheetFragment">
+  android:orientation="vertical"
+  android:id="@+id/contentBox"
+  android:layout_height="wrap_content">
 
-  <androidx.core.widget.NestedScrollView
-    android:id="@+id/bottomSheet"
+  <View
+    android:layout_marginTop="60dp"
+    android:layout_marginStart="60dp"
+    android:layout_marginEnd="60dp"
+    android:background="@color/contentA"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:layout_behavior="@string/bottom_sheet_behavior"
-    app:behavior_peekHeight="300dp"
-    android:background="@color/white">
+    android:layout_height="500dp"/>
 
-    <TextView
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:text="test"
-      android:background="@color/black"/>
+  <View
+    android:layout_marginTop="40dp"
+    android:layout_marginStart="60dp"
+    android:layout_marginEnd="60dp"
+    android:background="@color/contentB"
+    android:layout_width="match_parent"
+    android:layout_height="500dp"/>
 
-  </androidx.core.widget.NestedScrollView>
-</FrameLayout>
+  <View
+    android:layout_marginTop="40dp"
+    android:layout_marginStart="60dp"
+    android:layout_marginEnd="60dp"
+    android:layout_marginBottom="10dp"
+    android:background="@color/contentC"
+    android:layout_width="match_parent"
+    android:layout_height="500dp"/>
+
+</LinearLayout>
+

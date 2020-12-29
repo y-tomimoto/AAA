@@ -46,6 +46,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
 
   override fun onMapReady(googleMap: GoogleMap?) {
 
+    // LocationManagerに渡すCallback。FusedLocationProvider内のTaskAPIでは戻り値を指定できないため。
     val getLastLocationCallback = fun(location: Location) {
 
       val currentPosition = LatLng(location.latitude, location.longitude)
@@ -72,7 +73,8 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
   }
 
   override fun onMarkerClick(p0: Marker?): Boolean {
-    println(p0)
+    // TODO: BottomSheetViewを表示
+    // TODO: BottomSheetView内に店舗詳細を表示
     return true
   }
 
