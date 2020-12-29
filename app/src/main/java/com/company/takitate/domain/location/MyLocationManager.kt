@@ -49,9 +49,30 @@ class MyLocationManager (private val context: Context, private val activity: Act
 
     fusedLocationClient.lastLocation
       .addOnSuccessListener { location: Location? ->
-        println("success")
         if (location != null) {
           callback(location)
+        } else {
+
+          // requestを生成
+          val request = LocationRequest.create()
+            .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+            .setInterval(500)
+            .setFastestInterval(300)
+
+          // 生成したrequestを投げる
+          fusedLocationClient
+            .requestLocationUpdates(
+              request,
+              object : LocationCallback() {
+                override fun onLocationResult(result: LocationResult) {
+                  for (location in result.locations) {
+                    callback(location)
+                    fusedLocationClient.removeLocationUpdates(this)
+                  }
+                }
+              },
+              null
+            )
         }
       }
       .addOnFailureListener {
