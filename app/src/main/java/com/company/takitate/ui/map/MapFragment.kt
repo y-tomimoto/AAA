@@ -1,14 +1,12 @@
 package com.company.takitate.ui.map
 
-import android.Manifest
 import android.app.Activity
-import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.app.ActivityCompat
+import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import com.company.takitate.R
 import com.company.takitate.domain.location.MyLocationManager
@@ -20,10 +18,13 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+
 
 class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
   private lateinit var mapView: MapView
+  private lateinit var behavior: BottomSheetBehavior<*>
   private lateinit var activity: Activity
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,6 +41,9 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
     mapView = view.findViewById<MapView>(R.id.mapview)
     mapView.onCreate(savedInstanceState);
     mapView.getMapAsync(this);
+
+    behavior = BottomSheetBehavior.from(view.findViewById<NestedScrollView>(R.id.bottomSheet))
+
     return view
 
   }
@@ -73,7 +77,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
   }
 
   override fun onMarkerClick(p0: Marker?): Boolean {
-    // TODO: BottomSheetViewを表示
+    behavior.peekHeight = 250
     // TODO: BottomSheetView内に店舗詳細を表示
     return true
   }
