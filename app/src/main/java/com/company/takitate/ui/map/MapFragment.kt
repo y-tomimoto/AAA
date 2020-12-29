@@ -48,13 +48,33 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
   }
 
   override fun onMapReady(googleMap: GoogleMap?) {
+    /*
+    fun getLocationCallback (location:Location) {
 
+      val currentPosition = LatLng(location.latitude, location.longitude)
+      val cu = CameraUpdateFactory.newLatLngZoom(
+        currentPosition, 16f
+      )
+
+      googleMap?.apply {
+        addMarker(
+          MarkerOptions()
+            .position(currentPosition)
+        )
+      }
+
+      googleMap?.moveCamera(cu)
+    }
+    */
+
+    /*
     locationCallback = object : LocationCallback() {
 
       override fun onLocationResult(locationResult: LocationResult?) {
         locationResult ?: return
+
         for (location in locationResult.locations){
-          println(location)
+
           val currentPosition = LatLng(location.latitude, location.longitude)
           val cu = CameraUpdateFactory.newLatLngZoom(
             currentPosition, 16f
@@ -68,16 +88,33 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
           }
 
           googleMap?.moveCamera(cu)
-
         }
+
       }
     }
+     */
 
+    fun getLastLocationCallback(location: Location) {
+
+      val currentPosition = LatLng(location.latitude, location.longitude)
+      val cu = CameraUpdateFactory.newLatLngZoom(
+        currentPosition, 16f
+      )
+
+      googleMap?.apply {
+        addMarker(
+          MarkerOptions()
+            .position(currentPosition)
+        )
+      }
+
+      googleMap?.moveCamera(cu)
+    }
+
+    val test: (Location)->Unit = ::getLastLocationCallback
 
     val lm = MyLocationManager(context = activity.applicationContext, activity = activity)
-    lm.getLocation(locationCallback)
-
-
+    lm.getLocation(test)
 
   }
 

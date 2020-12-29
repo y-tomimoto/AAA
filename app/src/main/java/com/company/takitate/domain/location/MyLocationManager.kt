@@ -15,7 +15,7 @@ class MyLocationManager (private val context: Context, private val activity: Act
   private var fusedLocationClient: FusedLocationProviderClient =
     LocationServices.getFusedLocationProviderClient(context)
 
-  fun getLocation(callback: LocationCallback){
+  fun getLocation(callback: (location:Location) -> Unit){
 
     // Permission Check
     if (ActivityCompat.checkSelfPermission(
@@ -49,29 +49,34 @@ class MyLocationManager (private val context: Context, private val activity: Act
 
     fusedLocationClient.lastLocation
       .addOnSuccessListener { location: Location? ->
-        // requestを生成
-        val request = LocationRequest.create()
-          .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-          .setInterval(500)
-          .setFastestInterval(300)
-
-        // 生成したrequestを用いてLocationを取得
-        fusedLocationClient
-          .requestLocationUpdates(
-            request,
-            callback, // getLocationから受け取ったcallback
-//            object : LocationCallback() {
-//              override fun onLocationResult(result: LocationResult) {
-//                println("dadada")
-//                fusedLocationClient.removeLocationUpdates(this)
-//              }
-//            },
-            null
-          )
+        println("success")
+        if (location != null) {
+          callback(location)
+        }
       }
       .addOnFailureListener {
         println("failed")
       }
+
+    /*
+    // requestを生成
+    val request = LocationRequest.create()
+      .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+      .setInterval(500)
+      .setFastestInterval(300)
+
+    // 生成したrequestを用いてLocationを取得
+    fusedLocationClient
+      .requestLocationUpdates(
+        request,
+        callback,
+        null
+      )
+    */
+
+
+
+
   }
 }
 
