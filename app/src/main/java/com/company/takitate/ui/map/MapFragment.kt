@@ -26,9 +26,6 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
   private lateinit var mapView: MapView
   private lateinit var activity: Activity
 
-  // For passing location
-  private lateinit var locationCallback: LocationCallback
-
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     activity = requireActivity()
@@ -48,8 +45,8 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
   }
 
   override fun onMapReady(googleMap: GoogleMap?) {
-    /*
-    fun getLocationCallback (location:Location) {
+
+    val getLastLocationCallback = fun(location: Location) {
 
       val currentPosition = LatLng(location.latitude, location.longitude)
       val cu = CameraUpdateFactory.newLatLngZoom(
@@ -65,56 +62,9 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
 
       googleMap?.moveCamera(cu)
     }
-    */
-
-    /*
-    locationCallback = object : LocationCallback() {
-
-      override fun onLocationResult(locationResult: LocationResult?) {
-        locationResult ?: return
-
-        for (location in locationResult.locations){
-
-          val currentPosition = LatLng(location.latitude, location.longitude)
-          val cu = CameraUpdateFactory.newLatLngZoom(
-            currentPosition, 16f
-          )
-
-          googleMap?.apply {
-            addMarker(
-              MarkerOptions()
-                .position(currentPosition)
-            )
-          }
-
-          googleMap?.moveCamera(cu)
-        }
-
-      }
-    }
-     */
-
-    fun getLastLocationCallback(location: Location) {
-
-      val currentPosition = LatLng(location.latitude, location.longitude)
-      val cu = CameraUpdateFactory.newLatLngZoom(
-        currentPosition, 16f
-      )
-
-      googleMap?.apply {
-        addMarker(
-          MarkerOptions()
-            .position(currentPosition)
-        )
-      }
-
-      googleMap?.moveCamera(cu)
-    }
-
-    val test: (Location)->Unit = ::getLastLocationCallback
 
     val lm = MyLocationManager(context = activity.applicationContext, activity = activity)
-    lm.getLocation(test)
+    lm.getLocation(getLastLocationCallback)
 
   }
 
