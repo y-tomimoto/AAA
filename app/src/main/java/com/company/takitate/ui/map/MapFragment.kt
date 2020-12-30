@@ -19,6 +19,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetBehavior.*
 
 
 class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
@@ -43,6 +44,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
     mapView.getMapAsync(this);
 
     behavior = BottomSheetBehavior.from(view.findViewById<NestedScrollView>(R.id.bottomSheet))
+    behavior.state = STATE_HIDDEN
 
     return view
 
@@ -77,11 +79,9 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
   }
 
   override fun onMarkerClick(p0: Marker?): Boolean {
-    // behavior.peekHeight = 250
+    behavior.state = STATE_COLLAPSED
     // behavior.halfExpandedRatio = 0.5F
     // behavior.expandedOffset = 250
-    behavior.expandedOffset = 1
-    // TODO: BottomSheetView内に店舗詳細を表示
     return true
   }
 
