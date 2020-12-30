@@ -77,7 +77,10 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
   }
 
   override fun onMarkerClick(p0: Marker?): Boolean {
-    behavior.peekHeight = 250
+    // behavior.peekHeight = 250
+    // behavior.halfExpandedRatio = 0.5F
+    // behavior.expandedOffset = 250
+    behavior.expandedOffset = 1
     // TODO: BottomSheetView内に店舗詳細を表示
     return true
   }
