@@ -1,34 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="match_parent"
-  android:orientation="vertical"
-  android:id="@+id/contentBox"
-  android:layout_height="wrap_content">
-
-  <View
-    android:layout_marginTop="60dp"
-    android:layout_marginStart="60dp"
-    android:layout_marginEnd="60dp"
-    android:background="@color/contentA"
+<layout>
+  <data>
+    <variable name="vm" type="com.company.takitate.viewmodel.MapBottomSheetViewModel" />
+  </data>
+  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="500dp"/>
+    android:orientation="vertical"
+    android:id="@+id/contentBox"
+    android:layout_height="wrap_content">
 
-  <View
-    android:layout_marginTop="40dp"
-    android:layout_marginStart="60dp"
-    android:layout_marginEnd="60dp"
-    android:background="@color/contentB"
-    android:layout_width="match_parent"
-    android:layout_height="500dp"/>
+    <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@{vm.buttonText}" />
 
-  <View
-    android:layout_marginTop="40dp"
-    android:layout_marginStart="60dp"
-    android:layout_marginEnd="60dp"
-    android:layout_marginBottom="10dp"
-    android:background="@color/contentC"
-    android:layout_width="match_parent"
-    android:layout_height="500dp"/>
+    <View
+      android:layout_marginTop="60dp"
+      android:layout_marginStart="60dp"
+      android:layout_marginEnd="60dp"
+      android:background="@color/contentA"
+      android:layout_width="match_parent"
+      android:layout_height="500dp"/>
 
-</LinearLayout>
+    <View
+      android:layout_marginTop="40dp"
+      android:layout_marginStart="60dp"
+      android:layout_marginEnd="60dp"
+      android:background="@color/contentB"
+      android:layout_width="match_parent"
+      android:layout_height="500dp"/>
+
+    <View
+      android:layout_marginTop="40dp"
+      android:layout_marginStart="60dp"
+      android:layout_marginEnd="60dp"
+      android:layout_marginBottom="10dp"
+      android:background="@color/contentC"
+      android:layout_width="match_parent"
+      android:layout_height="500dp"/>
+
+  </LinearLayout>
+</layout>
 

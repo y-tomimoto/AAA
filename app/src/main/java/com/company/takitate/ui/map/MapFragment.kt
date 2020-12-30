@@ -80,8 +80,6 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
 
   override fun onMarkerClick(p0: Marker?): Boolean {
     behavior.state = STATE_COLLAPSED
-    // behavior.halfExpandedRatio = 0.5F
-    // behavior.expandedOffset = 250
     return true
   }
 

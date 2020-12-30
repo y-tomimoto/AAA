@@ -19,7 +19,7 @@
       app:layout_behavior="@string/bottom_sheet_behavior"
       app:behavior_hideable="true"
       app:behavior_peekHeight="250dp"
-      android:background="@color/black">
+      android:background="@color/white">
 
       <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment2"
