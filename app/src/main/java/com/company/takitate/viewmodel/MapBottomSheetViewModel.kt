@@ -1,11 +1,14 @@
 package com.company.takitate.viewmodel
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 
-class MapBottomSheetViewModel(application: Application) : AndroidViewModel(application) {
+class MapBottomSheetViewModel: ViewModel() {
+
+  init {
+    println("init") // 初期化されているように見える
+  }
 
   // 実際に値がsetされる
   private val _bottomSheetText: MutableLiveData<String> =

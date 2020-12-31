@@ -8,8 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import com.company.takitate.R
 import com.company.takitate.domain.location.MyLocationManager
+import com.company.takitate.viewmodel.MapBottomSheetViewModel
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -22,11 +24,14 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.*
 
 
-class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
+class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener{
 
   private lateinit var mapView: MapView
   private lateinit var behavior: BottomSheetBehavior<*>
   private lateinit var activity: Activity
+
+  // プロパティデリゲートでviewModelを取得する
+  private val viewModel:MapBottomSheetViewModel by activityViewModels()
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -79,7 +84,10 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
   }
 
   override fun onMarkerClick(p0: Marker?): Boolean {
+    // mapをtapした際、下記からbottomSheetを表示
     behavior.state = STATE_COLLAPSED
+    // ViewModelにp0に格納した情報を反映
+    viewModel.updateBottomSheetText("map taped")
     return true
   }
 
