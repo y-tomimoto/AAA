@@ -6,10 +6,6 @@ import androidx.lifecycle.ViewModel
 
 class MapBottomSheetViewModel: ViewModel() {
 
-  init {
-    println("init") // 初期化されているように見える
-  }
-
   // 実際に値がsetされる
   private val _bottomSheetText: MutableLiveData<String> =
     MutableLiveData<String>().also { mutableLiveData ->
@@ -33,6 +29,7 @@ class MapBottomSheetViewModel: ViewModel() {
     MutableLiveData<String>().also { mutableLiveData ->
       mutableLiveData.value = "Ready"
     }
+
   val buttonText: LiveData<String>
     get() = _buttonText
 

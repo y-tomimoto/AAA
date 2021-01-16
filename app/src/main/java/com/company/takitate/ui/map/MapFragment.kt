@@ -10,6 +10,8 @@ import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.company.takitate.R
+import com.company.takitate.data.repository.LocalRepository
+import com.company.takitate.domain.entity.User
 import com.company.takitate.domain.location.MyLocationManager
 import com.company.takitate.viewmodel.MapBottomSheetViewModel
 import com.google.android.gms.location.*
@@ -22,8 +24,10 @@ import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
-
+// このFragmentは、BottomNavigationView内で展開されている
 class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener{
 
   private lateinit var mapView: MapView
@@ -84,10 +88,19 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
   }
 
   override fun onMarkerClick(p0: Marker?): Boolean {
+    // launch は Builder
+    // GlobalScope はコルーチンスコープ
+    GlobalScope.launch {
+      // var userA = User(2,"Yusuke", "Tomimoto")
+      // LocalRepository(activity).insertAll(userA) // ここがsuspend関数
+    }
+
     // mapをtapした際、下記からbottomSheetを表示
     behavior.state = STATE_COLLAPSED
     // ViewModelにp0に格納した情報を反映
-    viewModel.updateBottomSheetText("map taped")
+    // viewModel.updateBottomSheetText("map taped")
+    viewModel.updateButton("map taped")
+
     return true
   }
 
