@@ -4,9 +4,11 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import com.company.takitate.domain.entity.*
 
 @Database(entities = [Review::class, Reviewer::class], version = 2)
+@TypeConverters(DateTimeConverter::class) // TypeConverterについて: https://qiita.com/tkt989/items/d600cf995a5ea41598f6
 abstract class MyDatabase: RoomDatabase() {
 
   abstract fun reviewDao(): ReviewDao

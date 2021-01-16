@@ -105,4 +105,7 @@ dependencies {
 
     // optional - Test helpers
     testImplementation "androidx.room:room-testing:$room_version"
+
+    // for datetime in database: https://qiita.com/tomoima525/items/6d41093faf5df8bf5b77
+    implementation 'net.danlew:android.joda:2.6.0'
 }

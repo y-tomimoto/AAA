@@ -92,7 +92,8 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
     // GlobalScope はコルーチンスコープ
     GlobalScope.launch {
       // var userA = User(2,"Yusuke", "Tomimoto")
-      // LocalRepository(activity).insertAll(userA) // ここがsuspend関数
+      LocalRepository(activity)
+
     }
 
     // mapをtapした際、下記からbottomSheetを表示
