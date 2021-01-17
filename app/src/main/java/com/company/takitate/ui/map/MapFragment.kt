@@ -9,9 +9,10 @@ import android.view.ViewGroup
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.room.Room
 import com.company.takitate.R
-import com.company.takitate.data.repository.LocalRepository
-import com.company.takitate.domain.entity.User
+import com.company.takitate.data.repository.driver.MyDatabase
+import com.company.takitate.domain.entity.Reviewer
 import com.company.takitate.domain.location.MyLocationManager
 import com.company.takitate.viewmodel.MapBottomSheetViewModel
 import com.google.android.gms.location.*
@@ -26,6 +27,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import org.joda.time.DateTime
 
 // このFragmentは、BottomNavigationView内で展開されている
 class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener{
@@ -37,9 +39,18 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
   // プロパティデリゲートでviewModelを取得する
   private val viewModel:MapBottomSheetViewModel by activityViewModels()
 
+  // Roomインスタンスを用意
+  private lateinit var db: MyDatabase
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     activity = requireActivity()
+
+    // dbインスタンスを用意
+    db = Room.databaseBuilder(
+      activity,
+      MyDatabase::class.java, "room-database"
+    ).build()
   }
 
   override fun onCreateView(
@@ -91,9 +102,8 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
     // launch は Builder
     // GlobalScope はコルーチンスコープ
     GlobalScope.launch {
-      // var userA = User(2,"Yusuke", "Tomimoto")
-      LocalRepository(activity)
-
+        var reviewer = Reviewer(birthday = DateTime(),reviewer_id = 1,handle = "john doe")
+        db.reviewerDao().insertReviewer(reviewer)
     }
 
     // mapをtapした際、下記からbottomSheetを表示

@@ -19,6 +19,7 @@ abstract class MyDatabase: RoomDatabase() {
     private var instance: MyDatabase? = null
     private const val databaseName = "RESTAURANT_REVIEW.db"
 
+    // singleton にするためにcompanion: https://blog.mokelab.com/22/room.html
     fun getInstance(context: Context): MyDatabase =
       instance ?: synchronized(this) {
         Room.databaseBuilder(context,

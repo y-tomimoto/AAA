@@ -6,6 +6,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.company.takitate.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import net.danlew.android.joda.JodaTimeAndroid
 
 class MainActivity : AppCompatActivity() {
 
@@ -13,6 +14,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // https://qiita.com/tomoima525/items/6d41093faf5df8bf5b77
+        JodaTimeAndroid.init(this);
         setContentView(R.layout.activity_main)
 
         // bottomNavigationView with navigation: https://developer.android.com/guide/navigation/navigation-ui?hl=ja
