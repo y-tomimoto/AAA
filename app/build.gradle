@@ -108,4 +108,7 @@ dependencies {
 
     // for datetime in database: https://qiita.com/tomoima525/items/6d41093faf5df8bf5b77
     implementation 'net.danlew:android.joda:2.6.0'
+
+    // for Retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
 }
