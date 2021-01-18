@@ -102,7 +102,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
     // launch は Builder
     // GlobalScope はコルーチンスコープ
     GlobalScope.launch {
-        var reviewer = Reviewer(birthday = DateTime(),reviewer_id = 1,handle = "john doe")
+        var reviewer = Reviewer(birthday = DateTime(),reviewer_id = 0,handle = "john doe")
         db.reviewerDao().insertReviewer(reviewer)
     }
 
