@@ -24,7 +24,11 @@ android {
         if (rootProject.file("local.properties").exists()) {
           properties.load(rootProject.file("local.properties").newDataInputStream())
         }
-        manifestPlaceholders = [ mapsApiKey : properties.getProperty("MAPS_API_KEY", "") ]
+        manifestPlaceholders = [
+          mapsApiKey : properties.getProperty("MAPS_API_KEY", ""),
+          recruitApiKey : properties.getProperty("RECRUIT_API_KEY", "")
+        ]
+
 
     }
 
@@ -118,5 +122,8 @@ dependencies {
     def moshi_version = '1.11.0'
     implementation "com.squareup.moshi:moshi:$moshi_version"
     implementation "com.squareup.moshi:moshi-kotlin:$moshi_version"
+
+    // for Logging in Retrofit : https://stackoverflow.com/questions/32514410/logging-with-retrofit-2
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.2.1'
 
 }

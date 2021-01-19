@@ -1,6 +1,10 @@
 package com.company.takitate.domain.entity
 
 data class RecruitAPIResponse(
+  val results: Results,
+  )
+
+data class Results(
     val api_version: String,
     val results_available: Int,
     val results_returned: String,

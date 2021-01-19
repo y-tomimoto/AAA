@@ -2,6 +2,10 @@ package com.company.takitate.data.repository
 
 import com.company.takitate.domain.entity.RecruitAPIResponse
 import com.company.takitate.service.WebService
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -10,11 +14,20 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 
 class RecruitAPIRepository: WebService {
 
-  private val HTTP_API_RECRUIT_URL = "http://webservice.recruit.co.jp/hotpepper/gourmet/v1"
+  private val HTTP_API_RECRUIT_URL = "http://webservice.recruit.co.jp/"
+
+  private val moshi = Moshi.Builder()
+    .addLast(KotlinJsonAdapterFactory()) // Moshi for 1.9.0 ~
+    .build()
+
+  private val interceptor = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY);
+
+  private val client = OkHttpClient.Builder().addInterceptor(interceptor).build();
 
   private val webService = Retrofit.Builder()
     .baseUrl(HTTP_API_RECRUIT_URL)
-    .addConverterFactory(MoshiConverterFactory.create())
+    .client(client)
+    .addConverterFactory(MoshiConverterFactory.create(moshi)) // Moshi Converter : https://gist.github.com/dangets/66dd7bed4b5babaa8cc6d6b7336ba76a
     .build()
     .create(WebService::class.java)
 
@@ -22,9 +35,10 @@ class RecruitAPIRepository: WebService {
     key: String,
     lat: Double,
     lng: Double,
-    range: Int
+    range: Int,
+    format: String,
+    order: Int
   ): RecruitAPIResponse {
-    // Callbackを引数として受け取っている
-    return webService.getRestaurantsByGeocode(key=key,lat=lat,lng=lng,range=range)
+    return webService.getRestaurantsByGeocode(key=key,lat=lat,lng=lng,range=range,format=format, order = order)
   }
 }

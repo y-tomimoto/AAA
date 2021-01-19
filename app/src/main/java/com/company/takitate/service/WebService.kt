@@ -11,6 +11,8 @@ interface WebService {
     @Query("key") key:String,
     @Query("lat") lat:Double,
     @Query("lng") lng:Double,
-    @Query("range") range:Int
+    @Query("range") range:Int,
+    @Query("format") format:String,
+    @Query("order") order:Int,
   ): RecruitAPIResponse
 }
