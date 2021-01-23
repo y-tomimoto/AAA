@@ -9,8 +9,8 @@ import java.sql.Timestamp
 @Entity(tableName = "reviews")
 data class Review(
   @PrimaryKey(autoGenerate = true)
-  val review_id: Int,
-  val reviewer_id: Int,
+  val review_id: String,
+  val reviewer_id: String,
   val restaurant_id: String,
   val comment: String,
   val title: String,

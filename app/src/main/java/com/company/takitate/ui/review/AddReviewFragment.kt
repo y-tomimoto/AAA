@@ -19,6 +19,7 @@ import com.company.takitate.viewmodel.RecruitAPIResponseShopViewModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.joda.time.DateTime
+import java.util.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -72,9 +73,9 @@ class AddReviewFragment : Fragment() {
         val review = viewModel.focusedShop.value?.let {
           Review(
             comment = "まずい",
-            review_id = 1,
+            review_id = UUID.randomUUID().toString(),
             datetime = DateTime(),
-            reviewer_id = 1,
+            reviewer_id = "1",
             restaurant_id = it.id,
             title = "まず過ぎる"
           )
