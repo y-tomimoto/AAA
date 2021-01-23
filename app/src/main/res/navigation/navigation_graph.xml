@@ -8,18 +8,21 @@
   <fragment
     android:id="@+id/navigation_style"
     android:name="com.company.takitate.ui.map.MapFragment"
-    android:label="map" />
+    android:label="map" >
+    <action
+      android:id="@+id/action_Map_to_AddReview"
+      app:destination="@id/add_review" />
+  </fragment>
 
   <fragment
     android:id="@+id/test01"
     android:name="com.company.takitate.ui.map.MapBottomSheetFragment"
-    android:label="test" />
-
+    android:label="test"/>
 
   <fragment
-    android:id="@+id/test02"
-    android:name="com.company.takitate.ui.test.TestFragment"
-    android:label="test" />
+    android:id="@+id/add_review"
+    android:name="com.company.takitate.ui.review.AddReviewFragment"
+    android:label="add_review" />
 
   <fragment
     android:id="@+id/test03"
