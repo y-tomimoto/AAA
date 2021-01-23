@@ -9,14 +9,14 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import com.company.takitate.R
 import com.company.takitate.databinding.FragmentMapBottomSheetBinding
-import com.company.takitate.viewmodel.MapBottomSheetViewModel
+import com.company.takitate.viewmodel.RecruitAPIResponseShopViewModel
 
 class MapBottomSheetFragment : Fragment() {
 
   private lateinit var binding: FragmentMapBottomSheetBinding
 
   // プロパティデリゲートでviewModelを取得する方法
-  private val viewModel:MapBottomSheetViewModel by activityViewModels()
+  private val viewModel:RecruitAPIResponseShopViewModel by activityViewModels()
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)

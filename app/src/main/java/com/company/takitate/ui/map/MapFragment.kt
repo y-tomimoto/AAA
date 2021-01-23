@@ -14,8 +14,9 @@ import androidx.room.Room
 import com.company.takitate.R
 import com.company.takitate.data.repository.driver.MyDatabase
 import com.company.takitate.domain.entity.Reviewer
+import com.company.takitate.domain.entity.Shop
 import com.company.takitate.domain.location.MyLocationManager
-import com.company.takitate.viewmodel.MapBottomSheetViewModel
+import com.company.takitate.viewmodel.RecruitAPIResponseShopViewModel
 import com.company.takitate.viewmodel.RecruitAPIResponseViewModel
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -35,11 +36,12 @@ import org.joda.time.DateTime
 class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener{
 
   private lateinit var mapView: MapView
+  private lateinit var marker: Marker // For tag: https://developers.google.com/maps/documentation/android-sdk/marker?hl=ja
   private lateinit var behavior: BottomSheetBehavior<*>
   private lateinit var activity: Activity
 
   // プロパティデリゲートでviewModelを取得する
-  private val viewModel:MapBottomSheetViewModel by activityViewModels()
+  private val RecruitAPIResponseFocusedShopViewModel:RecruitAPIResponseShopViewModel by activityViewModels()
   private val recruitAPIResponseViewModel:RecruitAPIResponseViewModel by activityViewModels()
 
   // Roomインスタンスを用意
@@ -121,9 +123,10 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
 
     // mapをtapした際、下記からbottomSheetを表示
     behavior.state = STATE_COLLAPSED
-    // ViewModelにp0に格納した情報を反映
-    // viewModel.updateBottomSheetText("map taped")
-    viewModel.updateButton("map taped")
+
+    if (p0 != null) {
+      RecruitAPIResponseFocusedShopViewModel.updateFocusedShop(p0.tag as Shop)
+    }
 
     return true
   }
@@ -154,13 +157,11 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
       viewLifecycleOwner,
       Observer { restaurants ->
         for (value in restaurants.results.shop) {
-          println(value)
-          _googleMap?.apply {
-            addMarker(
+            marker = _googleMap!!.addMarker(
               MarkerOptions()
                 .position(LatLng(value.lat, value.lng))
             )
-          }
+          marker.tag = value // setTagで、内部のmarker objectにpassされる仕様になっていると思う
         }
       })
   }
