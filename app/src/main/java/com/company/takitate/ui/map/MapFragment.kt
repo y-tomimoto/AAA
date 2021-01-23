@@ -1,7 +1,6 @@
 package com.company.takitate.ui.map
 
 import android.app.Activity
-import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,15 +9,14 @@ import android.view.ViewGroup
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.room.Room
-import com.company.takitate.BuildConfig
 import com.company.takitate.R
-import com.company.takitate.data.repository.RecruitAPIRepository
 import com.company.takitate.data.repository.driver.MyDatabase
 import com.company.takitate.domain.entity.Reviewer
 import com.company.takitate.domain.location.MyLocationManager
 import com.company.takitate.viewmodel.MapBottomSheetViewModel
-import com.google.android.gms.location.*
+import com.company.takitate.viewmodel.RecruitAPIResponseViewModel
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
@@ -27,13 +25,11 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetBehavior.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
+import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_COLLAPSED
+import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_HIDDEN
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.joda.time.DateTime
-import retrofit2.HttpException
 
 // このFragmentは、BottomNavigationView内で展開されている
 class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener{
@@ -44,51 +40,23 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
 
   // プロパティデリゲートでviewModelを取得する
   private val viewModel:MapBottomSheetViewModel by activityViewModels()
+  private val recruitAPIResponseViewModel:RecruitAPIResponseViewModel by activityViewModels()
 
   // Roomインスタンスを用意
   private lateinit var db: MyDatabase
 
-  private lateinit var recruitAPIRepository: RecruitAPIRepository
+  // onMapReady外でgoogleMapインスタンスをcallしたい
+  private var _googleMap: GoogleMap? = null
 
-  private var api_key: String? = null
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     activity = requireActivity()
-
     // dbインスタンスを用意
     db = Room.databaseBuilder(
       activity,
       MyDatabase::class.java, "room-database"
     ).build()
-    recruitAPIRepository = RecruitAPIRepository()
-    val coroutineScope = CoroutineScope(context = Dispatchers.Main)
-    val app = context?.packageManager?.getApplicationInfo("com.company.takitate",PackageManager.GET_META_DATA)
-    val bundle = app?.metaData
-    if (bundle != null) {
-        api_key = bundle.getString("com.company.takitate.RECRUIT_API_KEY")
-      }
-    fun getRecruitAPIResponseData() {
-      coroutineScope.launch {
-        try {
-          val recruitAPIResponseData = api_key?.let {
-            recruitAPIRepository.getRestaurantsByGeocode(
-              key = it, lat = 34.67, lng = 135.52, range = 5, format = "json", order= 4
-            )
-          }
-          println(recruitAPIResponseData)
-          // 検索したGitHubリポジトリを画面に表示する
-        } catch (e: HttpException) {
-          // リクエスト失敗時の処理を行う
-            println("failed")
-            println(e)
-            println(e.message())
-        }
-      }
-    }
-    println("=====")
-    getRecruitAPIResponseData()
-    println("=====")
   }
 
   override fun onCreateView(
@@ -110,14 +78,21 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
 
   override fun onMapReady(googleMap: GoogleMap?) {
 
+    _googleMap = googleMap
+
     // LocationManagerに渡すCallback。FusedLocationProvider内のTaskAPIでは戻り値を指定できないため。
     val getLastLocationCallback = fun(location: Location) {
 
       val currentPosition = LatLng(location.latitude, location.longitude)
+
+      // ViewModelの値を現在地によって更新する。
+      recruitAPIResponseViewModel.loadRestaurants(currentPosition)
+
       val cu = CameraUpdateFactory.newLatLngZoom(
         currentPosition, 16f
       )
 
+      // ここをloopすれば良さそう
       googleMap?.apply {
         addMarker(
           MarkerOptions()
@@ -140,7 +115,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
     // launch は Builder
     // GlobalScope はコルーチンスコープ
     GlobalScope.launch {
-        var reviewer = Reviewer(birthday = DateTime(),reviewer_id = 0,handle = "john doe")
+        var reviewer = Reviewer(birthday = DateTime(), reviewer_id = 0, handle = "john doe")
         db.reviewerDao().insertReviewer(reviewer)
     }
 
@@ -171,5 +146,22 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
   override fun onLowMemory() {
     super.onLowMemory()
     mapView.onLowMemory()
+  }
+
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
+    recruitAPIResponseViewModel.recruitAPIResponse.observe(
+      viewLifecycleOwner,
+      Observer { restaurants ->
+        for (value in restaurants.results.shop) {
+          println(value)
+          _googleMap?.apply {
+            addMarker(
+              MarkerOptions()
+                .position(LatLng(value.lat, value.lng))
+            )
+          }
+        }
+      })
   }
 }

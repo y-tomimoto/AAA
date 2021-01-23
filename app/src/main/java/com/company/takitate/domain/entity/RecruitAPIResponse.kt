@@ -59,7 +59,7 @@ data class Shop(
     val show: String,
     val small_area: SmallArea,
     val station_name: String,
-    val sub_genre: SubGenre,
+    val sub_genre: SubGenre?,
     val tatami: String,
     val tv: String,
     val urls: Urls,
@@ -133,3 +133,4 @@ data class Pc(
     val m: String,
     val s: String
 )
+

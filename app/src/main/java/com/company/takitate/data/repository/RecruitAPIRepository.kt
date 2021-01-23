@@ -1,18 +1,17 @@
 package com.company.takitate.data.repository
 
+import android.content.Context
+import android.content.pm.PackageManager
 import com.company.takitate.domain.entity.RecruitAPIResponse
 import com.company.takitate.service.WebService
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
-class RecruitAPIRepository: WebService {
+class RecruitAPIRepository : WebService {
 
   private val HTTP_API_RECRUIT_URL = "http://webservice.recruit.co.jp/"
 
@@ -37,8 +36,9 @@ class RecruitAPIRepository: WebService {
     lng: Double,
     range: Int,
     format: String,
-    order: Int
+    order: Int,
+    count: Int
   ): RecruitAPIResponse {
-    return webService.getRestaurantsByGeocode(key=key,lat=lat,lng=lng,range=range,format=format, order = order)
+    return webService.getRestaurantsByGeocode(key=key,lat=lat,lng=lng,range=range,format=format,order=order,count=count)
   }
 }

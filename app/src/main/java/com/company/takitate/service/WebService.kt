@@ -14,5 +14,6 @@ interface WebService {
     @Query("range") range:Int,
     @Query("format") format:String,
     @Query("order") order:Int,
+    @Query("count") count:Int,
   ): RecruitAPIResponse
 }
