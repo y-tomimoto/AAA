@@ -114,12 +114,6 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
   }
 
   override fun onMarkerClick(p0: Marker?): Boolean {
-    // launch は Builder
-    // GlobalScope はコルーチンスコープ
-    GlobalScope.launch {
-        var reviewer = Reviewer(birthday = DateTime(), reviewer_id = 0, handle = "john doe")
-        db.reviewerDao().insertReviewer(reviewer)
-    }
 
     // mapをtapした際、下記からbottomSheetを表示
     behavior.state = STATE_COLLAPSED
