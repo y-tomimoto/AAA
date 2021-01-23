@@ -5,7 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.activityViewModels
 import com.company.takitate.R
+import com.company.takitate.databinding.FragmentAddReviewBinding
+import com.company.takitate.databinding.FragmentMapBottomSheetBinding
+import com.company.takitate.viewmodel.RecruitAPIResponseShopViewModel
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -22,6 +27,9 @@ class AddReviewFragment : Fragment() {
   private var param1: String? = null
   private var param2: String? = null
 
+  private val viewModel: RecruitAPIResponseShopViewModel by activityViewModels()
+  private lateinit var binding: FragmentAddReviewBinding
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     arguments?.let {
@@ -34,8 +42,11 @@ class AddReviewFragment : Fragment() {
     inflater: LayoutInflater, container: ViewGroup?,
     savedInstanceState: Bundle?
   ): View? {
-    // Inflate the layout for this fragment
-    return inflater.inflate(R.layout.fragment_add_review, container, false)
+    binding = DataBindingUtil.inflate(inflater,R.layout.fragment_add_review, container,false) // bindingクラスを生成
+    binding.vm = viewModel
+    binding.lifecycleOwner = this // LiveDataが値の更新を検知するように設定する
+    return binding.root
+
   }
 
   companion object {
