@@ -30,49 +30,6 @@ abstract class MyDatabase: RoomDatabase() {
       }
     }
 
-//    TableInfo{name='reviews',
-//      columns={
-//        review_id=Column{name='review_id', type='TEXT', affinity='2', notNull=true, primaryKeyPosition=1, defaultValue='null'},
-//        comment=Column{name='comment', type='TEXT', affinity='2', notNull=true, primaryKeyPosition=0, defaultValue='null'},
-//        datetime=Column{name='datetime', type='INTEGER', affinity='3', notNull=true, primaryKeyPosition=0, defaultValue='null'},
-//        title=Column{name='title', type='TEXT', affinity='2', notNull=true, primaryKeyPosition=0, defaultValue='null'},
-//        restaurant_id=Column{name='restaurant_id', type='TEXT', affinity='2', notNull=true, primaryKeyPosition=0, defaultValue='null'},
-//        reviewer_id=Column{name='reviewer_id', type='TEXT', affinity='2', notNull=true, primaryKeyPosition=0, defaultValue='null'}}, foreignKeys=[], indices=[]}
-//
-//    TableInfo{name='reviews',
-//      columns={
-//        review_id=Column{name='review_id', type='TEXT', affinity='2', notNull=true, primaryKeyPosition=1, defaultValue='null'},
-//        datetime=Column{name='datetime', type='TEXT', affinity='2', notNull=false, primaryKeyPosition=0, defaultValue='null'},
-//        restaurant_id=Column{name='restaurant_id', type='TEXT', affinity='2', notNull=false, primaryKeyPosition=0, defaultValue='null'},
-//        reviewer_id=Column{name='reviewer_id', type='TEXT', affinity='2', notNull=false, primaryKeyPosition=0, defaultValue='null'},
-//        comment=Column{name='comment', type='TEXT', affinity='2', notNull=false, primaryKeyPosition=0, defaultValue='null'},
-//        title=Column{name='title', type='TEXT', affinity='2', notNull=false, primaryKeyPosition=0, defaultValue='null'}}, foreignKeys=[], indices=[]}
-
-
-//    TableInfo{name='reviews',
-//      columns={
-//        review_id=Column{name='review_id', type='TEXT', affinity='2', notNull=true, primaryKeyPosition=1, defaultValue='null'},
-//        comment=Column{name='comment', type='TEXT', affinity='2', notNull=true, primaryKeyPosition=0, defaultValue='null'},
-//        datetime=Column{name='datetime', type='INTEGER', affinity='3', notNull=true, primaryKeyPosition=0, defaultValue='null'},
-//        title=Column{name='title', type='TEXT', affinity='2', notNull=true, primaryKeyPosition=0, defaultValue='null'},
-//        restaurant_id=Column{name='restaurant_id', type='TEXT', affinity='2', notNull=true, primaryKeyPosition=0, defaultValue='null'},
-//        reviewer_id=Column{name='reviewer_id', type='TEXT', affinity='2', notNull=true, primaryKeyPosition=0, defaultValue='null'}},
-//      foreignKeys=[],
-//      indices=[]
-//    }
-//
-//    TableInfo{
-//      name='reviews',
-//      columns={
-//        review_id=Column{name='review_id', type='TEXT', affinity='2', notNull=true, primaryKeyPosition=1, defaultValue='null'},
-//        datetime=Column{name='datetime', type='TEXT', affinity='2', notNull=true, primaryKeyPosition=0, defaultValue='null'},
-//        restaurant_id=Column{name='restaurant_id', type='TEXT', affinity='2', notNull=true, primaryKeyPosition=0, defaultValue='null'},
-//        reviewer_id=Column{name='reviewer_id', type='TEXT', affinity='2', notNull=true, primaryKeyPosition=0, defaultValue='null'},
-//        comment=Column{name='comment', type='TEXT', affinity='2', notNull=true, primaryKeyPosition=0, defaultValue='null'},
-//        title=Column{name='title', type='TEXT', affinity='2', notNull=true, primaryKeyPosition=0, defaultValue='null'}},
-//      foreignKeys=[],
-//      indices=[]}
-
     val MIGRATION_3_4 = object : Migration(3, 4) {
       override fun migrate(database: SupportSQLiteDatabase) {
         // Create temporary table
