@@ -11,6 +11,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.room.Room
 import com.company.takitate.R
 import com.company.takitate.data.repository.driver.MyDatabase
+import com.company.takitate.data.repository.driver.MyDatabase.Companion.MIGRATION_2_3
+import com.company.takitate.data.repository.driver.MyDatabase.Companion.MIGRATION_3_4
 import com.company.takitate.databinding.FragmentAddReviewBinding
 import com.company.takitate.databinding.FragmentMapBottomSheetBinding
 import com.company.takitate.domain.entity.Review
@@ -47,11 +49,12 @@ class AddReviewFragment : Fragment() {
       param1 = it.getString(ARG_PARAM1)
       param2 = it.getString(ARG_PARAM2)
     }
+
     // dbインスタンスを用意
     db = Room.databaseBuilder(
       requireContext(),
       MyDatabase::class.java, "room-database"
-    ).build()
+    ).addMigrations(MIGRATION_2_3,MIGRATION_3_4).build()
 
   }
 
