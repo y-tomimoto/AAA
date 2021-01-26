@@ -1,6 +1,9 @@
 package com.company.takitate.ui.map
 
 import android.app.Activity
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.drawable.Drawable
 import android.location.Location
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,7 +16,6 @@ import androidx.lifecycle.Observer
 import androidx.room.Room
 import com.company.takitate.R
 import com.company.takitate.data.repository.driver.MyDatabase
-import com.company.takitate.domain.entity.Reviewer
 import com.company.takitate.domain.entity.Shop
 import com.company.takitate.domain.location.MyLocationManager
 import com.company.takitate.viewmodel.RecruitAPIResponseShopViewModel
@@ -22,16 +24,11 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.Marker
-import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_COLLAPSED
 import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_HIDDEN
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import org.joda.time.DateTime
+
 
 // このFragmentは、BottomNavigationView内で展開されている
 class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener{
@@ -146,16 +143,35 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
     mapView.onLowMemory()
   }
 
+  private fun getMarkerIconFromDrawable(drawable: Drawable): BitmapDescriptor? {
+    val canvas = Canvas()
+    val bitmap = Bitmap.createBitmap(
+      drawable.intrinsicWidth,
+      drawable.intrinsicHeight,
+      Bitmap.Config.ARGB_8888
+    )
+    canvas.setBitmap(bitmap)
+    drawable.setBounds(0, 0, drawable.intrinsicWidth, drawable.intrinsicHeight)
+    drawable.draw(canvas)
+    return BitmapDescriptorFactory.fromBitmap(bitmap)
+  }
+
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
+
+    // Reffer to : https://stackoverflow.com/questions/18053156/set-image-from-drawable-as-marker-in-google-map-version-2
+    val circleDrawable = resources.getDrawable(R.drawable.restaurant_marker_24)
+    val markerIcon = getMarkerIconFromDrawable(circleDrawable)
+
     recruitAPIResponseViewModel.recruitAPIResponse.observe(
       viewLifecycleOwner,
       Observer { restaurants ->
         for (value in restaurants.results.shop) {
-            marker = _googleMap!!.addMarker(
-              MarkerOptions()
-                .position(LatLng(value.lat, value.lng))
-            )
+          marker = _googleMap!!.addMarker(
+            MarkerOptions()
+              .position(LatLng(value.lat, value.lng))
+              .icon(markerIcon)
+          )
           marker.tag = value // setTagで、内部のmarker objectにpassされる仕様になっていると思う
         }
       })
