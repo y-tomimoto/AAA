@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -143,6 +144,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
     mapView.onLowMemory()
   }
 
+  //     // Reffer to : https://stackoverflow.com/questions/18053156/set-image-from-drawable-as-marker-in-google-map-version-2
   private fun getMarkerIconFromDrawable(drawable: Drawable): BitmapDescriptor? {
     val canvas = Canvas()
     val bitmap = Bitmap.createBitmap(
@@ -160,7 +162,8 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
     super.onViewCreated(view, savedInstanceState)
 
     // Reffer to : https://stackoverflow.com/questions/18053156/set-image-from-drawable-as-marker-in-google-map-version-2
-    val circleDrawable = resources.getDrawable(R.drawable.restaurant_marker_24)
+    val circleDrawable = resources.getDrawable(R.drawable.restaurant_marker_36)
+    circleDrawable.setTint(ContextCompat.getColor(requireActivity(), R.color.primary))
     val markerIcon = getMarkerIconFromDrawable(circleDrawable)
 
     recruitAPIResponseViewModel.recruitAPIResponse.observe(
