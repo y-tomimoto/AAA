@@ -8,7 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.company.takitate.data.repository.RecruitAPIRepository
 import com.company.takitate.domain.entity.RecruitAPIResponse
-import com.google.android.gms.maps.model.LatLng
+import com.google.android.libraries.maps.model.LatLng
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 
@@ -27,7 +27,7 @@ class RecruitAPIResponseViewModel(application: Application) : AndroidViewModel(a
   }
 
   // 外部通信によって取得
-  fun loadRestaurants( location: LatLng ) = viewModelScope.launch { // 通常のCoroutine Scopeを採用すると、ViewModelが排除されるタイミングでメモリリークする
+  fun loadRestaurants( location: LatLng) = viewModelScope.launch { // 通常のCoroutine Scopeを採用すると、ViewModelが排除されるタイミングでメモリリークする
     try {
       // ViewModelを更新する
       _recruitAPIResponse.postValue( // バックグラウンドスレッドでは、postでViewModelをupdate

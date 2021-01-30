@@ -1,43 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.company.takitate">
-
-  <!-- For Location Start-->
-  <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+  package="com.company.takitate">
+  <!-- For Location Start -->
   <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-  <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
-  <!-- For Location End-->
+  <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+  <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" /> <!-- For Location End -->
+  <!-- For Retrofit Start -->
+  <uses-permission android:name="android.permission.INTERNET" />
 
-  <!-- For Retrofit Start-->
-  <uses-permission android:name="android.permission.INTERNET"/>
-  <!-- For Retrofit End-->
-
-  <!-- For RECRUIT_API android:usesCleartextTraffic="true" -->
   <application
-        android:usesCleartextTraffic="true"
-        android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
-        android:theme="@style/Theme.TAKITATE">
-        <!-- For GoogleMap Start-->
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="${mapsApiKey}"/>
-        <!-- For GoogleMap Close-->
-        <!-- For RecruitAPI Start-->
-        <meta-data
-          android:name="com.company.takitate.RECRUIT_API_KEY"
-          android:value="${recruitApiKey}"/>
-        <!-- For RecruitAPI Close-->
-        <activity android:name=".ui.main.MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-    </application>
+    android:allowBackup="true"
+    android:icon="@mipmap/ic_launcher"
+    android:label="@string/app_name"
+    android:roundIcon="@mipmap/ic_launcher_round"
+    android:supportsRtl="true"
+    android:theme="@style/Theme.TAKITATE"
+    android:usesCleartextTraffic="true">
+    <!-- For GoogleMap Start -->
+    <meta-data
+      android:name="com.google.android.geo.API_KEY"
+      android:value="${mapsApiKey}" />
+    <!-- For RecruitAPI Start -->
+    <meta-data
+      android:name="com.company.takitate.RECRUIT_API_KEY"
+      android:value="${recruitApiKey}" />
+    <activity android:name=".ui.main.MainActivity">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+        <category android:name="android.intent.category.LAUNCHER" />
+      </intent-filter>
+    </activity>
+  </application>
 
 </manifest>

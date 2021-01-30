@@ -9,20 +9,20 @@ import android.os.Build
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.*
 
-class MyLocationManager (private val context: Context, private val activity: Activity) {
+class MyLocationManager (private val activity: Activity) {
 
   private val REQUEST_CODE = 1000
   private var fusedLocationClient: FusedLocationProviderClient =
-    LocationServices.getFusedLocationProviderClient(context)
+    LocationServices.getFusedLocationProviderClient(activity.applicationContext)
 
   fun getLocation(callback: (location:Location) -> Unit){
 
     // Permission Check
     if (ActivityCompat.checkSelfPermission(
-        context,
+        activity.applicationContext,
         Manifest.permission.ACCESS_FINE_LOCATION
       ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-        context,
+        activity.applicationContext,
         Manifest.permission.ACCESS_COARSE_LOCATION
       ) != PackageManager.PERMISSION_GRANTED
     ) {
@@ -30,10 +30,10 @@ class MyLocationManager (private val context: Context, private val activity: Act
       // Permissionの許諾を取る: https://developer.android.com/training/location/retrieve-current#permissions
       if (Build.VERSION.SDK_INT >= 23) { // 23以降厳格なPermission許諾が求められる
         if (ActivityCompat.checkSelfPermission(
-            context,
+            activity.applicationContext,
             Manifest.permission.ACCESS_FINE_LOCATION
           ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-            context,
+            activity.applicationContext,
             Manifest.permission.ACCESS_COARSE_LOCATION
           ) != PackageManager.PERMISSION_GRANTED
         ) {

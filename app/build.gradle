@@ -90,10 +90,20 @@ dependencies {
     implementation 'com.google.android.material:material:1.2.1'
 
     // for GoogleMap
-    implementation 'com.google.android.gms:play-services-maps:17.0.0'
+    // implementation 'com.google.android.gms:play-services-maps:17.0.0'
+
+    // GMS
+    // implementation 'com.google.android.gms:play-services-maps:17.0.0'
+
+    // V3
+     implementation 'com.google.android.libraries.maps:maps:3.1.0-beta'
+     implementation 'com.google.android.gms:play-services-basement:17.3.0'
+     implementation 'com.google.android.gms:play-services-base:17.3.0'
+     implementation 'com.google.android.gms:play-services-gcm:17.0.0'
+     implementation 'com.google.android.gms:play-services-location:17.0.0'
 
     // for get location
-    implementation 'com.google.android.gms:play-services-location:17.1.0'
+    // implementation 'com.google.android.gms:play-services-location:17.1.0'
 
     // for bottom sheet view in map
     implementation 'com.google.android.material:material:1.1.0'
@@ -125,5 +135,10 @@ dependencies {
 
     // for Logging in Retrofit : https://stackoverflow.com/questions/32514410/logging-with-retrofit-2
     implementation 'com.squareup.okhttp3:logging-interceptor:4.2.1'
+
+    // For marker clustering: https://developers.google.com/maps/documentation/android-sdk/utility/setup
+    implementation 'com.google.maps.android:android-maps-utils:2.2.0'
+    implementation 'com.google.maps.android:maps-utils-ktx:2.2.0'
+
 
 }
