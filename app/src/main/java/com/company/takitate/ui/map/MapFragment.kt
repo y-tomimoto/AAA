@@ -30,7 +30,8 @@ import com.google.android.libraries.maps.model.*
 
 
 // このFragmentは、BottomNavigationView内で展開されている
-class MapFragment : Fragment(), OnMapReadyCallback, OnMarkerClickListener {
+class MapFragment : Fragment(), OnMapReadyCallback, OnMarkerClickListener,
+  GoogleMap.OnCameraIdleListener {
   // OnMapReady等以外からmapインスタンスを参照するためのScope変数
   private lateinit var map: GoogleMap
 
@@ -52,7 +53,6 @@ class MapFragment : Fragment(), OnMapReadyCallback, OnMarkerClickListener {
     inflater: LayoutInflater, container: ViewGroup?,
     savedInstanceState: Bundle?
   ): View? {
-    super.onCreate(savedInstanceState)
     val view = inflater.inflate(R.layout.fragment_map, container, false)
     // MapFragmentを配置: https://github.com/googlemaps/android-samples/blob/master/ApiDemos/kotlin/app/src/v3/java/com/example/kotlindemos/MyLocationDemoActivity.kt
     val mapFragment: SupportMapFragment? =
@@ -67,6 +67,10 @@ class MapFragment : Fragment(), OnMapReadyCallback, OnMarkerClickListener {
     return view
   }
 
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
+  }
+
   override fun onMapReady(googleMap: GoogleMap?) {
     map = googleMap ?: return // 外部の関数から、Mapを参照できるようScope変数として管理する
     // callbackを受け取って、現在値を用いた処理を実行するインスタンス
@@ -75,6 +79,8 @@ class MapFragment : Fragment(), OnMapReadyCallback, OnMarkerClickListener {
     myLocationManager.getLocation(getLastLocationCallback)
     // onMarkerClickを有効にする
     map.setOnMarkerClickListener(this);
+    // mapの移動を検知する
+    map.setOnCameraIdleListener(this);
   }
 
   // LocationManagerに渡すCallback。FusedLocationProvider内のTaskAPIでは戻り値を指定できないため。
@@ -130,5 +136,11 @@ class MapFragment : Fragment(), OnMapReadyCallback, OnMarkerClickListener {
     drawable.setBounds(0, 0, drawable.intrinsicWidth, drawable.intrinsicHeight)
     drawable.draw(canvas)
     return BitmapDescriptorFactory.fromBitmap(bitmap)
+  }
+
+  override fun onCameraIdle() {
+    println("camera idle ...")
+    // TODO: Cameraの中心のLatLngを取得する
+    // TODO: ViewModelをUpdateする
   }
 }
