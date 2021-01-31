@@ -49,7 +49,14 @@ class MapFragment : Fragment(), OnMapReadyCallback, OnMarkerClickListener,
   // OnMarkerClickから参照するためにScope変数として宣言
   private lateinit var behavior: BottomSheetBehavior<*>
 
+  // 現在地を元にMarkerを管理したい
   private lateinit var mapCenterLatLng: LatLng
+
+  // Markerのlist
+  private var markerList: MutableList<Marker> = mutableListOf()
+
+  // foreach用のshop
+  private lateinit var markeredShop: Shop
 
   override fun onCreateView(
     inflater: LayoutInflater, container: ViewGroup?,
@@ -83,6 +90,8 @@ class MapFragment : Fragment(), OnMapReadyCallback, OnMarkerClickListener,
     map.setOnMarkerClickListener(this);
     // mapの移動を検知する
     map.setOnCameraIdleListener(this);
+    // 初期値を管理する
+    mapCenterLatLng = map.cameraPosition.target
   }
 
   // LocationManagerに渡すCallback。FusedLocationProvider内のTaskAPIでは戻り値を指定できないため。
@@ -94,14 +103,42 @@ class MapFragment : Fragment(), OnMapReadyCallback, OnMarkerClickListener,
     recruitAPIResponseViewModel.recruitAPIResponse.observe(
       viewLifecycleOwner,
       Observer { restaurants ->
-        for (value in restaurants.results.shop) {
-          marker = map.addMarker(
-            MarkerOptions()
-              .position(LatLng(value.lat, value.lng))
-              .icon(getMarkerIconFromDrawable(circleDrawable))
-          )
-          // OnClick時に参照できるよう、markerにmetaDataを配置したい:  https://developers.google.com/maps/documentation/android-sdk/marker?hl=ja
-          marker.tag = value
+        // APIからのResponseで取得したShopリストに対してループ処理を実行する
+        if (markerList.isEmpty()) {
+          // 初回はmarkerListが空なので、ResponseのShop全てをMarkerとしてaddする
+          for (response_shop in restaurants.results.shop) {
+            marker = map.addMarker(
+              MarkerOptions()
+                .position(LatLng(response_shop.lat, response_shop.lng))
+                .icon(getMarkerIconFromDrawable(circleDrawable))
+            )
+            // OnClick時に参照できるよう、markerにmetaDataを配置したい:  https://developers.google.com/maps/documentation/android-sdk/marker?hl=ja
+            marker.tag = response_shop
+            // 追加したmarkerを管理する
+            markerList.add(marker)
+          }
+        } else {
+          //markerList内のMarkerに紐づくShopと、APIから取得したShopを照合する
+          restaurants.results.shop.forEach loop@{ response_shop ->
+            // Responseとして得たShopが、Markerとして配置されているShopと重複しないか確認する
+            markerList.forEach { markerInList ->
+              markeredShop = markerInList.tag as Shop // markerとして配置されているShop
+              // APIからのResponseのShopが、既にMarkerとして存在する場合は、処理をskipして次のloopに映る
+              if (response_shop.id == markeredShop.id ) {
+                      return@loop
+              }
+            }
+            // markerList内のどのShopと一致しなかった場合は、Markerをaddする
+            marker = map.addMarker(
+              MarkerOptions()
+                      .position(LatLng(response_shop.lat, response_shop.lng))
+                      .icon(getMarkerIconFromDrawable(circleDrawable))
+            )
+            // OnClick時に参照できるよう、markerにmetaDataを配置したい:  https://developers.google.com/maps/documentation/android-sdk/marker?hl=ja
+            marker.tag = response_shop
+            // 追加したmarkerを管理する
+            markerList.add(marker)
+          }
         }
       })
 
@@ -141,9 +178,26 @@ class MapFragment : Fragment(), OnMapReadyCallback, OnMarkerClickListener,
   }
 
   override fun onCameraIdle() {
-    // Cameraの中心のLatLngを取得する
+    markerList.forEach { _marker ->
+      markeredShop = _marker.tag as Shop
+      // mapCenterLatLng で取得された位置より離れていたらMarkerをremoveする
+      val result = distance(map.cameraPosition.target, LatLng(markeredShop.lat,markeredShop.lng))
+      println(result)
+      // if XXXXX {
+      //  _marker.remove
+      //  markerList.remove(_marker)
+      // }
+    }
+    // Cameraの中心のLatLngを更新する
     mapCenterLatLng = map.cameraPosition.target // https://stackoverflow.com/questions/13904505/how-to-get-center-of-map-for-v2-android-maps
-    // ViewModelをUpdateする
+    // ViewModelをUpdateして、新たにmarkerを追加する
     recruitAPIResponseViewModel.loadRestaurants(mapCenterLatLng)
   }
+
+  private fun distance(baseLatLng: LatLng,targetLatLng: LatLng):FloatArray {
+    val results:FloatArray = floatArrayOf()
+    Location.distanceBetween(baseLatLng.latitude,baseLatLng.longitude,targetLatLng.latitude,targetLatLng.longitude,results)
+    return results
+  }
+
 }
