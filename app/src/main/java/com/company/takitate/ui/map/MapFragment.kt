@@ -49,6 +49,8 @@ class MapFragment : Fragment(), OnMapReadyCallback, OnMarkerClickListener,
   // OnMarkerClickから参照するためにScope変数として宣言
   private lateinit var behavior: BottomSheetBehavior<*>
 
+  private lateinit var mapCenterLatLng: LatLng
+
   override fun onCreateView(
     inflater: LayoutInflater, container: ViewGroup?,
     savedInstanceState: Bundle?
@@ -139,8 +141,9 @@ class MapFragment : Fragment(), OnMapReadyCallback, OnMarkerClickListener,
   }
 
   override fun onCameraIdle() {
-    println("camera idle ...")
-    // TODO: Cameraの中心のLatLngを取得する
-    // TODO: ViewModelをUpdateする
+    // Cameraの中心のLatLngを取得する
+    mapCenterLatLng = map.cameraPosition.target // https://stackoverflow.com/questions/13904505/how-to-get-center-of-map-for-v2-android-maps
+    // ViewModelをUpdateする
+    recruitAPIResponseViewModel.loadRestaurants(mapCenterLatLng)
   }
 }
