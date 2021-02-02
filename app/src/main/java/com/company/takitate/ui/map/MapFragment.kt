@@ -58,6 +58,9 @@ class MapFragment : Fragment(), OnMapReadyCallback, OnMarkerClickListener,
   // foreach用のshop
   private lateinit var markeredShop: Shop
 
+  // Marker用に距離を測る
+  private lateinit var distanceResults: FloatArray
+
   override fun onCreateView(
     inflater: LayoutInflater, container: ViewGroup?,
     savedInstanceState: Bundle?
@@ -178,26 +181,30 @@ class MapFragment : Fragment(), OnMapReadyCallback, OnMarkerClickListener,
   }
 
   override fun onCameraIdle() {
-    markerList.forEach { _marker ->
-      markeredShop = _marker.tag as Shop
-      // mapCenterLatLng で取得された位置より離れていたらMarkerをremoveする
-      val result = distance(map.cameraPosition.target, LatLng(markeredShop.lat,markeredShop.lng))
-      println(result)
-      // if XXXXX {
-      //  _marker.remove
-      //  markerList.remove(_marker)
-      // }
+    val iterator = markerList.iterator() // https://stackoverflow.com/questions/50032000/how-to-avoid-concurrentmodificationexception-kotlin/50032174
+    while(iterator.hasNext()) {
+      // カメラが移動した直後、markerを確認する
+      val item = iterator.next()
+      markeredShop = item.tag as Shop
+      val markerDistanceFromCenter = distance(map.cameraPosition.target, LatLng(markeredShop.lat,markeredShop.lng))
+      if (300 < markerDistanceFromCenter) { // TODO: 300は定数として切り出す
+        // markerが現在地よりも300m以上離れている場合は、markerを削除する
+        item.remove()
+        iterator.remove()
+        markerList.remove(item)
+        markerList.remove(iterator)
+      }
     }
     // Cameraの中心のLatLngを更新する
     mapCenterLatLng = map.cameraPosition.target // https://stackoverflow.com/questions/13904505/how-to-get-center-of-map-for-v2-android-maps
     // ViewModelをUpdateして、新たにmarkerを追加する
     recruitAPIResponseViewModel.loadRestaurants(mapCenterLatLng)
+
   }
 
-  private fun distance(baseLatLng: LatLng,targetLatLng: LatLng):FloatArray {
-    val results:FloatArray = floatArrayOf()
-    Location.distanceBetween(baseLatLng.latitude,baseLatLng.longitude,targetLatLng.latitude,targetLatLng.longitude,results)
-    return results
+  private fun distance(baseLatLng: LatLng,targetLatLng: LatLng):Float {
+    distanceResults = FloatArray(1)
+    Location.distanceBetween(baseLatLng.latitude,baseLatLng.longitude,targetLatLng.latitude,targetLatLng.longitude,distanceResults)
+    return distanceResults[0] // 単位はメートル
   }
-
 }

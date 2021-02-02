@@ -32,7 +32,7 @@ class RecruitAPIResponseViewModel(application: Application) : AndroidViewModel(a
       // ViewModelを更新する
       _recruitAPIResponse.postValue( // バックグラウンドスレッドでは、postでViewModelをupdate
         recruitAPIRepository.getRestaurantsByGeocode(
-          key = apiKey, lat = location.latitude, lng = location.longitude, range = 1, format = "json", order=4 , count=100
+          key = apiKey, lat = location.latitude, lng = location.longitude, range = 1, format = "json", order=4 , count=100 // range=1 は300m
         )
       )
     } catch (e: HttpException) {
