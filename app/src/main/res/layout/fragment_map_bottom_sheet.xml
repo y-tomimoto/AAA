@@ -1,29 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
+
   <data>
-    <import type="com.company.takitate.viewmodel.RecruitAPIResponseShopViewModel"/>
-    <variable name="viewModel" type="RecruitAPIResponseShopViewModel" />
+
+    <import type="com.company.takitate.viewmodel.RecruitAPIResponseShopViewModel" />
+
+    <variable
+      name="viewModel"
+      type="RecruitAPIResponseShopViewModel" />
   </data>
+
+
   <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:id="@+id/contentBox"
-    android:background="@drawable/android_gradient_list"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent"
+    android:background="@color/transparent"
+    android:orientation="vertical">
 
-    <TextView
-      android:layout_width="wrap_content"
+    <View xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      android:id="@+id/shadow"
+      layout_height="16dp"
+      android:layout_width="match_parent"
+      android:layout_height="16dp"
+      android:background="@drawable/shape_gradient_top_shadow"
+      app:layout_anchor="@id/contentBox" />
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+      android:id="@+id/background"
+      android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:text="@{viewModel.focusedShop.id}" />
+      android:background="@drawable/shadow_helper"
+      android:orientation="vertical">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-      android:id="@+id/fab"
-      android:layout_width="wrap_content"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+      android:id="@+id/contentBox"
+      android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_gravity="end|bottom"
-      android:src="@drawable/ic_baseline_add_24"
-      android:layout_margin="16dp" />
+      android:background="@drawable/android_gradient_list"
+      android:orientation="vertical">
 
+      <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_baseline_add_24" />
+
+    </LinearLayout>
+  </LinearLayout>
   </LinearLayout>
 </layout>
 
