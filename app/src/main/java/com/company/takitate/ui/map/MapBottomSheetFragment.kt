@@ -64,6 +64,7 @@ class MapBottomSheetFragment : Fragment() {
         .placeholder(R.drawable.ic_baseline_add_24)
         .error(R.drawable.ic_baseline_add_24)
         .into(binding.profileImage);
+      println(shop.genre)
     })
   }
 }
