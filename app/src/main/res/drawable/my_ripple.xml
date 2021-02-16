@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- https://stackoverflow.com/questions/39738066/how-to-set-button-background-drawable-image-with-ripple-effect-in-android -->
+<ripple xmlns:android="http://schemas.android.com/apk/res/android" android:color="@color/gmm_white">
+  <item>
+    <selector xmlns:android="http://schemas.android.com/apk/res/android" >
+      <item
+        android:drawable="@drawable/shadow_helper2"
+        android:state_checked="false"/>
+    </selector>
+  </item>
+</ripple>
+
