@@ -23,9 +23,6 @@ class MapBottomSheetFragment : Fragment() {
   // プロパティデリゲートでviewModelを取得する方法
   private val viewModel:RecruitAPIResponseShopViewModel by activityViewModels()
 
-  // ForcusされたShopの画像をloadするために利用。
-  private val recruitAPIResponseFocusedShopViewModel: RecruitAPIResponseShopViewModel by activityViewModels()
-
   override fun onCreateView(
     inflater: LayoutInflater, container: ViewGroup?,
     savedInstanceState: Bundle?
@@ -57,14 +54,14 @@ class MapBottomSheetFragment : Fragment() {
     super.onViewCreated(view, savedInstanceState)
 
     // ここでViewModelから流れてきた値を受け取る。
-    recruitAPIResponseFocusedShopViewModel.focusedShop.observe(viewLifecycleOwner, Observer { shop ->
+    viewModel.focusedShop.observe(viewLifecycleOwner, Observer { shop ->
       // 対象がupdateされたとき、画像をbindする。
       Picasso.get()
         .load(shop.logo_image)
         .placeholder(R.drawable.ic_baseline_add_24)
         .error(R.drawable.ic_baseline_add_24)
         .into(binding.profileImage);
-      println(shop.genre)
+      println(shop)
     })
   }
 }

@@ -1,7 +1,7 @@
 plugins {
   id 'com.android.application'
   id 'kotlin-android'
-
+  id 'kotlin-android-extensions'
   // for room
   id 'kotlin-kapt'
 }
