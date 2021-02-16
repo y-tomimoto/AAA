@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+  <corners
+    android:topLeftRadius="16dp"
+    android:bottomLeftRadius="16dp"
+    android:bottomRightRadius="64dp"
+    android:topRightRadius="64dp" />
+  <solid android:color="@color/bottom_sheet_card" />
+
+</shape>
