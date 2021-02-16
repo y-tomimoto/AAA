@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto">
 
   <data>
 
@@ -39,21 +40,26 @@
         android:layout_height="wrap_content"
         android:background="@drawable/android_gradient_list"
         android:orientation="horizontal"
+        android:clipChildren="false"
+        android:clipToPadding="false"
         android:padding="10dp">
 
         <FrameLayout
           android:layout_width="match_parent"
           android:layout_height="120dp"
-          android:background="@drawable/shadow_helper2">
+          android:layout_marginLeft="48dp"
+          android:background="@drawable/shadow_helper2"
+          android:clipChildren="false"
+          android:clipToPadding="false">
 
           <de.hdodenhof.circleimageview.CircleImageView
-            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/profile_image"
             android:layout_width="96dp"
-            android:layout_height="96dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="-48dp"
             android:src="@drawable/ic_baseline_add_24"
-            app:civ_border_width="2dp"
-            app:civ_border_color="#FF000000"/>
+            app:civ_border_color="@color/bottom_sheet_card"
+            app:civ_border_width="4dp" />
 
           <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab"
@@ -61,7 +67,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end|bottom"
             android:layout_margin="16dp"
-              android:src="@drawable/ic_baseline_add_24" />
+            android:src="@drawable/ic_baseline_add_24" />
         </FrameLayout>
       </LinearLayout>
     </LinearLayout>

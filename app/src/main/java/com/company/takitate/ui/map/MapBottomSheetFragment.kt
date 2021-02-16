@@ -50,14 +50,13 @@ class MapBottomSheetFragment : Fragment() {
     animationDrawable.setExitFadeDuration(4000)
     animationDrawable.start()
 
-
     return binding.root
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
 
-    // ここでViewModelから流れてきた値を受け取る.
+    // ここでViewModelから流れてきた値を受け取る。
     recruitAPIResponseFocusedShopViewModel.focusedShop.observe(viewLifecycleOwner, Observer { shop ->
       // 対象がupdateされたとき、画像をbindする。
       Picasso.get()
