@@ -39,11 +39,11 @@ class MapBottomSheetFragment : Fragment() {
     ) // bindingクラスを生成
     binding.viewModel = viewModel
     binding.lifecycleOwner = this // LiveDataが値の更新を検知するように設定する
-    val fab: View = binding.fab
-    fab.setOnClickListener { view ->
-      // ReviewFragmentへ以降する。このとき、店舗IDをFragmentに渡す。
-      findNavController().navigate(R.id.action_Map_to_AddReview)
-    }
+//    val fab: View = binding.fab
+//    fab.setOnClickListener { view ->
+//      // ReviewFragmentへ以降する。このとき、店舗IDをFragmentに渡す。
+//      findNavController().navigate(R.id.action_Map_to_AddReview)
+//    }
 
     val animationDrawable = binding.contentBox.background  as AnimationDrawable
     animationDrawable.setEnterFadeDuration(2000)

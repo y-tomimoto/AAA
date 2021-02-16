@@ -5,8 +5,8 @@
   <corners
     android:topLeftRadius="16dp"
     android:bottomLeftRadius="16dp"
-    android:bottomRightRadius="64dp"
-    android:topRightRadius="64dp" />
+    android:bottomRightRadius="16dp"
+    android:topRightRadius="16dp" />
   <solid android:color="@color/bottom_sheet_card" />
 
 </shape>
