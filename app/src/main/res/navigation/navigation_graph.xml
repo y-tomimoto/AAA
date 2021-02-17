@@ -11,7 +11,12 @@
     android:label="map" >
     <action
       android:id="@+id/action_Map_to_AddReview"
-      app:destination="@id/add_review" />
+      app:destination="@id/add_review"
+      app:enterAnim="@anim/nav_ios_enter_anim"
+      app:exitAnim="@anim/nav_ios_exit_anim"
+      app:popEnterAnim="@anim/nav_ios_pop_enter_anim"
+      app:popExitAnim="@anim/nav_ios_pop_exit_anim"/>
+
   </fragment>
 
   <fragment
