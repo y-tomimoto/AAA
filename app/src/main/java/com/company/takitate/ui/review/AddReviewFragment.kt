@@ -13,8 +13,8 @@ import com.company.takitate.R
 import com.company.takitate.data.repository.driver.MyDatabase
 import com.company.takitate.data.repository.driver.MyDatabase.Companion.MIGRATION_2_3
 import com.company.takitate.data.repository.driver.MyDatabase.Companion.MIGRATION_3_4
-import com.company.takitate.databinding.FragmentAddReviewBinding
 import com.company.takitate.databinding.FragmentMapBottomSheetBinding
+import com.company.takitate.databinding.PreFragmentAddReviewBinding
 import com.company.takitate.domain.entity.Review
 import com.company.takitate.domain.entity.Reviewer
 import com.company.takitate.viewmodel.RecruitAPIResponseShopViewModel
@@ -39,7 +39,7 @@ class AddReviewFragment : Fragment() {
   private var param2: String? = null
 
   private val viewModel: RecruitAPIResponseShopViewModel by activityViewModels()
-  private lateinit var binding: FragmentAddReviewBinding
+  private lateinit var binding: PreFragmentAddReviewBinding
 
   private lateinit var db: MyDatabase
 
@@ -62,32 +62,32 @@ class AddReviewFragment : Fragment() {
     inflater: LayoutInflater, container: ViewGroup?,
     savedInstanceState: Bundle?
   ): View? {
-    binding = DataBindingUtil.inflate(inflater,R.layout.fragment_add_review, container,false) // bindingクラスを生成
+    binding = DataBindingUtil.inflate(inflater,R.layout.pre_fragment_add_review, container,false) // bindingクラスを生成
     binding.vm = viewModel
     binding.lifecycleOwner = this // LiveDataが値の更新を検知するように設定する
 
-    val fab: View = binding.fab
-    fab.setOnClickListener { view ->
-      // launch は Builder
-      // GlobalScope はコルーチンスコープ
-      GlobalScope.launch {
-        val reviewer = Reviewer(birthday = DateTime(), reviewer_id = 0, handle = "john doe")
-        db.reviewerDao().insertReviewer(reviewer)
-        val review = viewModel.focusedShop.value?.let {
-          Review(
-            comment = "まずい",
-            review_id = UUID.randomUUID().toString(),
-            datetime = DateTime(),
-            reviewer_id = "1",
-            restaurant_id = it.id,
-            title = "まず過ぎる"
-          )
-        }
-        if (review != null) {
-          db.reviewDao().insertReview(review)
-        }
-      }
-    }
+//    val fab: View = binding.fab
+//    fab.setOnClickListener { view ->
+//      // launch は Builder
+//      // GlobalScope はコルーチンスコープ
+//      GlobalScope.launch {
+//        val reviewer = Reviewer(birthday = DateTime(), reviewer_id = 0, handle = "john doe")
+//        db.reviewerDao().insertReviewer(reviewer)
+//        val review = viewModel.focusedShop.value?.let {
+//          Review(
+//            comment = "まずい",
+//            review_id = UUID.randomUUID().toString(),
+//            datetime = DateTime(),
+//            reviewer_id = "1",
+//            restaurant_id = it.id,
+//            title = "まず過ぎる"
+//          )
+//        }
+//        if (review != null) {
+//          db.reviewDao().insertReview(review)
+//        }
+//      }
+//    }
 
     return binding.root
 
