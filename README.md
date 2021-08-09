@@ -1,3 +1,3 @@
 # :construction: TAKITATE
-炊きたてのご飯にたどり着きやすくするためだけのアプリ
+sandbox for android 
 yet under construction ...
