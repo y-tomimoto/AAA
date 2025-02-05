@@ -192,7 +192,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, OnMarkerClickListener,
         item.remove()
         iterator.remove()
         markerList.remove(item)
-        markerList.remove(iterator)
+        // markerList.remove(iterator)
       }
     }
     // Cameraの中心のLatLngを更新する

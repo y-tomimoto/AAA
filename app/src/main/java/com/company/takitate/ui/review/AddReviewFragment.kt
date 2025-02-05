@@ -20,7 +20,6 @@ import com.company.takitate.domain.entity.Reviewer
 import com.company.takitate.viewmodel.RecruitAPIResponseShopViewModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import org.joda.time.DateTime
 import java.util.*
 
 // TODO: Rename parameter arguments, choose names that match

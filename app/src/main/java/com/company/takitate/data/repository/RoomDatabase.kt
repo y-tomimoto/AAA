@@ -8,7 +8,6 @@ import androidx.room.TypeConverters
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.company.takitate.domain.entity.*
-import org.joda.time.DateTime
 
 @Database(entities = [Review::class, Reviewer::class], version = 4, exportSchema = false)
 @TypeConverters(DateTimeConverter::class) // TypeConverterについて: https://qiita.com/tkt989/items/d600cf995a5ea41598f6
