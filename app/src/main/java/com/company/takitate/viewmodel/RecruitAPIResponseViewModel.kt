@@ -26,6 +26,8 @@ class RecruitAPIResponseViewModel(application: Application) : AndroidViewModel(a
     application.packageManager.getApplicationInfo("com.company.takitate", PackageManager.GET_META_DATA).metaData.getString("com.company.takitate.RECRUIT_API_KEY")?:"invalid_api_key"
   }
 
+  // google map の place api を採用する予定
+
   // 外部通信によって取得
   fun loadRestaurants( location: LatLng) = viewModelScope.launch { // 通常のCoroutine Scopeを採用すると、ViewModelが排除されるタイミングでメモリリークする
     try {

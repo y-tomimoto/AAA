@@ -4,6 +4,9 @@ plugins {
   id 'com.google.devtools.ksp'
 }
 
+def localProperties = new Properties()
+file("${rootDir}/local.properties").withInputStream { localProperties.load(it) }
+
 android {
   compileSdk = 35
   namespace "com.company.takitate"
@@ -21,8 +24,8 @@ android {
       properties.load(rootProject.file("local.properties").newDataInputStream())
     }
     manifestPlaceholders = [
-            mapsApiKey   : properties.getProperty("MAPS_API_KEY", ""),
-            recruitApiKey: properties.getProperty("RECRUIT_API_KEY", "")
+            mapsApiKey   : localProperties.getProperty("MAPS_API_KEY", ""),
+            recruitApiKey: localProperties.getProperty("RECRUIT_API_KEY", "")
     ]
   }
 
